@@ -1,0 +1,13 @@
+[package]
+name = "vidmesh-wasm"
+version = "0.0.1"
+description = "wasm-bindgen bindings over vidmesh-kernel for browsers and Node"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]

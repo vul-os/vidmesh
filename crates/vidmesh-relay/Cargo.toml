@@ -1,0 +1,10 @@
+[package]
+name = "vidmesh-relay"
+version = "0.0.1"
+description = "Vidmesh relay: websocket sync, optional blob sidecar, gossip"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

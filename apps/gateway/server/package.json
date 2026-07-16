@@ -1,0 +1,15 @@
+{
+  "name": "@vidmesh/gateway-server",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Vidmesh gateway backend: ingest, index, policy engine, upload pipeline, HLS serving",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

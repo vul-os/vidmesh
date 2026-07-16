@@ -1,0 +1,14 @@
+{
+  "name": "@vidmesh/gateway-web",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Vidmesh gateway frontend: React + Vite + Tailwind",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

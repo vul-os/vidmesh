@@ -1,0 +1,16 @@
+{
+  "name": "vidmesh-monorepo",
+  "private": true,
+  "description": "Vidmesh monorepo root. See README.md.",
+  "scripts": {
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test",
+    "build": "pnpm -r --if-present build"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

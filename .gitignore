@@ -1,0 +1,21 @@
+# Rust
+/target/
+**/*.rs.bk
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# WASM build output (generated into packages/kernel-ts)
+packages/kernel-ts/wasm/
+
+# Gateway runtime data
+apps/gateway/server/data/
+
+# OS
+.DS_Store
+
+# Env
+.env
+.env.local

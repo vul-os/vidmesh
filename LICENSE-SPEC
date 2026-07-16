@@ -1,0 +1,17 @@
+The Vidmesh specification (everything under spec/) is licensed under the
+Creative Commons Attribution-ShareAlike 4.0 International License
+(CC-BY-SA-4.0).
+
+You should have received a copy of the license along with this work. If not,
+see <https://creativecommons.org/licenses/by-sa/4.0/legalcode>.
+
+Summary (not a substitute for the license):
+
+- You may share and adapt the specification for any purpose, including
+  commercially.
+- You must give appropriate credit and indicate if changes were made.
+- If you remix or build upon the specification, you must distribute your
+  contributions under the same license.
+
+All code in this repository (crates/, packages/, apps/, tools/) is licensed
+separately; see LICENSE-MIT and LICENSE-APACHE.

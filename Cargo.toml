@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/vidmesh-kernel",
+    "crates/vidmesh-relay",
+    "crates/vidmesh-wasm",
+    "crates/vidmesh-node",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/vidmesh/vidmesh"
+authors = ["Vidmesh contributors"]
+
+[workspace.dependencies]
+vidmesh-kernel = { path = "crates/vidmesh-kernel" }
+
+[profile.release]
+lto = true
+codegen-units = 1

@@ -1,0 +1,43 @@
+# Vidmesh monorepo task runner. Install `just`: https://github.com/casey/just
+
+# List available recipes
+default:
+    @just --list
+
+# Install JS dependencies
+setup:
+    pnpm install
+
+# Run all Rust and JS tests
+test: test-rust test-js
+
+test-rust:
+    cargo test --workspace
+
+test-js:
+    pnpm -r --if-present test
+
+# Lint everything (rustfmt, clippy, JS lint)
+lint:
+    cargo fmt --all --check
+    cargo clippy --workspace --all-targets -- -D warnings
+    pnpm -r --if-present lint
+
+# Format all Rust code
+fmt:
+    cargo fmt --all
+
+# Build the WASM kernel bindings (Phase 3)
+wasm:
+    @echo "Phase 3 not implemented yet: builds crates/vidmesh-wasm via wasm-pack into packages/kernel-ts/wasm/"
+    @exit 1
+
+# Bring up relay + gateway + web with seeded demo content (Phase 5/6)
+dev:
+    @echo "Phase 5/6 not implemented yet: will run relay, gateway server, and web app with demo content"
+    @exit 1
+
+# Run the conformance suite against all implementations (Phase 7)
+conformance:
+    @echo "Phase 7 not implemented yet: runs tools/conformance vectors against kernel, kernel-ts, and a live relay"
+    @exit 1

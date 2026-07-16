@@ -1,0 +1,10 @@
+[package]
+name = "vidmesh-kernel"
+version = "0.0.1"
+description = "The Vidmesh protocol kernel: records, identity, blobs, bundles"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

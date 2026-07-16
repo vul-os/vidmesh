@@ -1,0 +1,10 @@
+[package]
+name = "vidmesh-node"
+version = "0.0.1"
+description = "Vidmesh node app (Tauri 2) — pins and seeds chosen content"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

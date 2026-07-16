@@ -1,0 +1,16 @@
+{
+  "name": "@vidmesh/kernel",
+  "version": "0.0.1",
+  "description": "Typed TypeScript API over the Vidmesh WASM kernel",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}
