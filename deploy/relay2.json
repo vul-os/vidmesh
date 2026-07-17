@@ -1,0 +1,10 @@
+{
+  "listen_addr": "0.0.0.0:8787",
+  "db_path": "/data/relay.sqlite3",
+  "name": "relay2.local",
+  "pow_min_bits": 0,
+  "rate": { "records_per_minute_per_key": 600 },
+  "retention": { "default_days": 365 },
+  "blob": { "enabled": true, "dir": "/data/blobs", "max_bytes": 4294967296 },
+  "peers": ["ws://relay1:8787/sync"]
+}

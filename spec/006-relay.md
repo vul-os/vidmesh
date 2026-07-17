@@ -71,7 +71,7 @@ element (OR within the list):
 | `refs` | [bytes(32)] | any of whose refs' hash is listed |
 | `ids` | [bytes(32)] | whose id is listed |
 | `since` | uint | with relay `seq` strictly greater |
-| `limit` | uint | stored-phase cap: relay sends at most this many stored records (most recent first), then `EOSE` |
+| `limit` | uint | stored-phase cap: relay sends at most this many stored records (most recent first), then `EOSE`. Relays MAY cap it and SHOULD default to 500 when omitted |
 
 An empty filter matches everything the relay will allow; relays MAY
 reject over-broad filters via `CLOSED`.
