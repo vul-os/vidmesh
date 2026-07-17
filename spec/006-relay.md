@@ -39,6 +39,16 @@ Relay → client:
 
 `sub_id` is client-chosen, ≤ 64 bytes, unique per connection.
 
+Edge cases (normative):
+
+* When a `PUB` payload fails to decode far enough to derive an id, the
+  relay answers `OK` with the all-zero id and a descriptive reason; the
+  all-zero id is reserved and never a real record id.
+* A frame that does not parse as a CBOR array with a text tag, or whose
+  tag carries no usable `sub_id`, is dropped (relays SHOULD log it);
+  `CLOSED` is only sent for well-formed frames with unknown tags that
+  do carry a `sub_id`.
+
 ## 2. Receipt sequence
 
 A relay assigns each accepted record a strictly increasing local
@@ -49,8 +59,10 @@ next filter.
 
 ## 3. Filters
 
-A filter is a CBOR map; all present conditions must hold (AND); each
-list condition matches any element (OR within the list):
+A filter is a CBOR map with UTF-8 text keys (the body convention of
+spec 003 §2 — the filter travels outside the signed envelope); all
+present conditions must hold (AND); each list condition matches any
+element (OR within the list):
 
 | Key | Type | Matches records… |
 |-----|------|-------------------|
@@ -103,9 +115,11 @@ All fields except `software` are OPTIONAL; absent means unspecified.
 | `HEAD /blob/{b3-256:hex}` | Headers only; `Content-Length` present. |
 | `GET /blob/{b3-256:hex}/proof?chunk=i` | CBOR `[chunk_index, [sibling hashes]]` — the range proof of [001](001-kernel.md) §8. Optional; advertised by presence. |
 
-A server MUST verify the hash of a `PUT` blob before acknowledging;
-a mismatch is `422`. Blob storage policy (who may PUT, quotas) is the
-relay's own.
+A server MUST hash a `PUT` blob before acknowledging and answer with
+the derived id. A client MAY pre-declare the id it expects via the
+`X-Expected-Blob-Id` request header; when present and disagreeing with
+the derived hash, the server MUST reject with `422` and MUST NOT store
+the blob. Blob storage policy (who may PUT, quotas) is the relay's own.
 
 ## 6. Anti-spam
 

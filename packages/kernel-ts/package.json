@@ -4,8 +4,20 @@
   "description": "Typed TypeScript API over the Vidmesh WASM kernel",
   "license": "MIT",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "wasm"],
   "scripts": {
+    "build:wasm": "wasm-pack build ../../crates/vidmesh-wasm --target web --out-dir ../../packages/kernel-ts/wasm --out-name vidmesh_wasm --no-pack --release",
+    "build": "tsc -p tsconfig.build.json && node scripts/emit-cjs.mjs",
     "lint": "tsc --noEmit",
     "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""
   },

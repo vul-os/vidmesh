@@ -45,6 +45,8 @@ process/product decisions that don't belong in the spec.
 | P15 | Encryption: per-blob random keys wrapped by a per-manifest content key; chunked XChaCha20-Poly1305 with 1 MiB ciphertext chunks; dedicated profile `enc_key` (no Ed25519→X25519 reuse) | 008 §2 |
 | P16 | Derivation statement covers (orig, rendition, codec, w, h, bitrate); prefix `vidmesh:derivation:v1` | 004 §3 |
 | P17 | Uniform reference UI across gateways is a trademark-level requirement | 009 §7 |
+| P18 | JSON interchange is a strict bijection: `txt:` escape also applies to text map keys that would re-parse as integer keys (codec agent finding) | codec.rs module docs |
+| P19 | Relay edge cases: all-zero id in `OK` for undecodable PUBs; unparseable frames dropped not CLOSED; `X-Expected-Blob-Id` header for PUT 422s; filter keys are text | 006 §§1,3,5.2 |
 
 ## Implementation decisions
 

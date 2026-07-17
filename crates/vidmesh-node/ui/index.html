@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidmesh Node</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-row">
+      <h1>Vidmesh Node</h1>
+      <span class="scaffold-badge">Phase 8 scaffold</span>
+    </div>
+    <p class="tagline">
+      Pins the content you choose. Seeds what you watch. No public-facing duties.
+    </p>
+  </header>
+
+  <main class="panels">
+    <section class="panel" aria-labelledby="pinned-heading">
+      <h2 id="pinned-heading">Pinned content</h2>
+      <p class="panel-note">
+        SCAFFOLD — this panel is not wired up yet. It will list videos pinned
+        by explicit choice (spec 000 &sect;4: nodes "pin chosen content").
+      </p>
+      <ul class="placeholder-list">
+        <li class="empty">No pinned content yet.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="subscriptions-heading">
+      <h2 id="subscriptions-heading">Subscriptions</h2>
+      <p class="panel-note">
+        SCAFFOLD — this panel is not wired up yet. It will list
+        channels/creators this node seeds automatically because you follow
+        them (spec 000 &sect;4: nodes "seed watched content").
+      </p>
+      <ul class="placeholder-list">
+        <li class="empty">No subscriptions yet.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="budgets-heading">
+      <h2 id="budgets-heading">Budgets</h2>
+      <p class="panel-note">
+        SCAFFOLD — this panel is not wired up yet. It will let you set the
+        disk and bandwidth budgets this node honors (spec 000 &sect;4: nodes
+        "honor their own budgets").
+      </p>
+      <dl class="budget-list">
+        <div class="budget-row">
+          <dt>Disk</dt>
+          <dd>0 GB reserved</dd>
+        </div>
+        <div class="budget-row">
+          <dt>Bandwidth</dt>
+          <dd>0 Mbps</dd>
+        </div>
+      </dl>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>
+      Vidmesh Node &mdash; Phase 8 scaffold only. Real pinning, seeding, and
+      budget enforcement arrive in a later phase.
+    </p>
+  </footer>
+</body>
+</html>

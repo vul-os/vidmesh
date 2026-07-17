@@ -1,0 +1,165 @@
+/*
+ * Vidmesh Node — minimal static shell UI.
+ * SCAFFOLD(phase-8): plain CSS, no framework/build step. Brand palette:
+ * deep indigo #3C3489, signal teal #1D9E75. System fonts only.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  --indigo: #3c3489;
+  --indigo-strong: #2a2461;
+  --teal: #1d9e75;
+  --teal-strong: #167a5a;
+
+  --bg: #f7f7fb;
+  --surface: #ffffff;
+  --border: #e1e1ec;
+  --text: #1b1b26;
+  --text-muted: #55556b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121218;
+    --surface: #1b1b25;
+    --border: #2e2e3c;
+    --text: #ececf4;
+    --text-muted: #a9a9bd;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.45;
+}
+
+.app-header {
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--indigo);
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-header h1 {
+    color: #8f88d6;
+  }
+}
+
+.scaffold-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--teal-strong);
+  background: rgba(29, 158, 117, 0.12);
+  border: 1px solid rgba(29, 158, 117, 0.35);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+.tagline {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  padding: 1.5rem 2rem 2rem;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  color: var(--indigo);
+}
+
+@media (prefers-color-scheme: dark) {
+  .panel h2 {
+    color: #8f88d6;
+  }
+}
+
+.panel-note {
+  margin: 0 0 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  border-left: 3px solid var(--teal);
+  padding-left: 0.6rem;
+}
+
+.placeholder-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.placeholder-list .empty {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.budget-list {
+  margin: 0;
+}
+
+.budget-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.budget-row:last-child {
+  border-bottom: none;
+}
+
+.budget-row dt {
+  font-weight: 600;
+}
+
+.budget-row dd {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.app-footer {
+  padding: 1rem 2rem 2rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}

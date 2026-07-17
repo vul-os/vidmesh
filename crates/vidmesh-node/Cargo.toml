@@ -1,10 +1,17 @@
 [package]
 name = "vidmesh-node"
 version = "0.0.1"
-description = "Vidmesh node app (Tauri 2) — pins and seeds chosen content"
+description = "Vidmesh node app (Tauri 2 scaffold) — pins and seeds chosen content"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
 
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
 [dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+vidmesh-kernel = { workspace = true }

@@ -1,0 +1,46 @@
+# Two vidmesh-relay instances, peered with each other, for the
+# conformance suite's `relay/gossip-*` vectors (spec 006 §8) and manual
+# smoke testing of REQ/PUB/gossip over a real network.
+#
+#   docker compose up --build
+#   curl http://localhost:8787/info
+#   curl http://localhost:8788/info
+#
+# relay1 and relay2 gossip over the internal docker network at
+# ws://relay{1,2}:8787/sync (see deploy/relay1.json, deploy/relay2.json);
+# each is also reachable from the host on its own mapped port.
+
+services:
+  relay1:
+    build:
+      context: .
+      dockerfile: crates/vidmesh-relay/Dockerfile
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./deploy/relay1.json:/etc/vidmesh/relay.json:ro
+      - relay1-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8787/info"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  relay2:
+    build:
+      context: .
+      dockerfile: crates/vidmesh-relay/Dockerfile
+    ports:
+      - "8788:8787"
+    volumes:
+      - ./deploy/relay2.json:/etc/vidmesh/relay.json:ro
+      - relay2-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8787/info"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  relay1-data:
+  relay2-data:
