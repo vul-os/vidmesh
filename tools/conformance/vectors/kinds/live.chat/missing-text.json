@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011871028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820550c30de4996b22b2c3fe34d25a0a2cbb72d8484ef3be0bd9ac08c6a3d0f97ec05a0060107584091896e41cd34bf39007dc36e09f6f026e979e368de59082f2dfa1660956f2ffa1a67a34c24f4ee1ee38b061e8e4c2d48b16305dd01a6ab09dc5a4bf5b2190404",
+  "description": "`text` is required (spec 003 §9.2).",
+  "expected_error": "kind",
+  "group": "kinds/live.chat",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "missing-text"
+}

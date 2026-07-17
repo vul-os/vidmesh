@@ -1,0 +1,30 @@
+{
+  "cbor_hex": "a7011830028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a26865766964656e636581582001010101010101010101010101010101010101010101010101010101010101016973746174656d656e74781a7265636f72646564206279206d652c20323032352d31312d30320601075840c63780728dcd944078bcde86d8a78a4b8ee3a76122daadbe35dd26c35d5bcf902d5a17931c1e9c5910bb180eb9380b4773548e5373a11a0b5c74505ac1b0be05",
+  "description": "A `claim.author` record (spec 003 §6.1).",
+  "expected_id_hex": "585d4b47268042161bf11580bef75dbd1a9d1e2be39a5be64b53094e7131d0fd",
+  "group": "kinds/claim.author",
+  "json": {
+    "1": 48,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    ],
+    "5": {
+      "evidence": [
+        "hex:0101010101010101010101010101010101010101010101010101010101010101"
+      ],
+      "statement": "recorded by me, 2025-11-02"
+    },
+    "6": 1,
+    "7": "hex:c63780728dcd944078bcde86d8a78a4b8ee3a76122daadbe35dd26c35d5bcf902d5a17931c1e9c5910bb180eb9380b4773548e5373a11a0b5c74505ac1b0be05"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

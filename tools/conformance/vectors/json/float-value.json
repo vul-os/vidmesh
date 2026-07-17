@@ -1,0 +1,9 @@
+{
+  "description": "A fractional JSON number; spec 001 §2 rule 4 forbids floating point anywhere in a record, and the codec supports only integers.",
+  "expected_cbor_hex": null,
+  "expected_error": "cbor",
+  "group": "json",
+  "json": "{\"1\":1.0}",
+  "kind": "json-roundtrip",
+  "name": "float-value"
+}

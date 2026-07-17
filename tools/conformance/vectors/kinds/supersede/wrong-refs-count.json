@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a70111028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048005a264626f6479a06b7461726765745f6b696e6418200601075840449df3b392d76689ac0a26424ba06252a1d160d2f221d33022f6d958961f614916fd3a3c534420dabb0ae682eda05d4010ff0956ddef02fa548b7ee10750ae03",
+  "description": "supersede refs MUST be exactly one target ref.",
+  "expected_error": "kind",
+  "group": "kinds/supersede",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "wrong-refs-count"
+}

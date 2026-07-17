@@ -5,6 +5,7 @@ members = [
     "crates/vidmesh-relay",
     "crates/vidmesh-wasm",
     "crates/vidmesh-node",
+    "tools/conformance",
 ]
 
 [workspace.package]

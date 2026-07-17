@@ -1,0 +1,9 @@
+{
+  "description": "A genuine negative integer map key round-trips through its decimal rendering.",
+  "expected_cbor_hex": "a122f6",
+  "expected_error": null,
+  "group": "json",
+  "json": "{\"-3\":null}",
+  "kind": "json-roundtrip",
+  "name": "negative-integer-key"
+}

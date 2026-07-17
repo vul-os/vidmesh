@@ -1,0 +1,9 @@
+{
+  "description": "`01` is not a canonical integer literal (a leading zero implies non-shortest form).",
+  "expected_cbor_hex": null,
+  "expected_error": "cbor",
+  "group": "json",
+  "json": "01",
+  "kind": "json-roundtrip",
+  "name": "leading-zero-number"
+}

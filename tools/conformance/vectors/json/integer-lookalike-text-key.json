@@ -1,0 +1,9 @@
+{
+  "description": "A text map key whose content is itself a bare decimal integer (`\"5\"`) is escaped with `txt:` so it cannot collide with a genuine integer key 5 on decode.",
+  "expected_cbor_hex": "a16135f5",
+  "expected_error": null,
+  "group": "json",
+  "json": "{\"txt:5\":true}",
+  "kind": "json-roundtrip",
+  "name": "integer-lookalike-text-key"
+}

@@ -1,0 +1,27 @@
+{
+  "cbor_hex": "a701182002825820111111111111111111111111111111111111111111111111111111111111111158208a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a164746578746e68656c6c6f2c207669646d6573680601075840546cefde1e09fa48a6f331d7f09bba3f017dac970bdb64be35acd9fe6a8c52539b4a7105672b1fb7a39fde2a40e16bd715fba0f26f29143388935c6bc2a9a802",
+  "description": "A plain, envelope-valid `comment` record (spec 001 §§1-4).",
+  "expected_id_hex": "58c69ad7b264f36e526cc422d91afc1a129cd6d944bb45e23a59bcee107fba68",
+  "group": "envelope",
+  "json": {
+    "1": 32,
+    "2": [
+      "hex:1111111111111111111111111111111111111111111111111111111111111111",
+      "hex:8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    ],
+    "5": {
+      "text": "hello, vidmesh"
+    },
+    "6": 1,
+    "7": "hex:546cefde1e09fa48a6f331d7f09bba3f017dac970bdb64be35acd9fe6a8c52539b4a7105672b1fb7a39fde2a40e16bd715fba0f26f29143388935c6bc2a9a802"
+  },
+  "kind": "record-valid",
+  "name": "valid-comment"
+}

@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011821028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a1687265616374696f6e782178787878787878787878787878787878787878787878787878787878787878787806010758400b6fc5030df9a33a3ac9c876ac3d7a8c649450617eb3d55f1bf9b3d909fdce7ad4ae2148fde075386cffb4a88011fbce3701717464aa0343d12b27714e574907",
+  "description": "`reaction` MUST be at most 32 bytes (spec 003 §5.2).",
+  "expected_error": "kind",
+  "group": "kinds/reaction",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "reaction-too-long"
+}

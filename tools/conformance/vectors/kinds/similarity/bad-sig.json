@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a70114028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048282015820010101010101010101010101010101010101010101010101010101010101010182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a26573636f72651925e4666d6574686f646870686173682d76320601075840d6f528d93520f1b02f162b0cc96d7fae4b3e3716f73dcaefe811a97b524dc0dd8d6b1d1bf4e43548033b44219cc41ebbf1a2d9afc90e0207903c6200f4c1b308",
+  "description": "Signature byte flipped; Record::verify must reject it (id is unaffected, the id excludes sig).",
+  "expected_error": "signature",
+  "group": "kinds/similarity",
+  "kind": "record-invalid",
+  "layer": "envelope",
+  "name": "bad-sig"
+}

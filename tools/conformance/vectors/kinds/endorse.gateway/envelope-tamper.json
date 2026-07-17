@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a8011850028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048005a16375726c781968747470733a2f2f77617463682e6578616d706c652e6e65740601075840d76901fbef3ac20219e3ef1f71fcd9d70669de15ba9e231f1db7eeb5d12169e740890592825a43d53d8384d28ae1fa0f9032cf35c7b6eded8084936d977a93030800",
+  "description": "An 8th envelope key is appended; the envelope MUST contain exactly keys 1-7 (spec 001 §1).",
+  "expected_error": "envelope",
+  "group": "kinds/endorse.gateway",
+  "kind": "record-invalid",
+  "layer": "envelope",
+  "name": "envelope-tamper"
+}

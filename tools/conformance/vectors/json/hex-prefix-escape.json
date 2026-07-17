@@ -1,0 +1,9 @@
+{
+  "description": "A text value that itself starts with `hex:` is escaped with a `txt:` prefix so it is not confused with a byte string on decode (spec 001 §11, kernel codec module docs).",
+  "expected_cbor_hex": "a1616b6c6865783a6465616462656566",
+  "expected_error": null,
+  "group": "json",
+  "json": "{\"k\":\"txt:hex:deadbeef\"}",
+  "kind": "json-roundtrip",
+  "name": "hex-prefix-escape"
+}

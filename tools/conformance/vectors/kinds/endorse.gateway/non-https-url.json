@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011850028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048005a16375726c781b687474703a2f2f696e7365637572652e6578616d706c652e6e65740601075840a3be88c486c29225c7a287f37c6a5336962c4858552af9aef9891dfb2fadbcb732f916c575f3eca26d1fc55c1b4b1bc70788529c4dbbe2338a749d65c29f6406",
+  "description": "`url` MUST be an https origin (spec 003 §7.1).",
+  "expected_error": "kind",
+  "group": "kinds/endorse.gateway",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "non-https-url"
+}

@@ -1,0 +1,27 @@
+{
+  "cbor_hex": "a70112028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc05a166726561736f6e6f706f7374656420696e206572726f720601075840bd91ba4202400bbd7d43cbd88ee8fffa2d99190cac4a8de793f8ec0e5951dcc60adf5796107a544f2518b77924c3b3fa53cfbde91f810dd4ade5b0bc527a7300",
+  "description": "A `retract` record (spec 003 §4.3).",
+  "expected_id_hex": "030c82629d9db45be7d84ba9c7d195ac8a00f4bdcd860f66529fafda9aefac54",
+  "group": "kinds/retract",
+  "json": {
+    "1": 18,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      ]
+    ],
+    "5": {
+      "reason": "posted in error"
+    },
+    "6": 1,
+    "7": "hex:bd91ba4202400bbd7d43cbd88ee8fffa2d99190cac4a8de793f8ec0e5951dcc60adf5796107a544f2518b77924c3b3fa53cfbde91f810dd4ade5b0bc527a7300"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

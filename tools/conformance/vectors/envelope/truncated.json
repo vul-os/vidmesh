@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a701182002825820111111111111111111111111111111111111111111111111111111111111111158208a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a164746578746e68656c6c6f2c207669646d6573680601075840546cefde1e09fa48a6f331d7f09bba3f017dac970bdb64be35acd9fe6a8c52539b4a7105672b1fb7a39fde2a40e16bd715fba0f26f29143388935c6bc2a9a8",
+  "description": "The last byte of an otherwise-valid record is missing.",
+  "expected_error": "cbor",
+  "group": "envelope",
+  "kind": "record-invalid",
+  "layer": "envelope",
+  "name": "truncated"
+}

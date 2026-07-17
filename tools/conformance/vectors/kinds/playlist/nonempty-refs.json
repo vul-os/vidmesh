@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011823028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a2657469746c65617867656e7472696573815820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa06010758403a1c4e3464ce1665ef2e98a34f5b7bfc2f1c3c60b7ad0a30af669239f7525ca274748a7440fbb596b83b0ef8d2cecc41a8177601d2c562a810be7abadc3a2405",
+  "description": "playlist refs MUST be empty (spec 003 §5.4).",
+  "expected_error": "kind",
+  "group": "kinds/playlist",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "nonempty-refs"
+}

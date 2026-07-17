@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a70102028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a1646e616d6564617368610601075840a3a9e83b72f59ac32967c8a996c26d63e331c711063127a13bb363d7eb6ac82d403707b5142c94500b134f1dd628edb0aa8e1e7e905d5e131339193db797f809",
+  "description": "profile refs MUST be empty (spec 003 §3.2).",
+  "expected_error": "kind",
+  "group": "kinds/profile",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "nonempty-refs"
+}

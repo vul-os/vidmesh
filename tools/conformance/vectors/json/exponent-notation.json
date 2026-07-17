@@ -1,0 +1,9 @@
+{
+  "description": "Exponential notation is not a supported integer literal.",
+  "expected_cbor_hex": null,
+  "expected_error": "cbor",
+  "group": "json",
+  "json": "{\"1\":1e5}",
+  "kind": "json-roundtrip",
+  "name": "exponent-notation"
+}

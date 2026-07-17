@@ -1,0 +1,31 @@
+{
+  "cbor_hex": "a7011851028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a5647261696c016570617965655820222222222222222222222222222222222222222222222222222222222222222266616d6f756e74195208676d65737361676575666f7220746865207269766572207765656b2031326863757272656e63796373617406010758409e8af27fd6ff5b03f649f6d304f28e85407578bf0480d5932b2a58d3ff8e974e091268e6a88669ff46d2aeebde3d084d7ad262f31df1f13a84b213a08a7ea504",
+  "description": "A `receipt` record (spec 003 §7.2).",
+  "expected_id_hex": "5cc472a3e2ca11becc2dd5ddf46aebe7aca7006519dc45740bc64e222260d62b",
+  "group": "kinds/receipt",
+  "json": {
+    "1": 81,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    ],
+    "5": {
+      "amount": 21000,
+      "currency": "sat",
+      "message": "for the river week 12",
+      "payee": "hex:2222222222222222222222222222222222222222222222222222222222222222",
+      "rail": 1
+    },
+    "6": 1,
+    "7": "hex:9e8af27fd6ff5b03f649f6d304f28e85407578bf0480d5932b2a58d3ff8e974e091268e6a88669ff46d2aeebde3d084d7ad262f31df1f13a84b213a08a7ea504"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

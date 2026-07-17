@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011860028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a464726f6f745820313131313131313131313131313131313131313131313131313131313131313165636f756e74016570726f6f6644abababab6673797374656d6e6f70656e74696d657374616d707306010758408e2bc1c6d42bef26209f660cac339777d35c28ab97ed8ff68628c4e21ded03eb2946c9b9ff149208b585b0e06c73a3008c76faa930f98f217e6e68092adfd107",
+  "description": "anchor refs MUST be empty; the batch is under the root, not enumerated (spec 003 §8.1).",
+  "expected_error": "kind",
+  "group": "kinds/anchor",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "nonempty-refs"
+}

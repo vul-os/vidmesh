@@ -1,0 +1,32 @@
+{
+  "cbor_hex": "a70113028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a16568696e7473818203781e68747470733a2f2f6e6f6465372e6578616d706c652e6f72672f626c6f6206010758402ff98fd3f84389fea47aec0ff343ac0cab7f2cad76c2e3d281596a6b5750fce968263f53b7ff6c961b26a0373a8525fd381293a3811e459a097fb6b8a378ea05",
+  "description": "A `mirror` record (spec 003 §4.4).",
+  "expected_id_hex": "90214f4fe76ff91edb0367854a4c1dd6888424e8f7dd03a3cabaaeb0b949be00",
+  "group": "kinds/mirror",
+  "json": {
+    "1": 19,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    ],
+    "5": {
+      "hints": [
+        [
+          3,
+          "https://node7.example.org/blob"
+        ]
+      ]
+    },
+    "6": 1,
+    "7": "hex:2ff98fd3f84389fea47aec0ff343ac0cab7f2cad76c2e3d281596a6b5750fce968263f53b7ff6c961b26a0373a8525fd381293a3811e459a097fb6b8a378ea05"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

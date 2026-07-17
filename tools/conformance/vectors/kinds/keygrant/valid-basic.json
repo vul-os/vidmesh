@@ -1,0 +1,29 @@
+{
+  "cbor_hex": "a7011861028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a368777261705f616c670169726563697069656e74582022222222222222222222222222222222222222222222222222222222222222226b777261707065645f6b65795830cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd06010758403d7754eb50e51c28f7d14aa4e4800398acdf6ef824065329adf924f392876089e0d860270d441ac96e1529f7a9f07184fdeefbef005f92605e24037dfb12300a",
+  "description": "A `keygrant` record (spec 003 §8.2, spec 008 §3).",
+  "expected_id_hex": "1dfb976edbb6f2123fcabd75aa8d49b4d4d573580d2d6dc4f761d28bd31051ad",
+  "group": "kinds/keygrant",
+  "json": {
+    "1": 97,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [
+      [
+        0,
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    ],
+    "5": {
+      "recipient": "hex:2222222222222222222222222222222222222222222222222222222222222222",
+      "wrap_alg": 1,
+      "wrapped_key": "hex:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+    },
+    "6": 1,
+    "7": "hex:3d7754eb50e51c28f7d14aa4e4800398acdf6ef824065329adf924f392876089e0d860270d441ac96e1529f7a9f07184fdeefbef005f92605e24037dfb12300a"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

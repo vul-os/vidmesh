@@ -1,0 +1,9 @@
+{
+  "description": "The same object key appears twice; canonical map keys MUST be unique (spec 001 §2 rule 3).",
+  "expected_cbor_hex": null,
+  "expected_error": "cbor",
+  "group": "json",
+  "json": "{\"a\":1,\"a\":2}",
+  "kind": "json-roundtrip",
+  "name": "duplicate-object-key"
+}

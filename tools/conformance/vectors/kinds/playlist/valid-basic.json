@@ -1,0 +1,26 @@
+{
+  "cbor_hex": "a7011823028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048005a2657469746c656c77696e746572206d6978657367656e7472696573825820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa5820bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0601075840d873753a728aee04d6e1c72c55e354ed0a377a0e89f4b15eb7cee03981c87ff936eb26441a18dfa365c52e2f580d446a05375e2c70804fa2aabd63e8afdad40e",
+  "description": "A `playlist` record (spec 003 §5.4).",
+  "expected_id_hex": "1a6bafc746ba6f6743c409165e61ae744536d2ef82aa605248e0f5807938bbba",
+  "group": "kinds/playlist",
+  "json": {
+    "1": 35,
+    "2": [
+      "hex:9cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956",
+      "hex:43a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c"
+    ],
+    "3": 1700000000,
+    "4": [],
+    "5": {
+      "entries": [
+        "hex:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "hex:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "title": "winter mixes"
+    },
+    "6": 1,
+    "7": "hex:d873753a728aee04d6e1c72c55e354ed0a377a0e89f4b15eb7cee03981c87ff936eb26441a18dfa365c52e2f580d446a05375e2c70804fa2aabd63e8afdad40e"
+  },
+  "kind": "record-valid",
+  "name": "valid-basic"
+}

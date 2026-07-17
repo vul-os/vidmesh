@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011850028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048182005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa05a16375726c781968747470733a2f2f77617463682e6578616d706c652e6e657406010758405479b1ecd71b7309c8d62aa90ac902c358b99c7dc89d069bedae1e96a0255ff4a63384998648b65b265b28cfb1374576fa609118339677a5f7eb645726b2e201",
+  "description": "endorse.gateway refs MUST be empty (spec 003 §7.1).",
+  "expected_error": "kind",
+  "group": "kinds/endorse.gateway",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "nonempty-refs"
+}

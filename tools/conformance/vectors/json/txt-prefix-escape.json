@@ -1,0 +1,9 @@
+{
+  "description": "A text value that itself starts with `txt:` is double-escaped the same way.",
+  "expected_cbor_hex": "a1616b6d7478743a736f6d657468696e67",
+  "expected_error": null,
+  "group": "json",
+  "json": "{\"k\":\"txt:txt:something\"}",
+  "kind": "json-roundtrip",
+  "name": "txt-prefix-escape"
+}

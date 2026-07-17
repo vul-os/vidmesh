@@ -1,0 +1,9 @@
+{
+  "cbor_hex": "a7011830028258209cd918d9f3f258ed84e319597829f40489b835e7fa8bc31753707b5c8cbe6956582043a72e714401762df66b68c26dfbdf2682aaec9f2474eca4613e424a0fbafd3c031a6553f100048282005820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa82005820bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb05a006010758406e07f14b28b210563918274450047ebe9d0e336512dbb4ae2b84ed6e8b6752eeb64a3469f0e83d97df4aa2b290f1b47fa99b0bc1aa66214ddb81f74d4a2db105",
+  "description": "claim.author refs MUST be exactly one (the subject manifest).",
+  "expected_error": "kind",
+  "group": "kinds/claim.author",
+  "kind": "record-invalid",
+  "layer": "kind",
+  "name": "wrong-refs-count"
+}

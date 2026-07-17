@@ -1,0 +1,9 @@
+{
+  "bundle_hex": "4e4f504501726573742d6f662d66696c652d646f65732d6e6f742d6d6174746572",
+  "description": "The 5-byte magic is wrong; `Bundle::import` MUST return an error rather than attempt any salvage (spec 007 §2 step 1).",
+  "expected": null,
+  "expected_error": "bundle",
+  "group": "bundle",
+  "kind": "bundle",
+  "name": "bad-magic"
+}
