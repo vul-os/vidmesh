@@ -33,10 +33,9 @@ spec-pdf:
     pandoc -d spec/pandoc-pdf.yaml spec/draft-vidmesh-protocol-00.md -o dist/vidmesh-protocol-draft-00.pdf
     @echo "wrote dist/vidmesh-protocol-draft-00.pdf"
 
-# Build the WASM kernel bindings (Phase 3)
+# Build the WASM kernel bindings into packages/kernel-ts/wasm
 wasm:
-    @echo "Phase 3 not implemented yet: builds crates/vidmesh-wasm via wasm-pack into packages/kernel-ts/wasm/"
-    @exit 1
+    pnpm --filter @vidmesh/kernel build:wasm
 
 # Bring up relay + gateway + web with seeded demo content (Phase 5/6)
 dev:
