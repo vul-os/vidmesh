@@ -212,7 +212,7 @@ pub fn validate(record: &Record) -> Result<()> {
         KIND_ROTATION => validate_rotation_refs(record),
         KIND_PROFILE => social::Profile::parse(record).map(|_| ()),
         KIND_DELEGATE => content::Delegate::parse(record).map(|_| ()),
-        KIND_MANIFEST => content::Manifest::parse(record).map(|_| ()),
+        KIND_MANIFEST => validate_manifest(record),
         KIND_SUPERSEDE => content::Supersede::parse(record).map(|_| ()),
         KIND_RETRACT => content::Retract::parse(record).map(|_| ()),
         KIND_MIRROR => content::Mirror::parse(record).map(|_| ()),
@@ -238,6 +238,21 @@ pub fn validate(record: &Record) -> Result<()> {
         KIND_LIVE_CHAT => live::LiveChat::parse(record).map(|_| ()),
         _ => Ok(()),
     }
+}
+
+/// Full kind-level validation of a `manifest` record: the structural parse
+/// (`Manifest::parse`) plus the cryptographic check that every rendition's
+/// `derivation_sig` verifies against the manifest's own original blob (spec
+/// 004 §3.1). `Manifest::parse` deliberately stops at structure — this is
+/// the caller it documents as responsible for running [`verify_derivation`]
+/// per rendition. (Authorization of `produced_by`, which needs a second
+/// record, remains out of scope here, as does transcode fidelity.)
+fn validate_manifest(record: &Record) -> Result<()> {
+    let manifest = content::Manifest::parse(record)?;
+    for rendition in &manifest.renditions {
+        content::verify_derivation(rendition, &manifest.original.blob)?;
+    }
+    Ok(())
 }
 
 /// The refs-shape half of `rotation` validity (spec 002 §§2–3, restated

@@ -229,15 +229,24 @@ export const identity = {
     );
   },
 
-  /** Verify a rotation chain and return the current state (spec 002 §4). */
+  /**
+   * Verify a rotation chain and return the current state (spec 002 §4).
+   *
+   * `observedAt` maps a record's id-hex to the verifier-local Unix time it
+   * was first seen; it drives contest-window finality. A record absent from
+   * the map (or an omitted map) is treated as just-observed — not yet final
+   * — matching the native kernel's `observed_at` contract, so both runtimes
+   * agree on finality-dependent forks.
+   */
   async verifyChain(
     records: Uint8Array[],
     now: number | bigint = Math.floor(Date.now() / 1000),
+    observedAt?: Record<string, number>,
   ): Promise<IdentityState> {
     await init();
     const arr = new Array<Uint8Array>();
     for (const r of records) arr.push(r);
-    const raw = JSON.parse(wasm.verifyChain(arr, BigInt(now))) as {
+    const raw = JSON.parse(wasm.verifyChain(arr, BigInt(now), observedAt)) as {
       identity_id: string;
       signing_key: string;
       key_alg: number;

@@ -222,16 +222,37 @@ fn parse_recovery(json: &str) -> Result<Vec<(u64, Vec<u8>)>, JsError> {
 }
 
 /// Verify a rotation chain (spec 002 §4) from an array of canonical
-/// record byte buffers. All rotations are treated as just-observed (no
-/// finality); returns the state as a JSON object string.
+/// record byte buffers. Returns the state as a JSON object string.
+///
+/// `observed` is an optional plain object mapping a record's id-hex to the
+/// verifier-local Unix time it was first seen; it drives contest-window
+/// finality (spec 002 §4). A record absent from the map — or an absent /
+/// `undefined` / `null` map — is treated as just-observed (not yet final),
+/// matching `Identity::verify_chain`'s `observed_at` contract exactly, so
+/// this binding agrees with the native kernel on finality-dependent chains.
 #[wasm_bindgen(js_name = verifyChain)]
-pub fn verify_chain(records: js_sys::Array, now: i64) -> Result<String, JsError> {
+pub fn verify_chain(
+    records: js_sys::Array,
+    now: i64,
+    observed: JsValue,
+) -> Result<String, JsError> {
     let mut parsed = Vec::with_capacity(records.length() as usize);
     for entry in records.iter() {
         let bytes = js_sys::Uint8Array::new(&entry).to_vec();
         parsed.push(Record::from_cbor(&bytes).map_err(js_err)?);
     }
-    let state = Identity::verify_chain(&parsed, &|_| None, now).map_err(js_err)?;
+    let mut observed_map: std::collections::HashMap<String, i64> = std::collections::HashMap::new();
+    if !observed.is_undefined() && !observed.is_null() {
+        let obj: js_sys::Object = observed.unchecked_into();
+        for pair in js_sys::Object::entries(&obj).iter() {
+            let pair = js_sys::Array::from(&pair);
+            if let (Some(k), Some(v)) = (pair.get(0).as_string(), pair.get(1).as_f64()) {
+                observed_map.insert(k, v as i64);
+            }
+        }
+    }
+    let observed_at = |id: &RecordId| -> Option<i64> { observed_map.get(&id.to_hex()).copied() };
+    let state = Identity::verify_chain(&parsed, &observed_at, now).map_err(js_err)?;
     let recovery: Vec<String> = state
         .recovery
         .iter()

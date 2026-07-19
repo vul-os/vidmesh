@@ -21,21 +21,15 @@
 //     this harness, and `vidmesh-conformance run --target node`
 //     surfaces it as a normal spawn/I/O error.
 //
-// Known API gap (also noted in the top-level conformance report): the
-// current `identity.verifyChain` binding
+// Contest-window finality (RESOLVED): `identity.verifyChain`
 // (packages/kernel-ts/src/index.ts -> crates/vidmesh-wasm/src/lib.rs's
-// `verify_chain`) hardcodes `Identity::verify_chain(&parsed, &|_| None,
-// now)` — every record is treated as "just observed", so nothing is
-// ever final. This harness's "identity-verify-chain" op therefore
-// cannot honor a request's `observed` map (first-observed times per
-// record id); vectors that depend on contest-window finality
-// (`identity/fork-final-signing`) will legitimately disagree with the
-// Rust kernel target until the WASM binding grows an `observedAt`
-// parameter and `kernel-ts`'s `identity.verifyChain` forwards it. That
-// divergence is exactly what this suite exists to surface — see build
-// plan §7: "if a vector passes in one runtime and fails in another,
-// the canonical encoding [or, here, the binding surface] is broken —
-// stop and fix."
+// `verify_chain`) now takes an `observedAt` map (record-id-hex ->
+// first-seen seconds) and forwards it to `Identity::verify_chain`'s
+// `observed_at` closure, so a rotation observed long enough ago becomes
+// final exactly as in the native kernel. The "identity-verify-chain" op
+// below forwards `req.observed`, and `identity/fork-final-signing` now
+// agrees across the kernel and node targets — the divergence this suite
+// existed to surface, closed rather than special-cased (build plan §7).
 
 import readline from "node:readline";
 import * as kernel from "../../packages/kernel-ts/src/index.ts";
@@ -125,9 +119,10 @@ async function handle(req) {
     case "identity-verify-chain": {
       const records = req.records_hex.map((h) => kernel.fromHex(h));
       try {
-        // `req.observed` is intentionally not forwarded: see the API
-        // gap documented at the top of this file.
-        const state = await kernel.identity.verifyChain(records, req.now);
+        // Forward `req.observed` (record-id-hex -> first-seen seconds) so
+        // contest-window finality is exercised identically to the Rust
+        // kernel target — see the note at the top of this file.
+        const state = await kernel.identity.verifyChain(records, req.now, req.observed);
         return {
           head_hex: state.head,
           signing_key_hex: state.signingKey,

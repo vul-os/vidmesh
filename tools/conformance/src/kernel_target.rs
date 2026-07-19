@@ -203,7 +203,20 @@ fn run_chunk_proof(
     };
     let chunk = match blob.get(chunk_start..chunk_end) {
         Some(c) => c,
-        None => return Outcome::Fail("chunk_index out of range for synthesized blob".into()),
+        // No such chunk in the synthesized blob (e.g. the empty blob has
+        // zero chunks and no root): a range proof for it cannot possibly
+        // verify, which is exactly what an `invalid` vector asserts. Treat
+        // as Pass iff the vector expects invalid; only a vector claiming
+        // this should verify is a real failure.
+        None => {
+            return if valid {
+                Outcome::Fail(
+                    "chunk_index out of range for synthesized blob, but vector expects valid".into(),
+                )
+            } else {
+                Outcome::Pass
+            };
+        }
     };
     // Sanity: leaf_hash must be usable (exercises the same primitive the
     // kernel's own ChunkTree uses), even though verify_chunk recomputes
