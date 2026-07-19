@@ -37,12 +37,16 @@ spec-pdf:
 wasm:
     pnpm --filter @vidmesh/kernel build:wasm
 
-# Bring up relay + gateway + web with seeded demo content (Phase 5/6)
+# Local smoke run (relay blob sidecar + gateway) — see README "Smoke run"
 dev:
-    @echo "Phase 5/6 not implemented yet: will run relay, gateway server, and web app with demo content"
-    @exit 1
+    @echo "See the 'Smoke run' section in README.md: boots a relay with the"
+    @echo "blob sidecar and the gateway server against it (no ffmpeg needed)."
 
-# Run the conformance suite against all implementations (Phase 7)
+# (Re)generate the deterministic conformance vectors
+conformance-generate:
+    cargo run --bin generate
+
+# Run the conformance suite against the in-process kernel (reference target).
+# For the node and relay targets, see README "Conformance suite".
 conformance:
-    @echo "Phase 7 not implemented yet: runs tools/conformance vectors against kernel, kernel-ts, and a live relay"
-    @exit 1
+    cargo run --bin vidmesh-conformance -- run --target kernel
