@@ -1,15 +1,36 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Brand palette (see assets/README.md): deep indigo `#3C3489` as
- * `brand`, signal teal `#1D9E75` as `accent`, both wired through CSS
- * custom properties (src/styles/index.css) rather than hard-coded hex
- * so a gateway operator can re-skin accents by overriding the
- * properties alone — no rebuild of this file. `darkMode: "class"`
- * because the theme toggle (src/hooks/useTheme.ts) sets `dark` on
- * `<html>` explicitly (persisted + `prefers-color-scheme` default)
- * rather than relying purely on the media query.
+ * The reference UI's palette, wired entirely through CSS custom properties
+ * declared in src/styles/index.css (mirrored from assets/tokens.css, the
+ * project-wide source of truth documented in assets/README.md).
+ *
+ * `brand` is signal lime — live, verified, actionable. `accent` is mesh
+ * blue — identity, verification, the substrate. Crucially `slate` and
+ * `red` are remapped too: components across this app and @vidmesh/ui reach
+ * for stock `slate-*` neutrals and `red-*` errors, so overriding them here
+ * means the whole interface re-skins from the token layer with no
+ * component edits — which is exactly the constraint spec 009 §7 puts on a
+ * gateway operator (accents only, never the interface).
+ *
+ * `darkMode: "class"` because the theme toggle (src/hooks/useTheme.ts)
+ * sets `dark` on `<html>` explicitly (persisted, defaulting to
+ * `prefers-color-scheme`) rather than relying purely on the media query.
  */
+const ramp = (name: string) => ({
+  50: `var(--vm-${name}-50)`,
+  100: `var(--vm-${name}-100)`,
+  200: `var(--vm-${name}-200)`,
+  300: `var(--vm-${name}-300)`,
+  400: `var(--vm-${name}-400)`,
+  500: `var(--vm-${name}-500)`,
+  600: `var(--vm-${name}-600)`,
+  700: `var(--vm-${name}-700)`,
+  800: `var(--vm-${name}-800)`,
+  900: `var(--vm-${name}-900)`,
+  950: `var(--vm-${name}-950)`,
+});
+
 export default {
   darkMode: "class",
   content: [
@@ -22,34 +43,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "var(--vm-brand-50)",
-          100: "var(--vm-brand-100)",
-          200: "var(--vm-brand-200)",
-          300: "var(--vm-brand-300)",
-          400: "var(--vm-brand-400)",
-          500: "var(--vm-brand-500)",
-          600: "var(--vm-brand-600)",
-          700: "var(--vm-brand-700)",
-          800: "var(--vm-brand-800)",
-          900: "var(--vm-brand-900)",
-          950: "var(--vm-brand-950)",
-          DEFAULT: "var(--vm-brand-600)",
+        brand: { ...ramp("brand"), DEFAULT: "var(--vm-brand-600)" },
+        accent: { ...ramp("accent"), DEFAULT: "var(--vm-accent-600)" },
+        // neutrals: one paper-to-carbon ramp, used with `dark:` variants
+        slate: ramp("neutral"),
+        // errors and record state
+        red: ramp("live"),
+        // semantic shorthands for new code
+        surface: {
+          DEFAULT: "var(--vm-surface)",
+          2: "var(--vm-surface-2)",
+          base: "var(--vm-bg)",
         },
-        accent: {
-          50: "var(--vm-accent-50)",
-          100: "var(--vm-accent-100)",
-          200: "var(--vm-accent-200)",
-          300: "var(--vm-accent-300)",
-          400: "var(--vm-accent-400)",
-          500: "var(--vm-accent-500)",
-          600: "var(--vm-accent-600)",
-          700: "var(--vm-accent-700)",
-          800: "var(--vm-accent-800)",
-          900: "var(--vm-accent-900)",
-          950: "var(--vm-accent-950)",
-          DEFAULT: "var(--vm-accent-600)",
-        },
+        line: "var(--vm-border)",
+        ink: "var(--vm-fg)",
+        muted: "var(--vm-muted)",
+        signal: "var(--vm-signal)",
+        verified: "var(--vm-verified)",
+        live: "var(--vm-live)",
+      },
+      fontFamily: {
+        display: "var(--vm-font-display)",
+        sans: "var(--vm-font-sans)",
+        mono: "var(--vm-font-mono)",
       },
     },
   },

@@ -205,7 +205,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
             <div
               key={i}
               title={`Sponsored: ${seg.label}`}
-              className="absolute inset-y-0 rounded bg-accent-400"
+              className="absolute inset-y-0 rounded bg-brand-400"
               style={{ left: `${seg.style.leftPct}%`, width: `${Math.max(seg.style.widthPct, 0.5)}%` }}
             />
           ))}
@@ -217,7 +217,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
             step={0.1}
             value={state.currentTime}
             onChange={(e) => dispatch({ type: "seek-to", time: Number(e.target.value) })}
-            className="absolute inset-0 h-2 w-full cursor-pointer appearance-none bg-transparent accent-accent-500"
+            className="absolute inset-0 h-2 w-full cursor-pointer appearance-none bg-transparent accent-brand-400"
           />
         </div>
 
@@ -226,7 +226,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
             type="button"
             aria-label={state.playing ? "Pause" : "Play"}
             onClick={() => dispatch({ type: "toggle-play" })}
-            className="rounded p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
+            className="rounded p-1.5 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300"
           >
             {state.playing ? "⏸" : "▶"}
           </button>
@@ -240,7 +240,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
             aria-label={state.muted || state.volume === 0 ? "Unmute" : "Mute"}
             aria-pressed={state.muted}
             onClick={() => dispatch({ type: "toggle-mute" })}
-            className="rounded p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
+            className="rounded p-1.5 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300"
           >
             {state.muted || state.volume === 0 ? "🔇" : "🔊"}
           </button>
@@ -252,7 +252,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
             step={0.05}
             value={state.muted ? 0 : state.volume}
             onChange={(e) => dispatch({ type: "set-volume", volume: Number(e.target.value) })}
-            className="h-2 w-16 cursor-pointer accent-accent-500"
+            className="h-2 w-16 cursor-pointer accent-brand-400"
           />
 
           <div className="relative ml-auto flex items-center gap-2">
@@ -263,7 +263,7 @@ export function Player({ hls, mp4, captions = [], poster, sponsorSegments = [], 
               aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               aria-pressed={isFullscreen}
               onClick={toggleFullscreen}
-              className="rounded p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
+              className="rounded p-1.5 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300"
             >
               {isFullscreen ? "⤢" : "⤡"}
             </button>

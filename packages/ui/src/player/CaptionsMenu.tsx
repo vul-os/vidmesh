@@ -29,7 +29,7 @@ export function CaptionsMenu({ captions, captionsOn, activeLanguage, onSelect }:
         aria-controls={menuId}
         aria-pressed={captionsOn}
         onClick={() => setOpen((v) => !v)}
-        className="rounded p-1.5 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
+        className="rounded p-1.5 text-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300"
       >
         CC
       </button>

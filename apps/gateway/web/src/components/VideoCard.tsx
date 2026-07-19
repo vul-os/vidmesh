@@ -10,7 +10,7 @@ export function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
     <Link
       to={`/watch/${encodeURIComponent(video.id)}`}
-      className="group block rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-600"
+      className="group block rounded-lg focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:focus-visible:outline-brand-300"
     >
       <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800">
         {video.thumbnailUrl ? (
@@ -27,7 +27,7 @@ export function VideoCard({ video }: VideoCardProps): JSX.Element {
       <div className="mt-2 flex gap-2">
         <Avatar name={video.author.name} src={video.author.avatarUrl} size="sm" />
         <div className="min-w-0">
-          <h3 className="truncate text-sm font-semibold group-hover:underline">{video.title}</h3>
+          <h3 className="truncate text-sm font-semibold decoration-brand-600 decoration-2 underline-offset-2 group-hover:underline dark:decoration-brand-400">{video.title}</h3>
           <p className="truncate text-xs text-slate-600 dark:text-slate-400">{video.author.name}</p>
           {/* API.md's createdAt fields are Unix seconds (unlike the Ms-suffixed
               duration/sponsorship fields), matching the kernel record's native

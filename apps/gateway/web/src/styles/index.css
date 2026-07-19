@@ -1,71 +1,177 @@
+/*
+ * The uniform reference UI's token layer.
+ *
+ * Spec 009 §7 (and DECISIONS P17) make this interface uniform across
+ * gateways: an operator re-skins *accents*, never the interface itself.
+ * These custom properties are that seam. Every colour in every component
+ * resolves through them — including the neutrals and the error red, which
+ * tailwind.config.ts remaps onto `--vm-neutral-*` / `--vm-live-*` so that
+ * a stock `text-slate-500` is already a Vidmesh colour and no component
+ * has to be edited to re-skin the app.
+ *
+ * The values are the reference brand, "signal on carbon", and they are
+ * kept identical to assets/tokens.css — that file is the source of truth
+ * and is documented (with the measured contrast table) in assets/README.md.
+ * If you change one, change both.
+ *
+ *   signal / brand  live, verified, actionable — used sparingly on purpose
+ *   mesh / accent   identity, verification, the substrate
+ *   live            record state and errors, nothing else
+ *
+ * Fonts are bundled by Vite from the @fontsource packages below: latin
+ * subsets, vendored, no CDN request at runtime.
+ */
+
+@import "@fontsource/syne/latin-700.css";
+@import "@fontsource/syne/latin-800.css";
+@import "@fontsource/hanken-grotesk/latin-400.css";
+@import "@fontsource/hanken-grotesk/latin-500.css";
+@import "@fontsource/hanken-grotesk/latin-600.css";
+@import "@fontsource/hanken-grotesk/latin-700.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*
- * Branding-accent extension points. A gateway operator re-skinning this
- * uniform UI (spec 009 §7 — accents only, never the interface) overrides
- * these custom properties, nothing else: no Tailwind rebuild, no
- * component edits. `--vm-brand-*` / `--vm-accent-*` back the `brand`/
- * `accent` color scales in tailwind.config.ts.
- *
- * Values below are Vidmesh's own reference brand (assets/README.md):
- * deep indigo #3C3489 (brand-600) and signal teal #1D9E75 (accent-500).
- */
 :root {
-  --vm-bg: #fdfcff;
-  --vm-surface: #f4f2fb;
-  --vm-fg: #1b1830;
-  --vm-muted: #4b466a;
-  --vm-border: #dedaf0;
-  --vm-focus-ring: #1d9e75;
+  /* ---- signal (brand): live, verified, actionable ---- */
+  --vm-brand-50: #f4fce0;
+  --vm-brand-100: #e7f9be;
+  --vm-brand-200: #d2f387;
+  --vm-brand-300: #bcec4d;
+  --vm-brand-400: #a8e01f;
+  --vm-brand-500: #8fc212;
+  --vm-brand-600: #74a00c;
+  --vm-brand-700: #4f6e09;
+  --vm-brand-800: #3b5208;
+  --vm-brand-900: #2a3a07;
+  --vm-brand-950: #172004;
 
-  --vm-brand-50: #f2f0fc;
-  --vm-brand-100: #e4e0f8;
-  --vm-brand-200: #c9c2f5;
-  --vm-brand-300: #aca1ec;
-  --vm-brand-400: #8e7fde;
-  --vm-brand-500: #6c5bc4;
-  --vm-brand-600: #3c3489;
-  --vm-brand-700: #322b70;
-  --vm-brand-800: #282358;
-  --vm-brand-900: #1e1a41;
-  --vm-brand-950: #14101f;
+  /* ---- mesh (accent): identity, verification, substrate ---- */
+  --vm-accent-50: #e6f4fb;
+  --vm-accent-100: #c6e7f7;
+  --vm-accent-200: #93d2f0;
+  --vm-accent-300: #5cb8e6;
+  --vm-accent-400: #2e9bd8;
+  --vm-accent-500: #187eb8;
+  --vm-accent-600: #126595;
+  --vm-accent-700: #0f5075;
+  --vm-accent-800: #0d3d59;
+  --vm-accent-900: #0a2a3d;
+  --vm-accent-950: #061722;
 
-  --vm-accent-50: #eafbf5;
-  --vm-accent-100: #d0f5e7;
-  --vm-accent-200: #a3ecd1;
-  --vm-accent-300: #6edfb8;
-  --vm-accent-400: #2fe3a6;
-  --vm-accent-500: #1d9e75;
-  --vm-accent-600: #17805f;
-  --vm-accent-700: #12634a;
-  --vm-accent-800: #0d4736;
-  --vm-accent-900: #082c22;
-  --vm-accent-950: #041712;
+  /* ---- neutrals: paper at one end, carbon at the other ----
+     One ramp, not two themes: components pair `text-slate-600` with
+     `dark:text-slate-300` and both must land on the right surface. */
+  --vm-neutral-50: #fafbf7;
+  --vm-neutral-100: #f0f2ec;
+  --vm-neutral-200: #e1e5dc;
+  --vm-neutral-300: #cbd1c6;
+  --vm-neutral-400: #9faa9f;
+  --vm-neutral-500: #5e6a62;
+  --vm-neutral-600: #4c554d;
+  --vm-neutral-700: #333b35;
+  --vm-neutral-800: #1e2620;
+  --vm-neutral-900: #121614;
+  --vm-neutral-950: #0a0c0b;
+
+  /* ---- live: record state and errors ---- */
+  --vm-live-50: #fdecea;
+  --vm-live-100: #fad8d3;
+  --vm-live-200: #f5b3aa;
+  --vm-live-300: #ff8d7e;
+  --vm-live-400: #ff6b5c;
+  --vm-live-500: #e23d2b;
+  --vm-live-600: #c42a1c;
+  --vm-live-700: #9e1f13;
+  --vm-live-800: #6e150d;
+  --vm-live-900: #420c07;
+  --vm-live-950: #260603;
+
+  /* ---- surfaces + semantics (light) ---- */
+  --vm-bg: var(--vm-neutral-50);
+  --vm-surface: var(--vm-neutral-100);
+  --vm-surface-2: var(--vm-neutral-200);
+  --vm-fg: var(--vm-neutral-950);
+  --vm-muted: var(--vm-neutral-600);
+  --vm-border: var(--vm-neutral-200);
+  --vm-signal: var(--vm-brand-700);
+  --vm-verified: var(--vm-accent-600);
+  --vm-live: var(--vm-live-600);
+  --vm-focus-ring: var(--vm-accent-600);
+
+  /* ---- type ---- */
+  --vm-font-display: "Syne", "Hanken Grotesk", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --vm-font-sans: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --vm-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
 }
 
 :root.dark {
-  --vm-bg: #14101f;
-  --vm-surface: #1e1a33;
-  --vm-fg: #ece9fb;
-  --vm-muted: #b3acd1;
-  --vm-border: #322c52;
-  --vm-focus-ring: #2fe3a6;
+  --vm-bg: var(--vm-neutral-950);
+  --vm-surface: var(--vm-neutral-900);
+  --vm-surface-2: var(--vm-neutral-800);
+  --vm-fg: #e9f0ea;
+  --vm-muted: var(--vm-neutral-400);
+  --vm-border: var(--vm-neutral-700);
+  --vm-signal: var(--vm-brand-400);
+  --vm-verified: var(--vm-accent-200);
+  --vm-live: var(--vm-live-400);
+  --vm-focus-ring: var(--vm-brand-300);
 }
 
 html {
   color-scheme: light dark;
 }
 
+:root.dark {
+  color-scheme: dark;
+}
+
 body {
   background: var(--vm-bg);
   color: var(--vm-fg);
+  font-family: var(--vm-font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--vm-font-display);
+  letter-spacing: -0.03em;
+}
+
+/* Ids, content addresses and other machine text are always mono: in this
+   product a hash is content, not decoration. */
+code,
+kbd,
+samp,
+pre,
+.vm-data {
+  font-family: var(--vm-font-mono);
+}
+
+/*
+ * One focus treatment everywhere, high-contrast in both themes, and never
+ * removed — keyboard users on a video site are navigating a grid of links
+ * and need to see where they are.
+ */
 :focus-visible {
   outline: 3px solid var(--vm-focus-ring);
   outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Programmatic focus targets — the `<div id="main" tabindex="-1">` the
+   router moves focus to on navigation — are not things the user tabbed
+   to, so ringing them just draws a box around the whole page. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -84,9 +190,10 @@ body {
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--vm-brand-600);
-  color: white;
+  background: var(--vm-signal);
+  color: var(--vm-bg);
   padding: 10px 16px;
+  font-weight: 600;
   border-radius: 0 0 6px 0;
 }
 

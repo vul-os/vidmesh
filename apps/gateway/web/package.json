@@ -13,6 +13,9 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@fontsource/hanken-grotesk": "^5.1.0",
+    "@fontsource/jetbrains-mono": "^5.1.0",
+    "@fontsource/syne": "^5.1.0",
     "@tanstack/react-query": "^5.59.0",
     "@vidmesh/kernel": "workspace:*",
     "@vidmesh/ui": "workspace:*",

@@ -32,15 +32,38 @@ export function Layout(): JSX.Element {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
 
       <header className="border-b border-slate-200 dark:border-slate-800">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-4 py-3">
-          <Link to="/" className="text-lg font-bold text-brand-700 dark:text-brand-200">
-            vidmesh
+          {/* The lockup, drawn inline: the mark inherits the signal colour
+              from the token layer and the wordmark is the display face, so
+              the header is branded without loading an image. */}
+          <Link to="/" className="flex items-center gap-2" aria-label="Home">
+            <svg viewBox="0 0 256 256" aria-hidden="true" className="h-6 w-6 shrink-0">
+              <g
+                className="fill-slate-900 stroke-slate-900 dark:fill-slate-100 dark:stroke-slate-100"
+                strokeWidth={16}
+                strokeLinecap="round"
+              >
+                <path d="M84,72 L56,28" />
+                <path d="M84,184 L56,228" />
+                <path d="M190,128 L236,128" />
+                <circle cx="56" cy="28" r="15" stroke="none" />
+                <circle cx="56" cy="228" r="15" stroke="none" />
+                <circle cx="236" cy="128" r="15" stroke="none" />
+              </g>
+              <path
+                d="M80,64 L196,128 L80,192 Z"
+                className="fill-brand-700 stroke-brand-700 dark:fill-brand-400 dark:stroke-brand-400"
+                strokeWidth={24}
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="font-display text-lg font-extrabold tracking-tight">vidmesh</span>
           </Link>
 
           <form role="search" onSubmit={onSearch} className="flex min-w-[12rem] flex-1 items-center">
@@ -53,12 +76,12 @@ export function Layout(): JSX.Element {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search this gateway…"
-              className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm dark:border-slate-700 dark:bg-slate-900"
+              className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:placeholder:text-slate-400"
             />
           </form>
 
           <nav aria-label="Primary">
-            <ul className="flex items-center gap-4 text-sm">
+            <ul className="flex items-center gap-4 text-sm [&_a:hover]:text-brand-700 [&_a:hover]:underline dark:[&_a:hover]:text-brand-300">
               <li>
                 <Link to="/upload">Upload</Link>
               </li>
@@ -77,7 +100,7 @@ export function Layout(): JSX.Element {
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             className={cn(
               "rounded-md border border-slate-300 px-2 py-1.5 text-sm dark:border-slate-700",
-              "focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-600",
+              "hover:border-brand-600 dark:hover:border-brand-400",
             )}
           >
             {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
@@ -93,7 +116,7 @@ export function Layout(): JSX.Element {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4">
           <p>
             Powered by{" "}
-            <a href="https://vidmesh.org" className="text-brand-700 underline dark:text-brand-200">
+            <a href="https://vidmesh.org" className="text-brand-800 underline dark:text-brand-300">
               vidmesh
             </a>
             — many gateways, one substrate.

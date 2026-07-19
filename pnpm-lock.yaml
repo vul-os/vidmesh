@@ -69,6 +69,15 @@ importers:
 
   apps/gateway/web:
     dependencies:
+      '@fontsource/hanken-grotesk':
+        specifier: ^5.1.0
+        version: 5.2.8
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.1.0
+        version: 5.2.8
+      '@fontsource/syne':
+        specifier: ^5.1.0
+        version: 5.2.7
       '@tanstack/react-query':
         specifier: ^5.59.0
         version: 5.101.2(react@18.3.1)
