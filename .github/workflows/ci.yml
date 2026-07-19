@@ -22,6 +22,31 @@ jobs:
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
 
+  dmtap-pub:
+    name: DMTAP-PUB §22 conformance (additive path)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      # The §22 path is default-off, so the `rust` job above never builds it.
+      # Without this job the convergence proof — that vidmesh's §22 encoder
+      # agrees byte-for-byte with the spec's frozen vectors — would only ever
+      # have been run by hand. See docs/DMTAP-CONVERGENCE.md.
+      - run: cargo clippy -p vidmesh-kernel --features dmtap-pub --all-targets -- -D warnings
+      - run: cargo test -p vidmesh-kernel --features dmtap-pub
+      # Fail loudly if the vector harness stops running, rather than passing
+      # vacuously because the test was renamed or filtered out.
+      - name: Assert the frozen §22 vectors actually ran
+        run: |
+          cargo test -p vidmesh-kernel --features dmtap-pub \
+            --test dmtap_pub_vectors -- --exact \
+            dmtap_pub_conformance_vectors_agree_byte_for_byte \
+            | tee /tmp/vec.log
+          grep -q "1 passed" /tmp/vec.log
+
   wasm:
     name: WASM build
     runs-on: ubuntu-latest
