@@ -24,6 +24,8 @@
 pub mod blob;
 pub mod bundle;
 pub mod codec;
+#[cfg(feature = "dmtap-pub")]
+pub mod dmtap_pub;
 pub mod error;
 pub mod identity;
 pub mod ids;
