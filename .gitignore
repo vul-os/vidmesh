@@ -10,6 +10,11 @@ dist/
 # WASM build output (generated into packages/kernel-ts)
 packages/kernel-ts/wasm/
 
+# Tauri-generated schemas/capability manifests (regenerated on every
+# build by tauri-build; machine/build-local, never hand-edited or
+# committed — see DECISIONS.md T6)
+crates/vidmesh-node/gen/
+
 # Gateway runtime data
 apps/gateway/server/data/
 

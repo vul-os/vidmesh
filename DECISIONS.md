@@ -89,6 +89,33 @@ suites now run and pass; the fixes made, as decisions:
 | T4 | JS test/dev runners: gateway-server uses `--experimental-transform-types`; kernel-ts expands its one parameter property to a field | Node's strip-only mode rejects TS parameter-property constructors and enums; the gateway uses many parameter properties (a deliberate style), so the flag switch is the least-invasive correct fix there. |
 | T5 | Conformance verdict recorded: kernel 189/0/0, node 142/0/47, relay 115/0/74 — 0 failures; all differences are documented per-runtime skips | The three-runtime golden rule holds. Skips are each runtime checking only what it is responsible for (relay = envelope only; node = no bundle/json/kind-invalid surface). |
 
+**2026-07-19, post-relocation build breakage** — the repo's move from
+`~/code/vidmesh` to `~/code/vulos/vidmesh` left a *pre-existing, gitignored*
+`target/` directory in place, and two of its cached build artifacts kept
+serving absolute paths from the old location instead of being invalidated:
+`vidmesh-node`'s Tauri build script replayed a stale cached
+`cargo:tauri-core-*-permission-files=/Users/pc/code/vidmesh/target/...`
+line from `target/debug/build/tauri-*/output` (a previous build script
+run's captured stdout, reused because cargo's fingerprint check didn't
+consider it stale), and the `vidmesh-conformance` binary had
+`env!("CARGO_MANIFEST_DIR")` baked in from the last time it was actually
+relinked, pre-move. Neither is a source bug — both are local, gitignored
+build cache. Fix: `cargo clean -p tauri -p vidmesh-node` and
+`cargo clean -p vidmesh-conformance`, then rebuild; both regenerate
+correctly from `CARGO_MANIFEST_DIR` at the new path. No source or absolute
+path was hardcoded anywhere in the tree (repo-wide grep for the old path
+and for `/Users/*` came back empty). While investigating, found
+`crates/vidmesh-node/gen/` (Tauri's regenerated schema/capability JSON)
+was neither committed nor gitignored — added to `.gitignore` so build
+output never accidentally gets committed or relied upon across machines.
+Any dev hitting this after a future relocation: `cargo clean -p tauri -p
+vidmesh-node -p vidmesh-conformance` (or a full `cargo clean` if that
+doesn't clear it) before assuming a real regression.
+
+| # | Decision | Rationale |
+|---|----------|-----------|
+| T6 | `crates/vidmesh-node/gen/` added to `.gitignore`; stale-path build breakage fixed via targeted `cargo clean`, not a hardcoded path | Generated/cached artifacts must never bake in machine-specific absolute paths that outlive a relocation; the correct fix is always "regenerate", never "hardcode the new path" |
+
 **DMTAP-PUB convergence** — recorded as a full decision document at
 [docs/DMTAP-CONVERGENCE.md](docs/DMTAP-CONVERGENCE.md). Recommendation:
 re-base vidmesh's video layer as the DMTAP-PUB §24 video profile (route b),
