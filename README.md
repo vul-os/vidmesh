@@ -1,6 +1,22 @@
-# vidmesh
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img src="assets/logo.svg" alt="vidmesh" width="380">
+  </picture>
+</p>
 
-> Many gateways. One substrate. Video that outlives its platforms.
+<p align="center">
+  <b>Many gateways. One substrate. Video that outlives its platforms.</b>
+</p>
+
+<p align="center">
+  <img alt="status: pre-alpha" src="https://img.shields.io/badge/status-pre--alpha-FF4D3D">
+  <img alt="spec: v1 scope complete" src="https://img.shields.io/badge/spec-v1%20scope%20complete-A8E01F">
+  <img alt="conformance: 189 vectors, 3 runtimes, 0 failures" src="https://img.shields.io/badge/conformance-189%20vectors%20%C3%97%203%20runtimes-A8E01F">
+  <img alt="token: none, permanently" src="https://img.shields.io/badge/token-none%2C%20permanently-2E9BD8">
+  <img alt="code license: MIT OR Apache-2.0" src="https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-4C554D">
+  <img alt="spec license: CC-BY-SA-4.0" src="https://img.shields.io/badge/spec-CC--BY--SA--4.0-4C554D">
+</p>
 
 Vidmesh is a decentralized video protocol built on a substrate of
 self-certifying data: signed records (CBOR, Ed25519, BLAKE3) and
@@ -29,7 +45,7 @@ no live-streaming product surface, and the desktop node is a scaffold. The
 | `packages/ui` | Shared React components (player, verification badge) | **Implemented**, typechecks |
 | `apps/gateway/server` | Gateway backend: config, SQLite index, policy engine, key custody, relay clients, kind-aware ingest, upload/original-only pipeline, JSON API | **Implemented, tested** (45 tests); boots and connects to a relay |
 | `apps/gateway/web` | Gateway frontend: React + Vite + Tailwind | **Implemented, tested** (45 tests); builds |
-| `apps/site` | vidmesh.org static landing page | Static HTML/CSS |
+| `apps/site` | vidmesh.org: static landing page + docs viewer | **Built**, browser-checked (`just site-check`) |
 | `tools/conformance` | 189 deterministic vectors + a runner replaying them against three runtimes | **Implemented, green** (see below) |
 | `crates/vidmesh-node` | Desktop node app (Tauri 2) | **Scaffold only** |
 
@@ -61,6 +77,33 @@ what it is responsible for):
 | kernel | 189 | 0 | 0 |
 | node (WASM/kernel-ts) | 142 | 0 | 47 |
 | relay (`/sync`) | 115 | 0 | 74 |
+
+## What it looks like
+
+The **uniform reference UI** (spec [009 §7](spec/009-gateway.md)) is the one
+interface every gateway ships. An operator may re-skin its accents by
+overriding the `--vm-*` tokens in
+[`apps/gateway/web/src/styles/index.css`](apps/gateway/web/src/styles/index.css)
+— and nothing else. The brand those tokens carry (palette, type, the
+measured contrast table) is documented in [`assets/README.md`](assets/README.md).
+
+| Reference UI — dark | Reference UI — light |
+|---|---|
+| ![Gateway home in dark theme: a grid of video cards, search, and the vidmesh lockup](apps/site/screenshots/ui-dark.png) | ![The same page in the light theme](apps/site/screenshots/ui-light.png) |
+
+> These two are the real frontend served against a **stubbed** gateway API
+> (`node tools/brand/ui-shots.mjs`), because no vidmesh gateway is deployed
+> — see the status table above. They show the interface, not a running
+> network.
+
+| vidmesh.org | Docs viewer |
+|---|---|
+| ![The landing page: the survival test, roles, and an honest status section](apps/site/screenshots/site-dark.png) | ![The specification rendered in the site's docs viewer](apps/site/screenshots/docs-dark.png) |
+
+The site in [`apps/site`](apps/site/) is static and self-contained;
+`just site-check` drives a real browser over it (console errors, links,
+every docs route, both themes) and `just site-shots` refreshes these
+images.
 
 ## Development
 
@@ -137,6 +180,15 @@ GATEWAY_CONFIG=smoke/gateway.json \
 ```
 
 `just spec-pdf` renders the protocol spec (requires pandoc + tectonic).
+
+### Site and brand
+
+```sh
+just site-serve     # preview apps/site at http://127.0.0.1:8080
+just site-check     # docs-copy sync check + real-browser check of the site
+just site-shots     # refresh apps/site/screenshots/
+just brand          # re-render the OG card and apple-touch-icon
+```
 
 ## License
 

@@ -139,9 +139,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Display face on page-level headings only. Card and item titles (h3) stay
+   on the UI face: Syne is wide, and a grid of truncated video titles set in
+   it reads as decoration rather than content. */
 h1,
-h2,
-h3 {
+h2 {
   font-family: var(--vm-font-display);
   letter-spacing: -0.03em;
 }
