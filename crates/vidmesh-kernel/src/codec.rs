@@ -192,6 +192,43 @@ impl Value {
             .find(|(k, _)| k.as_u64() == Some(key))
             .map(|(_, v)| v)
     }
+
+    /// Return this value with every nested map's entries reordered into
+    /// canonical order — sorted by the bytewise order of their canonically
+    /// encoded keys, the exact key [`encode_map`] uses on the way out.
+    ///
+    /// This changes only ordering; the set of entries, keys, and values is
+    /// untouched, so it never alters the canonical encoding (which sorts
+    /// regardless of input order). Its purpose is to make an in-memory
+    /// value match the shape [`decode_canonical`] produces from the same
+    /// bytes, so a hand-built [`Record`](crate::record::Record) and a
+    /// decoded one compare equal (the `Map` invariant documented above).
+    pub fn into_canonical(self) -> Value {
+        match self {
+            Value::Array(items) => {
+                Value::Array(items.into_iter().map(Value::into_canonical).collect())
+            }
+            Value::Map(entries) => {
+                let mut canon: Vec<(Vec<u8>, (Value, Value))> = entries
+                    .into_iter()
+                    .map(|(k, v)| {
+                        let k = k.into_canonical();
+                        let v = v.into_canonical();
+                        let mut kbuf = Vec::new();
+                        // Key encoding cannot fail for well-formed scalar
+                        // keys; on the off chance it does, an empty buffer
+                        // keeps the sort total and `encode_canonical` still
+                        // surfaces the real error at signing time.
+                        let _ = encode_value(&k, &mut kbuf);
+                        (kbuf, (k, v))
+                    })
+                    .collect();
+                canon.sort_by(|a, b| a.0.cmp(&b.0));
+                Value::Map(canon.into_iter().map(|(_, kv)| kv).collect())
+            }
+            other => other,
+        }
+    }
 }
 
 // ---------------------------------------------------------------------

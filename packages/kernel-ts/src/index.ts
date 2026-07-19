@@ -98,8 +98,11 @@ export function fromHex(hex: string): Uint8Array {
 
 /** An Ed25519 keypair (thin wrapper over the WASM kernel's). */
 export class Keypair {
+  readonly inner: wasm.WasmKeypair;
   /** @internal */
-  constructor(readonly inner: wasm.WasmKeypair) {}
+  constructor(inner: wasm.WasmKeypair) {
+    this.inner = inner;
+  }
 
   static async generate(): Promise<Keypair> {
     await init();

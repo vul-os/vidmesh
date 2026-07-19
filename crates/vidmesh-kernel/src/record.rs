@@ -396,7 +396,12 @@ impl RecordBuilder {
             },
             created_at: self.created_at,
             refs: self.refs,
-            body: self.body,
+            // Store the body in canonical key order so a freshly built
+            // record has the same in-memory shape as one decoded from its
+            // canonical bytes (the `Value::Map` order invariant). Ordering
+            // only — the signed bytes are unchanged, since encoding sorts
+            // regardless.
+            body: self.body.into_canonical(),
             sig_alg: SIG_ALG_ED25519,
             sig: Vec::new(),
         };

@@ -301,9 +301,12 @@ mod tests {
         let a = Attest {
             subject: RecordId([1; 32]),
             statement: "100000 verified views on watch.example.net, 2026-06".into(),
+            // Canonical key order (5-byte "value" sorts before 6-byte
+            // "metric"): a signed record's nested maps are always canonical
+            // once round-tripped, so the expected value must be too.
             data: Some(Value::Map(vec![
-                (Value::Text("metric".into()), Value::Text("views".into())),
                 (Value::Text("value".into()), Value::Uint(100_000)),
+                (Value::Text("metric".into()), Value::Text("views".into())),
             ])),
         };
         let record = sign(super::super::KIND_ATTEST, a.refs(), a.to_body());
