@@ -1,0 +1,19 @@
+{
+  "port": 8080,
+  "host": "0.0.0.0",
+  "dbPath": "./data/gateway.sqlite3",
+  "blobDir": "./data/blobs",
+  "relays": ["wss://relay.example.net/sync"],
+  "policyFilePath": "./policy.example.json",
+  "sessionSecret": "change-me-to-at-least-32-random-bytes-before-deploying",
+  "custody": {
+    "secret": "change-me-to-a-different-32-plus-byte-secret-than-sessionSecret",
+    "contestWindowSeconds": 604800
+  },
+  "_comment_ffmpeg": "ffmpegPath/ffprobePath are optional; omit entirely to run original-only (no renditions/HLS). Example if installed: \"ffmpegPath\": \"/usr/bin/ffmpeg\", \"ffprobePath\": \"/usr/bin/ffprobe\"",
+  "uploadMaxBytes": 4294967296,
+  "gatewayName": "vidmesh-reference-gateway",
+  "gatewayDescription": "A reference Vidmesh gateway running the stock selection policy.",
+  "publicBaseUrl": "http://localhost:8080",
+  "uploadEnabled": true
+}

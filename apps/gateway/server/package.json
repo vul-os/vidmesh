@@ -6,10 +6,24 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "lint": "tsc --noEmit"
+    "dev": "node --experimental-transform-types src/main.ts",
+    "lint": "tsc --noEmit",
+    "test": "node --test --experimental-transform-types \"test/**/*.test.ts\""
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.4.0",
+    "@fastify/multipart": "^8.3.0",
+    "@vidmesh/kernel": "workspace:*",
+    "argon2": "^0.41.1",
+    "better-sqlite3": "^11.3.0",
+    "fastify": "^4.28.1",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.6.0",
-    "@types/node": "^22.0.0"
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.12",
+    "typescript": "^5.6.0"
   }
 }

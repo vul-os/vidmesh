@@ -1,0 +1,11 @@
+{
+  "name": "Vidmesh Reference Gateway",
+  "description": "A reference Vidmesh gateway. Selection = moderation: nothing here removes content from the substrate, only from what this gateway serves.",
+  "moderationPolicyHtml": "<h2>What this gateway serves</h2><p>This gateway indexes records from its configured relays subject to the allow/deny rules below. Removal from this gateway does not remove content from the Vidmesh substrate — see <a href=\"/legal/TERMS.md\">Terms</a> §1.</p><p>CSAM: this deployment's active CsamMatcher is named in server logs at boot. A deployment running <code>StubMatcher</code> is a development configuration only and is not a compliant reference gateway.</p>",
+  "denyIdentities": [],
+  "denyBlobHashes": [],
+  "denyRecordIds": [],
+  "denyKinds": [],
+  "geoBlocks": [],
+  "feeds": []
+}
