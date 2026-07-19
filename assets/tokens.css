@@ -1,0 +1,131 @@
+/*
+ * Vidmesh design tokens — the single source of truth for the reference look.
+ *
+ * Spec 009 §7 (and DECISIONS P17) make the gateway UI *uniform*: a gateway
+ * operator re-skins accents, never the interface. These custom properties
+ * are the seam that makes that possible — every surface in the project
+ * (apps/site, apps/gateway/web, packages/ui) reads colour, type, radius and
+ * elevation from here rather than hard-coding values. Override the
+ * properties, ship no new CSS.
+ *
+ * THEME: "signal on carbon". Carbon is a near-black with a green cast;
+ * signal is an acid lime that only ever appears where something is *live*,
+ * *verified*, or *actionable*. Mesh blue is structural: identity,
+ * verification, the substrate. Live red is reserved for record/live state
+ * and errors. Nothing else gets to be bright.
+ *
+ * CONTRAST: every foreground token below was checked against the surface
+ * it is used on. Light mode uses the deep end of each ramp for text
+ * (brand-800 7.0:1, accent-600 5.6:1 on --vm-surface); dark mode uses the
+ * bright end (brand-300 13.3:1, accent-200 11.1:1). Acid lime is never
+ * text on a light background — it fails even the 3:1 non-text floor there,
+ * which is why the light lockup uses brand-700.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- signal (brand): live, verified, actionable ---- */
+  --vm-brand-50: #f4fce0;
+  --vm-brand-100: #e7f9be;
+  --vm-brand-200: #d2f387;
+  --vm-brand-300: #bcec4d;
+  --vm-brand-400: #a8e01f;
+  --vm-brand-500: #8fc212;
+  --vm-brand-600: #74a00c;
+  --vm-brand-700: #4f6e09;
+  --vm-brand-800: #3b5208;
+  --vm-brand-900: #2a3a07;
+  --vm-brand-950: #172004;
+
+  /* ---- mesh (accent): identity, verification, substrate ---- */
+  --vm-accent-50: #e6f4fb;
+  --vm-accent-100: #c6e7f7;
+  --vm-accent-200: #93d2f0;
+  --vm-accent-300: #5cb8e6;
+  --vm-accent-400: #2e9bd8;
+  --vm-accent-500: #187eb8;
+  --vm-accent-600: #126595;
+  --vm-accent-700: #0f5075;
+  --vm-accent-800: #0d3d59;
+  --vm-accent-900: #0a2a3d;
+  --vm-accent-950: #061722;
+
+  /* ---- light surfaces ("paper") ---- */
+  --vm-bg: #fafbf7;
+  --vm-surface: #f0f2ec;
+  --vm-surface-2: #e7eae2;
+  --vm-fg: #10140f;
+  --vm-muted: #4c554d;
+  --vm-faint: #6d7a70;
+  --vm-border: #d7dcd1;
+  --vm-border-strong: #b9c2b2;
+
+  /* ---- semantic ---- */
+  --vm-link: var(--vm-brand-800);
+  --vm-link-hover: var(--vm-brand-700);
+  --vm-verified: var(--vm-accent-600);
+  --vm-live: #c42a1c;
+  --vm-focus-ring: var(--vm-accent-600);
+  --vm-on-signal: #10140f; /* text on a signal-filled surface */
+  --vm-signal: var(--vm-brand-700); /* the signal colour that is safe on paper */
+
+  /* ---- type ---- */
+  --vm-font-display: "Syne", "Hanken Grotesk", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --vm-font-sans: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --vm-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
+
+  /* ---- shape + elevation ---- */
+  --vm-radius: 14px;
+  --vm-radius-sm: 8px;
+  --vm-radius-pill: 999px;
+  --vm-shadow: 0 1px 2px rgba(16, 20, 15, 0.06), 0 8px 24px -12px rgba(16, 20, 15, 0.18);
+  --vm-shadow-lg: 0 24px 60px -28px rgba(16, 20, 15, 0.4);
+}
+
+:root.dark,
+:root[data-theme="dark"] {
+  --vm-bg: #0a0c0b;
+  --vm-surface: #121614;
+  --vm-surface-2: #1a201d;
+  --vm-fg: #e9f0ea;
+  --vm-muted: #9fb0a6;
+  --vm-faint: #74857a;
+  --vm-border: #26302c;
+  --vm-border-strong: #3a4741;
+
+  --vm-link: var(--vm-brand-300);
+  --vm-link-hover: var(--vm-brand-200);
+  --vm-verified: var(--vm-accent-200);
+  --vm-live: #ff4d3d;
+  --vm-focus-ring: var(--vm-brand-300);
+  --vm-signal: var(--vm-brand-400);
+  --vm-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --vm-shadow-lg: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+}
+
+/* Sites without a JS toggle get the dark palette from the OS instead. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-theme="light"]) {
+    --vm-bg: #0a0c0b;
+    --vm-surface: #121614;
+    --vm-surface-2: #1a201d;
+    --vm-fg: #e9f0ea;
+    --vm-muted: #9fb0a6;
+    --vm-faint: #74857a;
+    --vm-border: #26302c;
+    --vm-border-strong: #3a4741;
+
+    --vm-link: var(--vm-brand-300);
+    --vm-link-hover: var(--vm-brand-200);
+    --vm-verified: var(--vm-accent-200);
+    --vm-live: #ff4d3d;
+    --vm-focus-ring: var(--vm-brand-300);
+    --vm-signal: var(--vm-brand-400);
+    --vm-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+    --vm-shadow-lg: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+  }
+}

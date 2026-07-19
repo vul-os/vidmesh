@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+  Source of truth for assets/og-image.png (1200x630 social share card).
+
+  It is HTML rather than SVG on purpose: an <img>-embedded SVG cannot load
+  the vendored woff2 faces, so an SVG card would always export with a
+  fallback system font and stop looking like Vidmesh. Render it with:
+
+      node tools/brand/render.mjs
+
+  which serves the repo, loads this file at 1200x630, waits for fonts, and
+  writes the PNG. Nothing here is served to users — only the PNG is.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vidmesh OG card</title>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/tokens.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden; position: relative;
+    background: #0a0c0b; color: #e9f0ea;
+    font-family: var(--vm-font-sans);
+  }
+  /* the mesh, at the edge of visibility */
+  .lattice { position: absolute; inset: 0; }
+  .content { position: relative; padding: 88px 96px; }
+  .lockup { display: block; width: 420px; }
+  h1 {
+    font-family: var(--vm-font-display); font-weight: 700;
+    font-size: 54px; line-height: 1.16; letter-spacing: -0.035em;
+    margin: 78px 0 0; max-width: 1010px;
+  }
+  h1 em { font-style: normal; color: #a8e01f; }
+  .strap {
+    font-family: var(--vm-font-mono); font-size: 21px; color: #9fb0a6;
+    margin-top: 34px; letter-spacing: -0.01em;
+  }
+  .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: #a8e01f; }
+</style>
+</head>
+<body>
+  <svg class="lattice" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#1e2620" stroke-width="2" fill="none">
+      <path d="M0,90 L1200,90 M0,315 L1200,315 M0,540 L1200,540"/>
+      <path d="M150,0 L150,630 M450,0 L450,630 M750,0 L750,630 M1050,0 L1050,630"/>
+      <path d="M150,90 L450,315 L750,90 L1050,315 L750,540 L450,315 L150,540"/>
+    </g>
+    <g fill="#26302c">
+      <circle cx="150" cy="90" r="7"/><circle cx="450" cy="315" r="7"/>
+      <circle cx="750" cy="90" r="7"/><circle cx="1050" cy="315" r="7"/>
+      <circle cx="750" cy="540" r="7"/><circle cx="150" cy="540" r="7"/>
+    </g>
+  </svg>
+  <div class="content">
+    <img class="lockup" src="/assets/logo-dark.svg" alt="Vidmesh">
+    <h1>Many gateways. One substrate.<br><em>Video that outlives its platforms.</em></h1>
+    <p class="strap">signed records &middot; content-addressed blobs &middot; no token &middot; no servers of record</p>
+  </div>
+  <div class="rule"></div>
+</body>
+</html>
