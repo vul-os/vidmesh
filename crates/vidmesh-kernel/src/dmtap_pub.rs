@@ -179,6 +179,31 @@ pub mod divergence {
         let pubm = pub_manifest_for_bytes(bytes)?;
         Some((native, pubm.id))
     }
+
+    /// Per-chunk: what vidmesh **stored** versus what §22 **needs**, for one chunk.
+    ///
+    /// Returns `(vidmesh_leaf, pub_chunk_address)` where
+    /// `vidmesh_leaf = BLAKE3(0x00 ‖ chunk)` ([`crate::blob::leaf_hash`]) and
+    /// `pub_chunk_address = 0x1e ‖ BLAKE3(chunk)` ([`chunk_hash`]).
+    ///
+    /// # Why this exists — a spec erratum
+    ///
+    /// DMTAP §24.14 item 4 states that on migration "the **chunk leaf hashes are
+    /// identical** (bare-chunk BLAKE3) … so re-derivation is a **tree recompute
+    /// over the existing chunk hashes**, not a re-read of the media bytes."
+    ///
+    /// **That is not true of vidmesh's format.** Vidmesh folds a `0x00` leaf tag
+    /// *inside* the hash, so what it persisted per chunk is `BLAKE3(0x00 ‖ chunk)`,
+    /// while §22's `h_i` digest is `BLAKE3(chunk)` — different preimages, different
+    /// values, asserted unequal by this module's tests.
+    ///
+    /// The operational consequence is significant and belongs in any phase-2 plan:
+    /// migrating a blob to §22 requires **re-reading and re-hashing every stored
+    /// media byte**, not a cheap metadata-only tree recompute over retained
+    /// digests. See `docs/DMTAP-CONVERGENCE.md`.
+    pub fn chunk_digests_for(chunk: &[u8]) -> ([u8; 32], ContentId) {
+        (crate::blob::leaf_hash(chunk), chunk_hash(chunk))
+    }
 }
 
 // ── Record → PubAnnounce bridging (§22.3 / §24) ──────────────────────────────
@@ -322,6 +347,35 @@ mod tests {
         let k = kp();
         let ik = keypair_to_identity_key(&k);
         assert_eq!(ik.public(), k.public_key_bytes().to_vec());
+    }
+
+    /// Pins the §24.14-item-4 erratum: vidmesh's retained per-chunk digest is
+    /// NOT the digest §22 needs, so migration cannot skip re-reading the media.
+    #[test]
+    fn stored_vidmesh_leaf_is_not_the_pub_chunk_address() {
+        // This exact chunk is the one behind the frozen vector
+        // `pub_manifest_single_chunk`, so the §22 side is corpus-anchored.
+        let chunk = b"dmtap-pub: one published chunk";
+        let (vid_leaf, pub_addr) = divergence::chunk_digests_for(chunk);
+
+        // The §22 address matches the frozen conformance vector byte-for-byte.
+        assert_eq!(
+            hex_of(pub_addr.as_bytes()),
+            "1e458cd8409c3b46d1e59eebedaab232ae9054e51d2cc01e3a0ef7447017301eaf",
+            "pub chunk address must match the frozen §22 vector"
+        );
+
+        // ...and what vidmesh stored is a different digest entirely.
+        assert_ne!(
+            vid_leaf,
+            *<&[u8; 32]>::try_from(&pub_addr.as_bytes()[1..]).unwrap(),
+            "§24.14 item 4 claims these are identical; they are not — \
+             migration MUST re-read media bytes, not recompute over stored digests"
+        );
+    }
+
+    fn hex_of(b: &[u8]) -> String {
+        b.iter().map(|x| format!("{x:02x}")).collect()
     }
 
     #[test]
