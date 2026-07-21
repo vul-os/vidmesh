@@ -309,7 +309,30 @@ impl Identity {
             }
             let is_final = |r: &Record| -> bool {
                 match observed_at(&r.id()) {
-                    Some(seen) => now.saturating_sub(seen) > state.contest_window as i64,
+                    // `contest_window` is a wire-decoded `u64` (spec 002
+                    // §1) and can legitimately be as large as
+                    // `u64::MAX` — it is not attacker-*bounded* the way
+                    // a fixed-width guard would reject, it is
+                    // attacker/author-*chosen*. Comparing via
+                    // `state.contest_window as i64` would silently wrap
+                    // any value `>= 2^63` into a *negative* `i64` (Rust's
+                    // `as` cast reinterprets bits rather than erroring),
+                    // making `now.saturating_sub(seen) > negative` true
+                    // for essentially any `seen`. That flips a huge
+                    // contest window — presumably chosen to mean "give
+                    // recovery a very long time to contest" — into an
+                    // window of effectively zero, finalizing a rogue
+                    // signing rotation instantly and defeating the exact
+                    // protection contest_window exists to provide. Do
+                    // the comparison in `u64`, the domain
+                    // `contest_window` is actually typed in; an elapsed
+                    // time that doesn't fit in `u64` (i.e. `seen > now`,
+                    // only possible with clock skew) cannot exceed any
+                    // window and so is treated as not final.
+                    Some(seen) => match u64::try_from(now.saturating_sub(seen)) {
+                        Ok(elapsed) => elapsed > state.contest_window,
+                        Err(_) => false,
+                    },
                     None => false,
                 }
             };
@@ -561,6 +584,73 @@ mod tests {
         };
         let state = Identity::verify_chain(&[genesis, rot_a, rot_b], &seen_now, 1000).unwrap();
         assert_eq!(state.head, expected);
+    }
+
+    #[test]
+    fn huge_contest_window_does_not_wrap_negative_and_disable_recovery() {
+        // Regression for the `contest_window as i64` cast hazard: `u64`'s
+        // upper half (>= 2^63) reinterprets as a *negative* `i64` under
+        // `as`, which would make `is_final` return `true` for a rotation
+        // observed only moments ago — the opposite of what a large
+        // contest window means. Same shape as
+        // `recovery_beats_provisional_thief`, but with
+        // `contest_window = u64::MAX` and the thief's forged rotation
+        // reported as having just been seen (`elapsed == 0`).
+        let owner_signing = kp(1);
+        let owner_recovery = kp(2);
+        let thief = kp(3);
+        let owner_new = kp(4);
+        let huge_window = u64::MAX;
+        let (id, genesis) = Identity::genesis(
+            &owner_signing,
+            &[recovery_of(&owner_recovery)],
+            huge_window,
+            100,
+        )
+        .unwrap();
+        let thief_rot = Identity::rotate(
+            id,
+            genesis.id(),
+            &thief.public_key_bytes(),
+            SIG_ALG_ED25519,
+            &[],
+            huge_window,
+            200,
+            &owner_signing, // stolen key
+        )
+        .unwrap();
+        let owner_rot = Identity::rotate(
+            id,
+            genesis.id(),
+            &owner_new.public_key_bytes(),
+            SIG_ALG_ED25519,
+            &[recovery_of(&owner_recovery)],
+            huge_window,
+            300,
+            &owner_recovery,
+        )
+        .unwrap();
+        let thief_id = thief_rot.id();
+        // The thief's rotation was observed at exactly `now`: elapsed is
+        // 0, nowhere near "final" under a window this size. Under the
+        // wrapped cast, `huge_window as i64` is negative and `0 > that`
+        // is true, so the buggy code finalizes it immediately anyway.
+        let observed = move |rid: &RecordId| -> Option<i64> {
+            if *rid == thief_id {
+                Some(1000)
+            } else {
+                None
+            }
+        };
+        let records = vec![genesis, thief_rot, owner_rot.clone()];
+        let state = Identity::verify_chain(&records, &observed, 1000).unwrap();
+        assert_eq!(
+            state.head,
+            owner_rot.id(),
+            "recovery must still beat a just-observed provisional signing rotation \
+             even when contest_window is astronomically large"
+        );
+        assert_eq!(state.signing_key, owner_new.public_key_bytes().to_vec());
     }
 
     #[test]
