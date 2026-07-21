@@ -1,0 +1,229 @@
+# Release: build the vidmesh-relay binary (macOS universal, Linux, Windows)
+# and the reference gateway's static web bundle on a v* tag, and attach them
+# to a draft GitHub Release.
+#
+# What gets released, and what does not — see README.md "Status by
+# component" for the full picture this mirrors:
+#   - vidmesh-relay   the one component that is a real, self-hostable service
+#                      today (websocket sync + optional blob sidecar). Built
+#                      natively per OS, matching how slipscan/molao build
+#                      their CLI/server binaries in this suite.
+#   - gateway/web      the uniform reference UI. Static once built, so it
+#                      ships as a tarball an operator drops behind
+#                      gateway/server or any static host.
+#   - gateway/server   NOT built here. It is a plain Fastify/TS app meant to
+#                      run from source via Node (see apps/gateway/server/
+#                      README.md) — there is no bundler step that turns it
+#                      into a standalone artifact, so a source checkout at
+#                      the release tag *is* its release form. GitHub's
+#                      auto-generated "Source code" archive on every release
+#                      already covers that; building a redundant copy here
+#                      would add nothing.
+#   - vidmesh-node     NOT built. Tauri desktop-node scaffold only (pins and
+#                      seeds nothing yet) — see README's status table.
+#   - vidmesh-wasm /
+#     packages/*       NOT published here. Libraries other components embed
+#                      (gateway/web's build step below compiles the WASM
+#                      kernel as a build input), not standalone release
+#                      artifacts. Package publishing (npm) is a separate,
+#                      not-yet-decided step.
+#
+# Maintainer flow: bump VERSION + the workspace version in Cargo.toml +
+# version in package.json, push a matching tag (e.g. v0.1.0). A *draft*
+# release appears under GitHub → Releases with generated notes and all
+# assets; review and publish.
+#
+# ── Signing (not configured) ─────────────────────────────────────────────
+# The relay binary ships unsigned. It makes no outbound calls of its own
+# beyond what an operator configures (peers, blob storage); an unsigned
+# download only matters for macOS Gatekeeper / Windows SmartScreen warnings,
+# which is a distribution nuisance, not a security gap, until a code-signing
+# identity is provisioned.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # ── vidmesh-relay: one binary per platform ──────────────────────────────
+  build-relay:
+    name: Build relay (${{ matrix.platform }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos
+            # arm64 runner; produces a universal (arm64 + x86_64) binary.
+            os: macos-latest
+            rust-targets: aarch64-apple-darwin,x86_64-apple-darwin
+          - platform: linux
+            os: ubuntu-22.04
+            rust-targets: ""
+          - platform: windows
+            os: windows-latest
+            rust-targets: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Check tag matches VERSION, Cargo.toml and package.json
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver="$(tr -d '[:space:]' < VERSION)"
+          cargo_ver="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
+          pkg_ver="$(node -p "require('./package.json').version")"
+          base="${tag%%-*}"   # v0.1.0-rc1 dry-runs build against base version 0.1.0
+          echo "tag=$tag base=$base VERSION=$ver Cargo.toml=$cargo_ver package.json=$pkg_ver"
+          [ "$base" = "$ver" ] && [ "$base" = "$cargo_ver" ] && [ "$base" = "$pkg_ver" ] || {
+            echo "::error::Version mismatch — bump VERSION, [workspace.package].version in Cargo.toml, and version in package.json before tagging"
+            exit 1
+          }
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-targets }}
+
+      - uses: Swatinem/rust-cache@v2.7.7
+        with:
+          workspaces: . -> target
+
+      - name: Build relay (macOS universal)
+        if: matrix.platform == 'macos'
+        run: |
+          cargo build --release -p vidmesh-relay --target aarch64-apple-darwin
+          cargo build --release -p vidmesh-relay --target x86_64-apple-darwin
+          lipo -create \
+            target/aarch64-apple-darwin/release/vidmesh-relay \
+            target/x86_64-apple-darwin/release/vidmesh-relay \
+            -output target/release-vidmesh-relay-universal
+
+      - name: Build relay
+        if: matrix.platform != 'macos'
+        run: cargo build --release -p vidmesh-relay
+
+      - name: Stage release asset
+        shell: bash
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          mkdir -p staging
+          case "${{ matrix.platform }}" in
+            macos)
+              cp target/release-vidmesh-relay-universal "staging/vidmesh-relay-${ver}-macos-universal"
+              ;;
+            linux)
+              cp target/release/vidmesh-relay "staging/vidmesh-relay-${ver}-linux-x86_64"
+              ;;
+            windows)
+              cp target/release/vidmesh-relay.exe "staging/vidmesh-relay-${ver}-windows-x86_64.exe"
+              ;;
+          esac
+          ls -la staging
+
+      - uses: actions/upload-artifact@v4.6.0
+        with:
+          name: relay-${{ matrix.platform }}
+          path: staging/*
+          if-no-files-found: error
+
+  # ── gateway/web: the uniform reference UI, static bundle ────────────────
+  build-gateway-web:
+    name: Build gateway web bundle
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Check tag matches VERSION
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          ver="$(tr -d '[:space:]' < VERSION)"
+          base="${tag%%-*}"
+          [ "$base" = "$ver" ] || {
+            echo "::error::Tag $tag does not match VERSION ($ver)"; exit 1; }
+
+      # The kernel-ts package (a gateway/web dependency) wraps a WASM build
+      # of vidmesh-wasm, so this job needs the Rust wasm32 target too — same
+      # as the "js" job in ci.yml.
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2.7.7
+        with:
+          workspaces: . -> target
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4.2.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build WASM kernel + TS wrapper
+        run: |
+          pnpm --filter @vidmesh/kernel build:wasm
+          pnpm --filter @vidmesh/kernel build
+
+      - name: Build gateway web
+        run: pnpm --filter @vidmesh/gateway-web build
+
+      - name: Stage release asset
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          mkdir -p staging
+          tar -czf "staging/vidmesh-gateway-web-${ver}.tar.gz" -C apps/gateway/web/dist .
+          ls -la staging
+
+      - uses: actions/upload-artifact@v4.6.0
+        with:
+          name: gateway-web
+          path: staging/*
+          if-no-files-found: error
+
+  release:
+    name: Draft GitHub Release
+    needs: [build-relay, build-gateway-web]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@v4.1.8
+        with:
+          path: dist
+          pattern: relay-*
+          merge-multiple: true
+
+      - uses: actions/download-artifact@v4.1.8
+        with:
+          path: dist
+          name: gateway-web
+
+      - name: Generate checksums
+        run: |
+          cd dist
+          sha256sum vidmesh-relay-* vidmesh-gateway-web-* > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: List assets
+        run: ls -la dist
+
+      - uses: softprops/action-gh-release@v2.2.1
+        with:
+          draft: true
+          generate_release_notes: true
+          name: Vidmesh ${{ github.ref_name }}
+          files: dist/*
