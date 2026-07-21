@@ -76,7 +76,7 @@ export function VerifiedBadge({ state, shortId, failureReason, className }: Veri
           role="dialog"
           aria-label="Verification detail"
           className={cn(
-            "absolute left-0 z-10 mt-2 w-72 rounded-lg border p-3 text-sm shadow-lg",
+            "vm-fade-up absolute left-0 z-10 mt-2 w-72 rounded-card border p-3.5 text-sm shadow-elevated",
             "border-slate-200 bg-white text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200",
           )}
         >
