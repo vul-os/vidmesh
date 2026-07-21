@@ -59,7 +59,7 @@ export function VerifiedBadge({ state, shortId, failureReason, className }: Veri
         onClick={() => setOpen((v) => !v)}
         className={cn(
           "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium",
-          "transition-colors motion-reduce:transition-none",
+          "transition-all duration-150 ease-vm hover:shadow-card motion-reduce:transition-none",
           "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:focus-visible:outline-brand-300",
           copy.ring,
         )}

@@ -1,4 +1,6 @@
 import { useId, useState } from "react";
+import { cn } from "../cn.js";
+import { CaptionsIcon } from "../Icon.js";
 import type { PlayerCaption } from "./Player.js";
 
 export interface CaptionsMenuProps {
@@ -29,12 +31,19 @@ export function CaptionsMenu({ captions, captionsOn, activeLanguage, onSelect }:
         aria-controls={menuId}
         aria-pressed={captionsOn}
         onClick={() => setOpen((v) => !v)}
-        className="rounded p-1.5 text-sm focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300"
+        className={cn(
+          "rounded-full p-1.5 transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-brand-300",
+          captionsOn && "text-brand-300",
+        )}
       >
-        CC
+        <CaptionsIcon />
       </button>
       {open && (
-        <ul id={menuId} role="menu" className="absolute bottom-8 right-0 min-w-[8rem] rounded-md bg-slate-900 p-1 text-sm shadow-lg">
+        <ul
+          id={menuId}
+          role="menu"
+          className="absolute bottom-9 right-0 min-w-[9rem] rounded-control border border-white/10 bg-slate-900/95 p-1 text-sm text-white shadow-elevated backdrop-blur"
+        >
           <li role="none">
             <button
               role="menuitemradio"
@@ -43,7 +52,7 @@ export function CaptionsMenu({ captions, captionsOn, activeLanguage, onSelect }:
                 onSelect(null);
                 setOpen(false);
               }}
-              className="block w-full rounded px-2 py-1 text-left hover:bg-white/10"
+              className="block w-full rounded px-2 py-1.5 text-left transition-colors hover:bg-white/10"
             >
               Off
             </button>
@@ -57,7 +66,7 @@ export function CaptionsMenu({ captions, captionsOn, activeLanguage, onSelect }:
                   onSelect(cap.language);
                   setOpen(false);
                 }}
-                className="block w-full rounded px-2 py-1 text-left hover:bg-white/10"
+                className="block w-full rounded px-2 py-1.5 text-left transition-colors hover:bg-white/10"
               >
                 {cap.label ?? cap.language}
               </button>

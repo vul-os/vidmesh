@@ -37,3 +37,20 @@ export type { TimeAgoProps } from "./TimeAgo.js";
 
 export { cn } from "./cn.js";
 export type { ClassValue } from "./cn.js";
+
+export {
+  PlayIcon,
+  PauseIcon,
+  VolumeIcon,
+  MuteIcon,
+  FullscreenIcon,
+  FullscreenExitIcon,
+  SunIcon,
+  MoonIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  SearchIcon,
+  CaptionsIcon,
+  UploadCloudIcon,
+} from "./Icon.js";
+export type { IconProps } from "./Icon.js";

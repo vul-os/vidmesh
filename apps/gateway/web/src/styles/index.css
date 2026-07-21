@@ -96,11 +96,33 @@
   --vm-surface-2: var(--vm-neutral-200);
   --vm-fg: var(--vm-neutral-950);
   --vm-muted: var(--vm-neutral-600);
+  --vm-faint: #6d7a70;
   --vm-border: var(--vm-neutral-200);
+  --vm-border-strong: #b9c2b2;
+  --vm-link: var(--vm-brand-800);
+  --vm-link-hover: var(--vm-brand-700);
   --vm-signal: var(--vm-brand-700);
   --vm-verified: var(--vm-accent-600);
   --vm-live: var(--vm-live-600);
   --vm-focus-ring: var(--vm-accent-600);
+  --vm-on-signal: #10140f;
+
+  /* ---- shape + elevation (mirrors assets/tokens.css — the app was
+     missing this half of the token layer, which is why it read flatter
+     than vidmesh.org: every card/input/button here was falling back to
+     stock Tailwind rounded-md/border with no radius or shadow scale of
+     its own). Two-stop shadows — a tight contact layer plus a soft
+     ambient one — so surfaces read as resting material, not a flat
+     rectangle with a border. ---- */
+  --vm-radius: 14px;
+  --vm-radius-sm: 8px;
+  --vm-radius-pill: 999px;
+  --vm-shadow: 0 1px 2px rgba(16, 20, 15, 0.06), 0 8px 24px -12px rgba(16, 20, 15, 0.18);
+  --vm-shadow-lg: 0 24px 60px -28px rgba(16, 20, 15, 0.4);
+
+  /* ---- motion ---- */
+  --vm-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --vm-duration: 160ms;
 
   /* ---- type ---- */
   --vm-font-display: "Syne", "Hanken Grotesk", -apple-system, BlinkMacSystemFont,
@@ -117,11 +139,17 @@
   --vm-surface-2: var(--vm-neutral-800);
   --vm-fg: #e9f0ea;
   --vm-muted: var(--vm-neutral-400);
+  --vm-faint: #74857a;
   --vm-border: var(--vm-neutral-700);
+  --vm-border-strong: #3a4741;
+  --vm-link: var(--vm-brand-300);
+  --vm-link-hover: var(--vm-brand-200);
   --vm-signal: var(--vm-brand-400);
   --vm-verified: var(--vm-accent-200);
   --vm-live: var(--vm-live-400);
   --vm-focus-ring: var(--vm-brand-300);
+  --vm-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --vm-shadow-lg: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
 }
 
 html {
@@ -201,4 +229,196 @@ pre,
 
 .skip-link:focus {
   left: 0;
+}
+
+/*
+ * ---- component primitives ----
+ *
+ * The routes in this app used to hand-roll the same five or six Tailwind
+ * classes on every input/button/card (see git history pre this file) —
+ * functional, but it meant the interface had no shape or elevation system
+ * of its own even after the token layer above gained one. These classes
+ * are that system made concrete: one input, one card, one chip, one small
+ * family of buttons, applied everywhere instead of re-derived per file.
+ */
+
+.vm-card {
+  border-radius: var(--vm-radius);
+  border: 1px solid var(--vm-border);
+  background: var(--vm-surface);
+  box-shadow: var(--vm-shadow);
+}
+
+.vm-field {
+  display: block;
+  width: 100%;
+  border-radius: var(--vm-radius-sm);
+  border: 1px solid var(--vm-border-strong);
+  background: var(--vm-bg);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--vm-fg);
+  transition:
+    border-color var(--vm-duration) var(--vm-ease),
+    box-shadow var(--vm-duration) var(--vm-ease);
+}
+
+.vm-field::placeholder {
+  color: var(--vm-faint);
+}
+
+.vm-field:hover {
+  border-color: var(--vm-muted);
+}
+
+.vm-field:focus-visible {
+  outline: none;
+  border-color: var(--vm-focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vm-focus-ring) 25%, transparent);
+}
+
+.vm-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--vm-muted);
+}
+
+.vm-label > .vm-field,
+.vm-label > .vm-field-wrap {
+  margin-top: 0.375rem;
+  font-weight: 400;
+  color: var(--vm-fg);
+}
+
+.vm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: var(--vm-radius-sm);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform var(--vm-duration) var(--vm-ease),
+    box-shadow var(--vm-duration) var(--vm-ease),
+    border-color var(--vm-duration) var(--vm-ease),
+    background-color var(--vm-duration) var(--vm-ease),
+    opacity var(--vm-duration) var(--vm-ease);
+}
+
+.vm-btn:active {
+  transform: translateY(1px);
+}
+
+.vm-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.vm-btn-primary {
+  background: var(--vm-signal);
+  color: var(--vm-on-signal);
+  box-shadow: var(--vm-shadow);
+}
+
+.vm-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--vm-shadow-lg);
+  transform: translateY(-1px);
+}
+
+.vm-btn-accent {
+  background: var(--vm-verified);
+  color: var(--vm-on-signal);
+  box-shadow: var(--vm-shadow);
+}
+
+.vm-btn-accent:hover:not(:disabled) {
+  box-shadow: var(--vm-shadow-lg);
+  transform: translateY(-1px);
+}
+
+.vm-btn-secondary {
+  background: transparent;
+  border-color: var(--vm-border-strong);
+  color: var(--vm-fg);
+}
+
+.vm-btn-secondary:hover:not(:disabled) {
+  border-color: var(--vm-signal);
+  color: var(--vm-signal);
+}
+
+.vm-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--vm-muted);
+  padding: 0.375rem 0.625rem;
+}
+
+.vm-btn-ghost:hover:not(:disabled) {
+  background: var(--vm-surface-2);
+  color: var(--vm-fg);
+}
+
+.vm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: var(--vm-radius-pill);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--vm-surface-2);
+  color: var(--vm-muted);
+}
+
+/* Round icon-only control (theme toggle, close buttons, player transport)
+   — one consistent hit target and hover treatment everywhere a glyph or
+   inline SVG stands in for a button. */
+.vm-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: var(--vm-radius-pill);
+  border: 1px solid var(--vm-border-strong);
+  color: var(--vm-fg);
+  background: transparent;
+  transition:
+    background-color var(--vm-duration) var(--vm-ease),
+    border-color var(--vm-duration) var(--vm-ease),
+    color var(--vm-duration) var(--vm-ease);
+}
+
+.vm-icon-btn:hover {
+  border-color: var(--vm-signal);
+  color: var(--vm-signal);
+  background: var(--vm-surface-2);
+}
+
+@keyframes vm-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vm-fade-up {
+  animation: vm-fade-up 260ms var(--vm-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vm-fade-up {
+    animation: none;
+  }
 }

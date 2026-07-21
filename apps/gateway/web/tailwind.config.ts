@@ -56,8 +56,10 @@ export default {
           base: "var(--vm-bg)",
         },
         line: "var(--vm-border)",
+        "line-strong": "var(--vm-border-strong)",
         ink: "var(--vm-fg)",
         muted: "var(--vm-muted)",
+        faint: "var(--vm-faint)",
         signal: "var(--vm-signal)",
         verified: "var(--vm-verified)",
         live: "var(--vm-live)",
@@ -66,6 +68,17 @@ export default {
         display: "var(--vm-font-display)",
         sans: "var(--vm-font-sans)",
         mono: "var(--vm-font-mono)",
+      },
+      borderRadius: {
+        card: "var(--vm-radius)",
+        control: "var(--vm-radius-sm)",
+      },
+      boxShadow: {
+        card: "var(--vm-shadow)",
+        elevated: "var(--vm-shadow-lg)",
+      },
+      transitionTimingFunction: {
+        vm: "var(--vm-ease)",
       },
     },
   },
