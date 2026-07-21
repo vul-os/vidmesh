@@ -12,7 +12,7 @@ export function Channel(): JSX.Element {
 
   if (!identityId) {
     return (
-      <p role="alert" className="py-10 text-sm text-red-700 dark:text-red-300">
+      <p role="alert" className="vm-card px-6 py-10 text-sm text-red-700 dark:text-red-300">
         No channel id in the URL.
       </p>
     );
@@ -43,11 +43,11 @@ export function Channel(): JSX.Element {
     >
       {(channel) => (
         <div>
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="vm-card flex flex-wrap items-center gap-4 p-5">
             <Avatar name={channel.profile?.name ?? identityId} src={channel.profile?.avatarUrl} size="lg" />
             <div>
-              <h1 className="text-xl font-semibold">{channel.profile?.name ?? "Unnamed channel"}</h1>
-              {channel.profile?.about && <p className="text-sm text-slate-600 dark:text-slate-400">{channel.profile.about}</p>}
+              <h1 className="text-xl font-semibold text-ink">{channel.profile?.name ?? "Unnamed channel"}</h1>
+              {channel.profile?.about && <p className="mt-0.5 text-sm text-muted">{channel.profile.about}</p>}
             </div>
             {me && me.identityId !== identityId && (
               <button
@@ -55,14 +55,14 @@ export function Channel(): JSX.Element {
                 onClick={() => followMutation.mutate()}
                 disabled={followMutation.isPending}
                 aria-pressed={following}
-                className="ml-auto rounded-md border border-brand-600 px-4 py-1.5 text-sm font-medium text-brand-700 disabled:opacity-50 dark:text-brand-200"
+                className={following ? "vm-btn vm-btn-secondary ml-auto" : "vm-btn vm-btn-primary ml-auto"}
               >
                 {following ? "Following" : "Follow"}
               </button>
             )}
           </div>
 
-          <h2 className="mb-4 mt-8 text-lg font-semibold">Videos</h2>
+          <h2 className="mb-4 mt-8 text-lg font-semibold text-ink">Videos</h2>
           <VideoGrid videos={channel.videos} emptyLabel="This channel hasn't published any videos on this gateway yet." />
         </div>
       )}

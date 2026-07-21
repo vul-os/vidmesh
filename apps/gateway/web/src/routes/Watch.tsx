@@ -14,7 +14,7 @@ export function Watch(): JSX.Element {
 
   if (!id) {
     return (
-      <p role="alert" className="py-10 text-sm text-red-700 dark:text-red-300">
+      <p role="alert" className="vm-card px-6 py-10 text-sm text-red-700 dark:text-red-300">
         No video id in the URL.
       </p>
     );
@@ -59,29 +59,31 @@ export function Watch(): JSX.Element {
               sponsorSegments={video.sponsorship}
             />
 
-            <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
-              <h1 className="text-xl font-semibold">{video.title}</h1>
+            <div className="mt-4 flex flex-wrap items-start justify-between gap-2">
+              <h1 className="text-xl font-semibold text-ink">{video.title}</h1>
               <VerifiedBadge state={badgeState} shortId={shortId} failureReason={failureReason} />
             </div>
 
-            <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-              <Link to={`/channel/${encodeURIComponent(video.author.identityId)}`} className="font-medium hover:underline">
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+              <Link to={`/channel/${encodeURIComponent(video.author.identityId)}`} className="font-medium text-ink hover:text-signal hover:underline">
                 {video.author.name}
               </Link>
+              <span aria-hidden="true" className="text-faint">·</span>
               <span>{video.counts.comments} comments on this gateway</span>
+              <span aria-hidden="true" className="text-faint">·</span>
               <span>License: {video.license}</span>
             </div>
 
-            <div className="mt-3">
+            <div className="mt-4">
               <ReactionBar videoId={video.id} reactions={video.counts.reactions} />
             </div>
 
-            <p className="mt-3 whitespace-pre-wrap text-sm">{video.description || "No description provided."}</p>
+            <p className="mt-4 whitespace-pre-wrap text-sm text-ink">{video.description || "No description provided."}</p>
 
             {video.tags.length > 0 && (
-              <ul className="mt-2 flex flex-wrap gap-2" aria-label="Tags">
+              <ul className="mt-3 flex flex-wrap gap-2" aria-label="Tags">
                 {video.tags.map((tag) => (
-                  <li key={tag} className="rounded-full bg-slate-100 px-2 py-0.5 text-xs dark:bg-slate-800">
+                  <li key={tag} className="vm-chip">
                     {tag}
                   </li>
                 ))}

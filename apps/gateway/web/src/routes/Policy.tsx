@@ -22,10 +22,25 @@ export function Policy(): JSX.Element {
     >
       {(policy) => (
         <div className="max-w-3xl">
-          <h1 className="text-xl font-semibold">{policy.name}</h1>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{policy.description}</p>
+          <h1 className="text-xl font-semibold text-ink">{policy.name}</h1>
+          <p className="mt-1 text-sm text-muted">{policy.description}</p>
 
-          <section className="mt-6 rounded-lg border border-slate-200 p-4 text-sm dark:border-slate-700">
+          <dl className="mt-6 grid grid-cols-3 divide-x divide-line rounded-card border border-line bg-surface shadow-card">
+            <div className="px-4 py-3.5 text-center sm:text-left sm:px-5">
+              <dt className="text-xs font-medium uppercase tracking-wide text-faint">Videos indexed</dt>
+              <dd className="mt-1 font-display text-2xl font-bold text-ink">{policy.stats.videos}</dd>
+            </div>
+            <div className="px-4 py-3.5 text-center sm:text-left sm:px-5">
+              <dt className="text-xs font-medium uppercase tracking-wide text-faint">De-indexed</dt>
+              <dd className="mt-1 font-display text-2xl font-bold text-ink">{policy.stats.deindexed}</dd>
+            </div>
+            <div className="px-4 py-3.5 text-center sm:text-left sm:px-5">
+              <dt className="text-xs font-medium uppercase tracking-wide text-faint">Policy log entries</dt>
+              <dd className="mt-1 font-display text-2xl font-bold text-ink">{policy.stats.policyLogEntries}</dd>
+            </div>
+          </dl>
+
+          <section className="mt-6 rounded-card border border-line bg-surface-2/50 p-4 text-sm text-ink">
             <p>
               <strong>Counts are this gateway&rsquo;s claims.</strong> View, comment, and reaction counts shown
               throughout this site reflect only what {policy.name} has selected and indexed — not a global count
@@ -41,36 +56,22 @@ export function Policy(): JSX.Element {
           />
 
           <section className="mt-8">
-            <h2 className="text-lg font-semibold">Subscribed takedown feeds</h2>
+            <h2 className="text-lg font-semibold text-ink">Subscribed takedown feeds</h2>
             {policy.feeds.length === 0 ? (
-              <p role="status" className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              <p role="status" className="mt-2 text-sm text-muted">
                 This gateway isn&rsquo;t subscribed to any compliance feeds.
               </p>
             ) : (
-              <ul className="mt-2 space-y-1 text-sm">
+              <ul className="mt-2 space-y-1.5 text-sm">
                 {policy.feeds.map((f) => (
-                  <li key={f.feed} className="rounded border border-slate-200 px-3 py-1.5 dark:border-slate-700">
-                    <span className="font-medium">{f.publisher}</span> — <code className="text-xs">{f.feed}</code>
+                  <li key={f.feed} className="rounded-control border border-line bg-surface px-3 py-2">
+                    <span className="font-medium text-ink">{f.publisher}</span>{" "}
+                    <span className="text-muted">—</span> <code className="text-xs text-muted">{f.feed}</code>
                   </li>
                 ))}
               </ul>
             )}
           </section>
-
-          <dl className="mt-8 grid grid-cols-3 gap-4 text-center text-sm">
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">Videos indexed</dt>
-              <dd className="text-lg font-semibold">{policy.stats.videos}</dd>
-            </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">De-indexed</dt>
-              <dd className="text-lg font-semibold">{policy.stats.deindexed}</dd>
-            </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">Policy log entries</dt>
-              <dd className="text-lg font-semibold">{policy.stats.policyLogEntries}</dd>
-            </div>
-          </dl>
         </div>
       )}
     </QueryBoundary>
