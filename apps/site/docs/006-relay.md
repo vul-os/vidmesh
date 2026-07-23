@@ -96,7 +96,7 @@ Returns the relay policy document, JSON,
 
 ```json
 { "name": "relay.example.net",
-  "software": "boloka-relay/0.1",
+  "software": "evermesh-relay/0.1",
   "pow_min_bits": 8,
   "rate": { "records_per_minute_per_key": 60 },
   "retention": { "default_days": 365, "live.chat_days": 2 },

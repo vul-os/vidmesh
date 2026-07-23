@@ -1,6 +1,6 @@
 # assets
 
-The Boloka brand: a hand-written SVG mark and wordmark, the design tokens
+The Evermesh brand: a hand-written SVG mark and wordmark, the design tokens
 every surface reads from, the vendored type, an architecture diagram, and a
 social share card.
 
@@ -8,7 +8,7 @@ social share card.
 
 | File | Purpose |
 |---|---|
-| `logo.svg` | Full lockup (mark + "boloka" wordmark) for light backgrounds. `viewBox="0 0 960 256"`. |
+| `logo.svg` | Full lockup (mark + "evermesh" wordmark) for light backgrounds. `viewBox="0 0 1080 256"`. |
 | `logo-dark.svg` | Same geometry, recolored for dark backgrounds. |
 | `mark.svg` | Mark only, structure drawn in `currentColor` so it can be inlined into a UI and inherit the text color. |
 | `favicon.svg` | Mark only, thickened to stay legible at 16px; structure follows `prefers-color-scheme`. `viewBox="0 0 256 256"`. |
@@ -26,15 +26,18 @@ always export in a fallback system font.
 A play triangle whose three vertices each throw an edge out to a mesh
 node — *the video is one point in a lattice that keeps going*. It is the
 whole thesis in one glyph: a record is playable on its own, and it is never
-only in one place.
+only in one place. This is the original Vidmesh-era mark; it was briefly
+retired for a cairn during the short-lived "Boloka" name and has been
+restored under Evermesh, since the mesh image is what the name itself now
+points at again (see DECISIONS.md, 2026-07-23).
 
 Everything is drawn by hand as `<path>`/`<circle>`: no raster effects, no
-gradients, no filters. The "boloka" wordmark is built the same way, on a
+gradients, no filters. The "evermesh" wordmark is built the same way, on a
 shared grid (baseline 180, x-height 100, ascender 30, stroke 22, round
 caps), with circular bowls drawn as béziers. There is no `<text>` and no
 `font-family` anywhere in `logo.svg` or `logo-dark.svg` — the lockup renders
 identically on every system with nothing to load and nothing to fall back
-on. The dot on the `i` is the one piece of signal colour in the wordmark.
+on.
 
 ## Palette — "signal on carbon"
 

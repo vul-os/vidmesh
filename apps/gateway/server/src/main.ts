@@ -29,7 +29,7 @@ async function main(): Promise<void> {
         "# It ALWAYS returns { match: false } and reports nowhere.\n" +
         "# Running this gateway with real user traffic on StubMatcher\n" +
         "# is NON-COMPLIANT (spec 009-gateway.md §4, apps/gateway/\n" +
-        "# server/CSAM.md) and is NOT covered by the Boloka trademark\n" +
+        "# server/CSAM.md) and is NOT covered by the Evermesh trademark\n" +
         "# program. Do not deploy this configuration publicly.\n" +
         "############################################################\n",
     );

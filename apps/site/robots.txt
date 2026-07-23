@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://boloka.org/sitemap.xml
+Sitemap: https://evermesh.org/sitemap.xml

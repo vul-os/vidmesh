@@ -1,26 +1,26 @@
-# @boloka/kernel
+# @evermesh/kernel
 
-Ergonomic, fully typed TypeScript API over the Boloka WASM kernel
-(`crates/boloka-wasm`). One crypto implementation everywhere: the exact
+Ergonomic, fully typed TypeScript API over the Evermesh WASM kernel
+(`crates/evermesh-wasm`). One crypto implementation everywhere: the exact
 Rust kernel that verifies natively also verifies here, in Node and in
 browsers, so ids, signatures, and canonical bytes are always identical.
 
 ## Build
 
 ```sh
-pnpm build:wasm   # wasm-pack build of crates/boloka-wasm into ./wasm
+pnpm build:wasm   # wasm-pack build of crates/evermesh-wasm into ./wasm
 pnpm build        # tsc → dist (ESM + .d.ts) + CJS shim
 ```
 
 The package is ESM-first; the CJS entry resolves to a Promise of the
-module namespace (`const kernel = await require("@boloka/kernel")`).
+module namespace (`const kernel = await require("@evermesh/kernel")`).
 
 ## API
 
 ```ts
 import { init, Keypair, identity, createRecord, verifyRecord,
          deriveId, validateKind, recordToJson, recordFromJson,
-         hashBlob, hashBlobStream, verifyChunk } from "@boloka/kernel";
+         hashBlob, hashBlobStream, verifyChunk } from "@evermesh/kernel";
 
 await init();                      // optional; all calls await it internally
 const kp = await Keypair.generate();
@@ -41,7 +41,7 @@ bodies use the JSON interchange form of spec 001 §11 (bytes as
 ## Testing
 
 ```sh
-pnpm --filter @boloka/kernel test   # requires pnpm build:wasm first
+pnpm --filter @evermesh/kernel test   # requires pnpm build:wasm first
 ```
 
 Golden rule (build plan §7): the same conformance vectors must pass in

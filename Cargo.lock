@@ -318,73 +318,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "boloka-conformance"
-version = "0.0.1"
-dependencies = [
- "boloka-kernel",
- "futures-util",
- "hex",
- "serde",
- "serde_json",
- "tokio",
- "tokio-tungstenite 0.23.1",
-]
-
-[[package]]
-name = "boloka-kernel"
-version = "0.0.1"
-dependencies = [
- "blake3",
- "dmtap-core",
- "ed25519-dalek",
- "getrandom 0.2.17",
- "hex",
- "proptest",
- "serde_json",
-]
-
-[[package]]
-name = "boloka-node"
-version = "0.0.1"
-dependencies = [
- "boloka-kernel",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
-]
-
-[[package]]
-name = "boloka-relay"
-version = "0.0.1"
-dependencies = [
- "anyhow",
- "axum",
- "blake3",
- "boloka-kernel",
- "futures-util",
- "rusqlite",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tokio-tungstenite 0.23.1",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "boloka-wasm"
-version = "0.0.1"
-dependencies = [
- "blake3",
- "boloka-kernel",
- "getrandom 0.2.17",
- "js-sys",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "brotli"
 version = "8.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1253,6 +1186,73 @@ checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "evermesh-conformance"
+version = "0.0.1"
+dependencies = [
+ "evermesh-kernel",
+ "futures-util",
+ "hex",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-tungstenite 0.23.1",
+]
+
+[[package]]
+name = "evermesh-kernel"
+version = "0.0.1"
+dependencies = [
+ "blake3",
+ "dmtap-core",
+ "ed25519-dalek",
+ "getrandom 0.2.17",
+ "hex",
+ "proptest",
+ "serde_json",
+]
+
+[[package]]
+name = "evermesh-node"
+version = "0.0.1"
+dependencies = [
+ "evermesh-kernel",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
+name = "evermesh-relay"
+version = "0.0.1"
+dependencies = [
+ "anyhow",
+ "axum",
+ "blake3",
+ "evermesh-kernel",
+ "futures-util",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tokio-tungstenite 0.23.1",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "evermesh-wasm"
+version = "0.0.1"
+dependencies = [
+ "blake3",
+ "evermesh-kernel",
+ "getrandom 0.2.17",
+ "js-sys",
+ "wasm-bindgen",
 ]
 
 [[package]]

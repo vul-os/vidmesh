@@ -1,4 +1,4 @@
-import { CloseIcon, RecordCard } from "@boloka/ui";
+import { CloseIcon, RecordCard } from "@evermesh/ui";
 import { useState } from "react";
 import type { ReceiptView } from "../lib/api-types.js";
 
@@ -21,7 +21,7 @@ function railName(rail: number): string {
 /**
  * Tip button that opens a display-only modal of this creator's payment
  * pointers plus the public receipt records for this video. There is no
- * payment integration here by design — Boloka is economically neutral
+ * payment integration here by design — Evermesh is economically neutral
  * (build plan §1 principle 5); this only surfaces what creators publish
  * and what receipts already exist as records.
  */

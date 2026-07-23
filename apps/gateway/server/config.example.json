@@ -12,8 +12,8 @@
   },
   "_comment_ffmpeg": "ffmpegPath/ffprobePath are optional; omit entirely to run original-only (no renditions/HLS). Example if installed: \"ffmpegPath\": \"/usr/bin/ffmpeg\", \"ffprobePath\": \"/usr/bin/ffprobe\"",
   "uploadMaxBytes": 4294967296,
-  "gatewayName": "boloka-reference-gateway",
-  "gatewayDescription": "A reference Boloka gateway running the stock selection policy.",
+  "gatewayName": "evermesh-reference-gateway",
+  "gatewayDescription": "A reference Evermesh gateway running the stock selection policy.",
   "publicBaseUrl": "http://localhost:8080",
   "uploadEnabled": true
 }

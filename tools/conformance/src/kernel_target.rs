@@ -1,16 +1,16 @@
-//! Executes vectors in-process against `boloka-kernel` (the `kernel`
+//! Executes vectors in-process against `evermesh-kernel` (the `kernel`
 //! runner target).
 //!
 //! This is the reference target: every other target (`node`, `relay`)
 //! is judged against the same vectors this module checks directly
 //! against the Rust kernel's public API.
 
-use boloka_kernel::blob::{leaf_hash, verify_chunk, CHUNK_SIZE};
-use boloka_kernel::bundle::Bundle;
-use boloka_kernel::codec;
-use boloka_kernel::identity::Identity;
-use boloka_kernel::ids::RecordId;
-use boloka_kernel::record::Record;
+use evermesh_kernel::blob::{leaf_hash, verify_chunk, CHUNK_SIZE};
+use evermesh_kernel::bundle::Bundle;
+use evermesh_kernel::codec;
+use evermesh_kernel::identity::Identity;
+use evermesh_kernel::ids::RecordId;
+use evermesh_kernel::record::Record;
 
 use crate::vectors::{error_class, IdentityExpected, Layer, Vector, VectorData};
 
@@ -144,7 +144,7 @@ fn run_record_invalid(cbor_hex: &str, expected_error: &str, layer: Layer) -> Out
             Ok(_) => Outcome::Fail("expected rejection, envelope validation accepted it".into()),
         },
         Layer::Kind => match result {
-            Ok(record) => match boloka_kernel::kinds::validate(&record) {
+            Ok(record) => match evermesh_kernel::kinds::validate(&record) {
                 Err(e) => {
                     let class = error_class::classify(&e);
                     if class == expected_error {

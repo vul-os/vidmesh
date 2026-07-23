@@ -1,5 +1,5 @@
 /*
- * boloka.org — "signal on carbon", composed as a broadcast monitor.
+ * evermesh.org — "signal on carbon", composed as a broadcast monitor.
  *
  * Everything colour/type/shape comes from assets/tokens.css (the reference
  * look, spec 009 §7). This file only lays things out. Dark is the default
@@ -344,6 +344,20 @@ h3 {
 .hero-sub strong {
   color: var(--bo-fg);
   font-weight: 600;
+}
+
+.hero-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.pill a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
 }
 
 .cta-row {

@@ -19,9 +19,9 @@ Service you agree to them.
 
 ## 1. What this service actually is
 
-{{GATEWAY_NAME}} runs on the Boloka protocol. Plainly, that means:
+{{GATEWAY_NAME}} runs on the Evermesh protocol. Plainly, that means:
 
-- Video and metadata on Boloka live as signed records and
+- Video and metadata on Evermesh live as signed records and
   content-addressed blobs on an open substrate that no one owns and no
   single party controls (see the protocol spec at
   `spec/000-overview.md` if you want the full picture).
@@ -45,7 +45,7 @@ Service you agree to them.
 
 ## 2. Accounts and custodial keys
 
-Your Boloka identity is a cryptographic keypair, not a row in our
+Your Evermesh identity is a cryptographic keypair, not a row in our
 database that only we control. Depending on how you set up your
 account:
 
@@ -68,14 +68,14 @@ without our cooperation, permission, or advance notice. We cannot lock
 you into {{GATEWAY_NAME}}, and if we ever cannot produce your export on
 request, that is a bug in our custody implementation, not a right we
 are choosing to withhold. This is a protocol-level requirement of
-running Boloka's reference gateway
+running Evermesh's reference gateway
 ([spec/009-gateway.md](../../../../spec/009-gateway.md) §5): a custodial
 gateway that cannot demonstrate the exit path is not
-Boloka-compliant, whatever else it calls itself.
+Evermesh-compliant, whatever else it calls itself.
 
 Practically: use the "Export identity" function in account settings.
 It gives you everything needed to continue publishing, signing, and
-proving your history on any other Boloka gateway or with your own
+proving your history on any other Evermesh gateway or with your own
 tools.
 
 ## 3. Acceptable use
@@ -135,7 +135,7 @@ draft the real language.)*
 
 We may suspend or terminate your account for violating these Terms or
 the AUP. Termination ends your use of {{GATEWAY_NAME}} — it does not
-and cannot revoke your Boloka identity, delete your content from the
+and cannot revoke your Evermesh identity, delete your content from the
 substrate, or prevent another gateway from serving it. If we custody
 your keys, terminating your account does not forfeit your exit right
 under §2: you may still export your identity.

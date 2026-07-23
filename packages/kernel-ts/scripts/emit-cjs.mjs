@@ -1,6 +1,6 @@
 // The package is ESM-first (the WASM binding is an ES module). The CJS
 // entry is a shim whose export is a Promise of the ESM namespace:
-//   const kernel = await require("@boloka/kernel");
+//   const kernel = await require("@evermesh/kernel");
 import { writeFile } from "node:fs/promises";
 
 await writeFile(

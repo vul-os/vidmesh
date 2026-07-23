@@ -1,4 +1,4 @@
-# Boloka monorepo task runner. Install `just`: https://github.com/casey/just
+# Evermesh monorepo task runner. Install `just`: https://github.com/casey/just
 
 # List available recipes
 default:
@@ -30,12 +30,12 @@ fmt:
 # Render the protocol spec to PDF (requires pandoc + tectonic)
 spec-pdf:
     mkdir -p dist
-    pandoc -d spec/pandoc-pdf.yaml spec/draft-boloka-protocol-00.md -o dist/boloka-protocol-draft-00.pdf
-    @echo "wrote dist/boloka-protocol-draft-00.pdf"
+    pandoc -d spec/pandoc-pdf.yaml spec/draft-evermesh-protocol-00.md -o dist/evermesh-protocol-draft-00.pdf
+    @echo "wrote dist/evermesh-protocol-draft-00.pdf"
 
 # Build the WASM kernel bindings into packages/kernel-ts/wasm
 wasm:
-    pnpm --filter @boloka/kernel build:wasm
+    pnpm --filter @evermesh/kernel build:wasm
 
 # Local smoke run (relay blob sidecar + gateway) — see README "Smoke run"
 dev:
@@ -49,7 +49,7 @@ conformance-generate:
 # Run the conformance suite against the in-process kernel (reference target).
 # For the node and relay targets, see README "Conformance suite".
 conformance:
-    cargo run --bin boloka-conformance -- run --target kernel
+    cargo run --bin evermesh-conformance -- run --target kernel
 
 # Copy spec/ + docs into apps/site/docs (the site is deployable on its own)
 site-docs:

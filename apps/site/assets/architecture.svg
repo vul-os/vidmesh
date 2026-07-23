@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Boloka architecture: creators publish into a self-certifying substrate
+  Evermesh architecture: creators publish into a self-certifying substrate
   (signed records + content-addressed blobs); independent gateways index and
   serve their own selection of it; viewers and nodes verify and reseed it.
   Flat two-color style matching assets/logo.svg (carbon structure, signal accent). A neutral card background
@@ -8,7 +8,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img"
      aria-label="Diagram: creators publish to a substrate of records and blobs; gateways index and serve their own selection; viewers and nodes verify and reseed it.">
-  <title>Boloka architecture</title>
+  <title>Evermesh architecture</title>
 
   <!-- neutral card so the diagram reads on any background -->
   <rect x="0" y="0" width="1000" height="380" rx="16" fill="#F0F2EC"/>

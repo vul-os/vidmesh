@@ -1,53 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Boloka lockup — dark-background variant.
+  Evermesh lockup — dark-background variant.
 
-  Mark: a cairn — three stacked stones, largest at the base, smallest on
-  top. "Kept, not merely stored." Wordmark: "boloka" hand-plotted as
-  stroked paths on a shared grid (baseline 180, x-height 100, ascender
-  30, stroke 22, round caps). There is no <text> and no font-family
-  anywhere in this file, so the lockup renders identically everywhere
-  with nothing to load. The four round letters (b, o, o, a) all reuse the
-  same bowl curve, the way a real typeface would.
+  Mark: a play triangle whose three vertices each throw an edge out to a
+  mesh node. This is the original Vidmesh-era mesh mark, restored: it was
+  briefly retired for a cairn during the short-lived "Boloka" name and is
+  brought back because "Evermesh" itself re-embraces the mesh image the
+  cairn had replaced (see DECISIONS.md, 2026-07-23). Wordmark: "evermesh"
+  hand-plotted as stroked paths on the same grid the project has used
+  since Vidmesh (baseline 180, x-height 100, ascender 30, stroke 22, round
+  caps). There is no <text> and no font-family anywhere in this file, so
+  the lockup renders identically everywhere with nothing to load.
 
   Colors: paper #E9F0EA for structure, signal lime #A8E01F for the
-  capstone — on carbon the bright end of the signal ramp is used at full
+  triangle — on carbon the bright end of the signal ramp is used at full
   strength (12.5:1 on #0A0C0B).
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 256" role="img" aria-label="Boloka">
-  <title>Boloka</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 256" role="img" aria-label="Evermesh">
+  <title>Evermesh</title>
 
-  <!-- ============ mark: a cairn ============ -->
-  <g fill="#E9F0EA">
-    <path d="M46,183 C46,159 83,145 128,145 C173,145 210,159 210,183 C210,206 173,219 128,219 C83,219 46,206 46,183 Z" />
-    <path d="M70,126 C70,105 100,92 132,92 C164,92 190,105 190,126 C190,145 164,157 132,157 C100,157 70,145 70,126 Z" />
+  <!-- ============ mark ============ -->
+  <g stroke="#E9F0EA" stroke-width="12" stroke-linecap="round" fill="#E9F0EA">
+    <path d="M84,72 L56,28" />
+    <path d="M84,184 L56,228" />
+    <path d="M190,128 L236,128" />
+    <circle cx="56" cy="28" r="13" stroke="none" />
+    <circle cx="56" cy="228" r="13" stroke="none" />
+    <circle cx="236" cy="128" r="13" stroke="none" />
   </g>
-  <path fill="#A8E01F" d="M92,72 C92,55 110,44 132,44 C154,44 170,55 170,72 C170,87 154,97 132,97 C110,97 92,87 92,72 Z" />
+  <path d="M84,72 L190,128 L84,184 Z" fill="#A8E01F" stroke="#A8E01F"
+        stroke-width="20" stroke-linejoin="round" />
 
-  <!-- ============ wordmark ============ -->
+  <!-- ============ wordmark: "evermesh" ============ -->
   <g transform="translate(300,23)" fill="none" stroke="#E9F0EA" stroke-width="22"
      stroke-linecap="round" stroke-linejoin="round">
-    <g transform="translate(0,0)"><!-- b -->
-      <path d="M80,140 C80,118 62,100 40,100 C18,100 0,118 0,140 C0,162 18,180 40,180 C62,180 80,162 80,140" />
-      <path d="M0,30 L0,180" />
+    <g transform="translate(0,0)"><!-- e -->
+      <path d="M2,140 L82,140 C82,118 66,100 42,100 C18,100 2,118 2,140 C2,162 18,180 42,180 C58,180 71,173 78,161" />
     </g>
-    <g transform="translate(100,0)"><!-- o -->
-      <path d="M80,140 C80,118 62,100 40,100 C18,100 0,118 0,140 C0,162 18,180 40,180 C62,180 80,162 80,140" />
+    <g transform="translate(106,0)"><!-- v -->
+      <path d="M0,100 L34,180 L68,100" />
     </g>
-    <g transform="translate(200,0)"><!-- l -->
-      <path d="M11,30 L11,180" />
+    <g transform="translate(198,0)"><!-- e -->
+      <path d="M2,140 L82,140 C82,118 66,100 42,100 C18,100 2,118 2,140 C2,162 18,180 42,180 C58,180 71,173 78,161" />
     </g>
-    <g transform="translate(260,0)"><!-- o -->
-      <path d="M80,140 C80,118 62,100 40,100 C18,100 0,118 0,140 C0,162 18,180 40,180 C62,180 80,162 80,140" />
+    <g transform="translate(304,0)"><!-- r -->
+      <path d="M11,100 L11,180" />
+      <path d="M11,120 C11,106 20,100 33,100 C38,100 42,101 46,103" />
     </g>
-    <g transform="translate(360,0)"><!-- k -->
-      <path d="M0,30 L0,180" />
-      <path d="M0,135 L58,98" />
-      <path d="M0,135 L58,180" />
+    <g transform="translate(374,0)"><!-- m -->
+      <path d="M0,180 L0,100" />
+      <path d="M0,124 C0,108 12,100 23,100 C35,100 44,110 44,126 L44,180" />
+      <path d="M44,124 C44,108 56,100 67,100 C79,100 88,110 88,126 L88,180" />
     </g>
-    <g transform="translate(460,0)"><!-- a -->
-      <path d="M80,140 C80,118 62,100 40,100 C18,100 0,118 0,140 C0,162 18,180 40,180 C62,180 80,162 80,140" />
-      <path d="M80,100 L80,180" />
+    <g transform="translate(486,0)"><!-- e -->
+      <path d="M2,140 L82,140 C82,118 66,100 42,100 C18,100 2,118 2,140 C2,162 18,180 42,180 C58,180 71,173 78,161" />
+    </g>
+    <g transform="translate(592,0)"><!-- s -->
+      <path d="M62,113 C57,104 48,100 36,100 C21,100 11,108 11,120 C11,144 62,133 62,157 C62,171 50,180 36,180 C22,180 12,174 7,164" />
+    </g>
+    <g transform="translate(678,0)"><!-- h -->
+      <path d="M0,180 L0,30" />
+      <path d="M0,124 C0,108 13,100 25,100 C41,100 52,110 52,128 L52,180" />
     </g>
   </g>
 </svg>

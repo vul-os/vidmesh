@@ -18,7 +18,7 @@ export interface VerificationFailed {
 
 export type VerificationResult = VerificationOk | VerificationFailed;
 
-/** The subset of @boloka/kernel's API this module depends on. */
+/** The subset of @evermesh/kernel's API this module depends on. */
 export interface KernelLike {
   verifyRecord(record: Uint8Array): Promise<void>;
   deriveId(record: Uint8Array): Promise<string>;

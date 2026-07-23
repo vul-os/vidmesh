@@ -1,4 +1,4 @@
-//! The `node` runner target: exercises `@boloka/kernel` (TypeScript,
+//! The `node` runner target: exercises `@evermesh/kernel` (TypeScript,
 //! `packages/kernel-ts`) by spawning `node node-harness.mjs` and
 //! speaking a small newline-delimited JSON protocol over its stdio.
 //!
@@ -20,7 +20,7 @@
 //! | `{"op":"verify-chunk","root_hex":...,"n_chunks":u64,"index":u64,"chunk_hex":...,"proof_hex":[...]}` | `{"ok":true}` |
 //! | `{"op":"identity-verify-chain","records_hex":[...],"now":i64,"observed":{<id_hex>:seconds}}` | `{"head_hex":...,"signing_key_hex":...,"depth":u64}` |
 //!
-//! `@boloka/kernel` only exposes record-level and chunk/identity
+//! `@evermesh/kernel` only exposes record-level and chunk/identity
 //! helpers (see `packages/kernel-ts/src/index.ts`), not a generic
 //! CBOR-Value-level JSON codec or bundle import/export, so
 //! `json-roundtrip` vectors that are not record-shaped and all `bundle`
@@ -29,7 +29,7 @@
 //!
 //! Requires **Node >= 22.6** run with `--experimental-strip-types` (the
 //! harness imports `packages/kernel-ts/src/index.ts` directly), and
-//! requires `crates/boloka-wasm` to have been built into
+//! requires `crates/evermesh-wasm` to have been built into
 //! `packages/kernel-ts/wasm/` (Phase 3 of the build plan) — until then
 //! the harness process will fail at import time, which this module
 //! surfaces as a normal I/O/spawn error rather than a panic.
@@ -145,7 +145,7 @@ pub fn run(harness: &mut NodeHarness, v: &Vector) -> Outcome {
             expected_error,
         ),
         VectorData::Bundle { .. } => {
-            Outcome::Skip("@boloka/kernel exposes no bundle import/export API".into())
+            Outcome::Skip("@evermesh/kernel exposes no bundle import/export API".into())
         }
         VectorData::JsonRoundtrip {
             json,
@@ -377,7 +377,7 @@ fn run_json_roundtrip(
             )
         }
     };
-    // @boloka/kernel only exposes record-level JSON (recordFromJson),
+    // @evermesh/kernel only exposes record-level JSON (recordFromJson),
     // which requires the 7 envelope keys "1".."7". Anything else is
     // outside this target's surface area.
     let is_record_shaped = value
@@ -385,7 +385,7 @@ fn run_json_roundtrip(
         .is_some_and(|m| (1..=7).all(|k| m.contains_key(&k.to_string())));
     if !is_record_shaped {
         return Outcome::Skip(
-            "not a record-shaped JSON document; @boloka/kernel exposes no generic \
+            "not a record-shaped JSON document; @evermesh/kernel exposes no generic \
              CBOR-Value JSON codec, only record-from-json"
                 .into(),
         );

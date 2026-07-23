@@ -1,13 +1,13 @@
 [package]
-name = "boloka-conformance"
+name = "evermesh-conformance"
 version = "0.0.1"
-description = "Boloka conformance suite: test vectors + cross-runtime runner"
+description = "Evermesh conformance suite: test vectors + cross-runtime runner"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 publish = false
 
 [dependencies]
-boloka-kernel = { path = "../../crates/boloka-kernel" }
+evermesh-kernel = { path = "../../crates/evermesh-kernel" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 hex = "0.4"
@@ -16,7 +16,7 @@ hex = "0.4"
 # speaks newline-delimited JSON over its stdio (src/node_target.rs).
 # No async runtime needed there — std::process::Command is enough.
 
-# relay target: a live websocket client against a running boloka-relay
+# relay target: a live websocket client against a running evermesh-relay
 # (spec 006). Kept compiling at all times; the relay need not be
 # running unless `--target relay` is actually invoked.
 tokio = { version = "1.40", features = ["rt-multi-thread", "macros", "net", "time", "io-util"] }
@@ -24,7 +24,7 @@ tokio-tungstenite = "0.23"
 futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
 
 [[bin]]
-name = "boloka-conformance"
+name = "evermesh-conformance"
 path = "src/main.rs"
 
 [[bin]]

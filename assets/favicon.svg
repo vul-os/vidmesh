@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Boloka favicon: the mark alone — three stacked stones, largest at the
-  base — already solid fills rather than thin strokes, so the silhouette
-  holds up unmodified at 16px. The base and middle stones follow the
-  browser/OS scheme so the tab icon holds up on light and dark chrome;
-  the signal-lime capstone is constant.
+  Evermesh favicon: the mark alone, thickened so the silhouette (play
+  triangle + three satellite mesh nodes) still reads at 16px. This is the
+  original Vidmesh-era mark, restored after a brief cairn interlude under
+  the "Boloka" name (see DECISIONS.md, 2026-07-23). The structure color
+  follows the browser/OS scheme so the tab icon holds up on light and dark
+  chrome; the signal-lime triangle is constant.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Boloka">
-  <title>Boloka</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Evermesh">
+  <title>Evermesh</title>
   <style>
-    .structure { fill: #10140F; }
+    .structure { fill: #10140F; stroke: #10140F; }
     @media (prefers-color-scheme: dark) {
-      .structure { fill: #E9F0EA; }
+      .structure { fill: #E9F0EA; stroke: #E9F0EA; }
     }
   </style>
-  <path class="structure" d="M40,187 C40,159 82,143 128,143 C174,143 216,159 216,187 C216,213 174,227 128,227 C82,227 40,213 40,187 Z" />
-  <path class="structure" d="M66,124 C66,101 98,86 132,86 C166,86 194,101 194,124 C194,145 166,159 132,159 C98,159 66,145 66,124 Z" />
-  <path fill="#A8E01F" d="M90,68 C90,49 110,37 132,37 C154,37 172,49 172,68 C172,85 154,97 132,97 C110,97 90,85 90,68 Z" />
+  <g class="structure" stroke-width="16" stroke-linecap="round">
+    <path d="M84,72 L56,28" />
+    <path d="M84,184 L56,228" />
+    <path d="M190,128 L236,128" />
+    <circle cx="56" cy="28" r="15" stroke="none" />
+    <circle cx="56" cy="228" r="15" stroke="none" />
+    <circle cx="236" cy="128" r="15" stroke="none" />
+  </g>
+  <path d="M80,64 L196,128 L80,192 Z" fill="#A8E01F" stroke="#A8E01F"
+        stroke-width="24" stroke-linejoin="round" />
 </svg>

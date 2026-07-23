@@ -122,7 +122,7 @@ requirement; bundles salvage rather than abort
 ## 4. Out of scope
 
 * Fraud-proof global view counting (the ad-fraud problem).
-* Anonymity of publishers (Boloka is pseudonymous; network-layer
+* Anonymity of publishers (Evermesh is pseudonymous; network-layer
   anonymity composes externally, e.g. via Tor).
 * DRM / copy protection of decrypted content.
 * Byzantine consensus of any form — deliberately absent by

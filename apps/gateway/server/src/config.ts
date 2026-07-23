@@ -31,8 +31,8 @@ const ConfigSchema = z.object({
   ffmpegPath: z.string().optional(),
   ffprobePath: z.string().optional(),
   uploadMaxBytes: z.number().int().positive().default(4 * 1024 * 1024 * 1024),
-  gatewayName: z.string().default("boloka-reference-gateway"),
-  gatewayDescription: z.string().default("A reference Boloka gateway."),
+  gatewayName: z.string().default("evermesh-reference-gateway"),
+  gatewayDescription: z.string().default("A reference Evermesh gateway."),
   publicBaseUrl: z.string().url().optional(),
   uploadEnabled: z.boolean().default(true),
 });

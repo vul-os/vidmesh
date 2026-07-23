@@ -337,7 +337,7 @@ Refs: exactly one (subject manifest).
 
 | Field | Type | Req | Meaning |
 |-------|------|-----|---------|
-| `license` | text | y | SPDX id or Boloka value ([004](004-manifest.md) §4) |
+| `license` | text | y | SPDX id or Evermesh value ([004](004-manifest.md) §4) |
 | `terms` | text | n | Free-text terms or pointer |
 
 Refs: exactly one (subject manifest).

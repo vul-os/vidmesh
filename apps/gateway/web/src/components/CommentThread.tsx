@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Avatar, TimeAgo } from "@boloka/ui";
+import { Avatar, TimeAgo } from "@evermesh/ui";
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { postComment } from "../api.js";

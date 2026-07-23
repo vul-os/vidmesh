@@ -4,7 +4,7 @@
 **Depends on:** [000-overview.md](000-overview.md)
 **Depended on by:** every other file
 
-The kernel is the invariant core of Boloka: the record envelope, the
+The kernel is the invariant core of Evermesh: the record envelope, the
 canonical encoding, identifier and signature derivation, the algorithm
 registries, blob addressing, the chunk-tree layout for verified range
 reads, and fetch hints. Everything else in the protocol is a record kind
@@ -90,21 +90,21 @@ envelope validation only.
 ## 4. Signatures
 
 ```
-sig = Sign( signing_key, "boloka:record:v1" || id )
+sig = Sign( signing_key, "evermesh:record:v1" || id )
 ```
 
 `||` is byte concatenation; the domain-separation prefix is the 17-byte
-ASCII string `boloka:record:v1` with no terminator. Verification
+ASCII string `evermesh:record:v1` with no terminator. Verification
 recomputes `id` from the received bytes and verifies `sig` against
 `author.signing_key` under `sig_alg`.
 
-Every signing context in Boloka uses a distinct prefix. Contexts defined
+Every signing context in Evermesh uses a distinct prefix. Contexts defined
 by this specification:
 
 | Prefix | Context |
 |--------|---------|
-| `boloka:record:v1` | Record signatures (this section) |
-| `boloka:derivation:v1` | Rendition derivation statements ([004](004-manifest.md) §3) |
+| `evermesh:record:v1` | Record signatures (this section) |
+| `evermesh:derivation:v1` | Rendition derivation statements ([004](004-manifest.md) §3) |
 
 ## 5. Identity references
 

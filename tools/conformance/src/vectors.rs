@@ -12,13 +12,13 @@
 //!   tool can read it directly.
 //! * `record-invalid` — a record that MUST be rejected.
 //!   `expected_error` names the rejection class using the same
-//!   vocabulary as [`boloka_kernel::Error`]: `cbor`, `non-canonical`,
+//!   vocabulary as [`evermesh_kernel::Error`]: `cbor`, `non-canonical`,
 //!   `envelope`, `signature`, `unknown-algorithm`, or `kind`. `layer`
 //!   says which validation pass produces the error: `"envelope"` means
 //!   `Record::from_cbor` + `Record::verify` alone must reject it (every
 //!   runner target can check this today); `"kind"` means the rejection
 //!   only happens once kind-level validation
-//!   (`boloka_kernel::kinds::validate`) runs, which is not wired into
+//!   (`evermesh_kernel::kinds::validate`) runs, which is not wired into
 //!   this runner by default (see `src/kernel_target.rs`) because the
 //!   kinds module is still being completed in parallel. Kind-layer
 //!   vectors are still generated and shipped; the runner reports them
@@ -57,7 +57,7 @@ pub struct Vector {
 }
 
 /// The rejection-class vocabulary shared by every implementation's
-/// error reporting. Mirrors [`boloka_kernel::Error`]'s variants.
+/// error reporting. Mirrors [`evermesh_kernel::Error`]'s variants.
 pub mod error_class {
     pub const CBOR: &str = "cbor";
     pub const NON_CANONICAL: &str = "non-canonical";
@@ -68,9 +68,9 @@ pub mod error_class {
     pub const IDENTITY: &str = "identity";
     pub const BUNDLE: &str = "bundle";
 
-    /// Classify a [`boloka_kernel::Error`] into this vocabulary.
-    pub fn classify(e: &boloka_kernel::Error) -> &'static str {
-        use boloka_kernel::Error;
+    /// Classify a [`evermesh_kernel::Error`] into this vocabulary.
+    pub fn classify(e: &evermesh_kernel::Error) -> &'static str {
+        use evermesh_kernel::Error;
         match e {
             Error::Cbor(_) => CBOR,
             Error::NonCanonical(_) => NON_CANONICAL,
@@ -96,7 +96,7 @@ pub mod error_class {
 pub enum Layer {
     /// `Record::from_cbor` + `Record::verify` alone must reject it.
     Envelope,
-    /// Only kind-level validation (`boloka_kernel::kinds::validate`)
+    /// Only kind-level validation (`evermesh_kernel::kinds::validate`)
     /// rejects it; envelope validation alone accepts the record.
     Kind,
 }

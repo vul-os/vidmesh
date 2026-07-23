@@ -6,7 +6,7 @@
  * at-rest encryption (same "not hardware-grade" disclosure applies) but
  * is a singleton row, not a per-user one.
  */
-import { Keypair, createRecord, identity as kernelIdentity, type RecordInit } from "@boloka/kernel";
+import { Keypair, createRecord, identity as kernelIdentity, type RecordInit } from "@evermesh/kernel";
 import type { Db } from "./db.ts";
 import type { Config } from "./config.ts";
 import { deriveWrapKey, encryptSecret, decryptSecret } from "./custody.ts";

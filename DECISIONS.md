@@ -1,6 +1,6 @@
 # DECISIONS.md
 
-Running log of judgment calls made while building Boloka, so work never
+Running log of judgment calls made while building Evermesh, so work never
 blocks on questions. Newest entries at the bottom of each section.
 Protocol-level decisions are also recorded in the relevant spec file
 under a "Decisions" heading; this file is the master index plus
@@ -37,7 +37,7 @@ process/product decisions that don't belong in the spec.
 |---|----------|-------|
 | P1 | Envelope = CBOR map, integer keys 1–7; unknown envelope keys reject; bodies are text-keyed and forward-extensible | 001 §1, 003 §2 |
 | P2 | Record id covers keys 1–6 incl. `sig_alg` (downgrade resistance) | 001 §3 |
-| P3 | Signature over domain-separated id: `"boloka:record:v1" \|\| id` | 001 §4 |
+| P3 | Signature over domain-separated id: `"evermesh:record:v1" \|\| id` | 001 §4 |
 | P4 | `IdentityRef = [identity_id, signing_key]`; genesis uses zero id | 001 §5, 002 §2 |
 | P5 | `Ref = [ref_type, hash]`, 0=record 1=blob | 001 §6 |
 | P6 | Chunk tree: 1 MiB chunks, leaf `0x00\|\|`, interior `0x01\|\|`, odd promoted | 001 §8 |
@@ -48,9 +48,9 @@ process/product decisions that don't belong in the spec.
 | P11 | `feed.takedown` subjects in body (bulk data), not refs | 003 §6.7 |
 | P12 | PoW nonce in transport frame (`PUB`), outside envelope; `BLAKE3-256(id \|\| nonce_le64)` leading zero bits | 006 §6 |
 | P13 | Relay frames are CBOR; `since` cursors are relay-local receipt sequences | 006 §§1–3 |
-| P14 | Bundle = magic `BLKA\x01` + CBOR sequence; 1 MiB blob parts aligned to chunk leaves; salvage-not-abort on corruption; no built-in compression | 007 |
+| P14 | Bundle = magic `EVMS\x01` + CBOR sequence; 1 MiB blob parts aligned to chunk leaves; salvage-not-abort on corruption; no built-in compression | 007 |
 | P15 | Encryption: per-blob random keys wrapped by a per-manifest content key; chunked XChaCha20-Poly1305 with 1 MiB ciphertext chunks; dedicated profile `enc_key` (no Ed25519→X25519 reuse) | 008 §2 |
-| P16 | Derivation statement covers (orig, rendition, codec, w, h, bitrate); prefix `boloka:derivation:v1` | 004 §3 |
+| P16 | Derivation statement covers (orig, rendition, codec, w, h, bitrate); prefix `evermesh:derivation:v1` | 004 §3 |
 | P17 | Uniform reference UI across gateways is a trademark-level requirement | 009 §7 |
 | P18 | JSON interchange is a strict bijection: `txt:` escape also applies to text map keys that would re-parse as integer keys (codec agent finding) | codec.rs module docs |
 | P19 | Relay edge cases: all-zero id in `OK` for undecodable PUBs; unparseable frames dropped not CLOSED; `X-Expected-Blob-Id` header for PUT 422s; filter keys are text | 006 §§1,3,5.2 |
@@ -90,8 +90,9 @@ suites now run and pass; the fixes made, as decisions:
 | T5 | Conformance verdict recorded: kernel 189/0/0, node 142/0/47, relay 115/0/74 — 0 failures; all differences are documented per-runtime skips | The three-runtime golden rule holds. Skips are each runtime checking only what it is responsible for (relay = envelope only; node = no bundle/json/kind-invalid surface). |
 
 **2026-07-19, post-relocation build breakage** (the project was still
-named **Vidmesh** at the time; renamed to Boloka afterward — crate names
-below are quoted as they literally were then) — the repo's move from
+named **Vidmesh** at the time; renamed to Boloka afterward, then to
+Evermesh — crate names below are quoted as they literally were then) —
+the repo's move from
 `~/code/vidmesh` to `~/code/vulos/vidmesh` left a *pre-existing,
 gitignored* `target/` directory in place, and two of its cached build
 artifacts kept serving absolute paths from the old location instead of
@@ -111,16 +112,16 @@ and for `/Users/*` came back empty). While investigating, found
 was neither committed nor gitignored — added to `.gitignore` so build
 output never accidentally gets committed or relied upon across machines.
 **Same hazard applies to any future relocation, under the current names:**
-`cargo clean -p tauri -p boloka-node -p boloka-conformance` (or a full
+`cargo clean -p tauri -p evermesh-node -p evermesh-conformance` (or a full
 `cargo clean` if that doesn't clear it) before assuming a real regression.
 
 | # | Decision | Rationale |
 |---|----------|-----------|
-| T6 | `crates/vidmesh-node/gen/` (now `crates/boloka-node/gen/`) added to `.gitignore`; stale-path build breakage fixed via targeted `cargo clean`, not a hardcoded path | Generated/cached artifacts must never bake in machine-specific absolute paths that outlive a relocation; the correct fix is always "regenerate", never "hardcode the new path" |
+| T6 | `crates/vidmesh-node/gen/` (now `crates/evermesh-node/gen/`) added to `.gitignore`; stale-path build breakage fixed via targeted `cargo clean`, not a hardcoded path | Generated/cached artifacts must never bake in machine-specific absolute paths that outlive a relocation; the correct fix is always "regenerate", never "hardcode the new path" |
 
 **DMTAP-PUB convergence** — recorded as a full decision document at
 [docs/DMTAP-CONVERGENCE.md](docs/DMTAP-CONVERGENCE.md). Recommendation:
-re-base boloka's video layer as the DMTAP-PUB §24 video profile (route b),
+re-base evermesh's video layer as the DMTAP-PUB §24 video profile (route b),
 contributing range proofs / rotation-log finality / a fetch-hint registry
 upstream. **FOUNDER-GATED** — no substrate byte changes until the founder
 confirms direction, §24 is targetable, and envoir's §22 Rust impl is a
@@ -153,3 +154,38 @@ Boloka always existed.
 | # | Decision | Rationale |
 |---|----------|-----------|
 | T7 | Rename + rescope is a find-and-redraw, not a find-and-replace: wire identifiers/crate names/tokens are mechanical renames (verified byte-for-byte via the conformance suite); the logo mark and wordmark are hand-redrawn because they encode meaning (a video-only play button; letterforms that spell the old name), not just a label | A rename must not silently change what a signature covers or what a container's magic bytes are without re-proving equivalence; a rebrand must not leave a new name inside an unchanged video-shaped mark |
+
+**2026-07-23, project renamed Boloka → Evermesh; GitHub repo moves
+`vul-os/boloka` → `vul-os/evermesh`; mesh mark restored** — the project's
+former name was **Boloka**; it is now **Evermesh**, keeping the same
+Sesotho/Setswana "to keep / to preserve" sense and the same media (video +
+audio) scope — this is a naming/brand correction, not a rescope. Crates
+renamed `boloka-{kernel,node,relay,wasm}` → `evermesh-{kernel,node,relay,wasm}`;
+npm scope `@boloka/*` → `@evermesh/*`; wire domain-separation prefixes
+`"boloka:record:v1"` / `"boloka:derivation:v1"` → `"evermesh:record:v1"` /
+`"evermesh:derivation:v1"` (P3, P16); bundle magic `BLKA\x01` → `EVMS\x01`
+(P14). As with the Vidmesh→Boloka rename, the prefixes and magic are
+signature-preimage and container bytes, so every conformance vector and
+fixture was regenerated from the (renamed) generator and re-run against all
+three runtimes to reconfirm no protocol drift. Design tokens were
+deliberately **left** as `--bo-*` — they're an internal abbreviation with no
+visible "Boloka" spelling and no signature/wire meaning, so touching every
+consumer across the web app for a purely cosmetic variable-name lineage
+wasn't worth the blast radius; flagged here rather than silently left
+inconsistent.
+
+Unlike the Vidmesh→Boloka step, the mark is **not** redrawn fresh: the
+Boloka cairn (three stacked stones) is retired and the pre-Boloka **mesh
+mark** (play-triangle-in-a-mesh, from the Vidmesh lockup) is brought back
+as Evermesh's mark, because "Evermesh" itself re-embraces the mesh imagery
+the cairn had replaced — restoring it, not redrawing around it, is the
+correct move this time. Only the wordmark is freshly hand-plotted, reading
+"evermesh" on the same letterform grid (baseline 180, x-height 100,
+ascender 30, stroke 22, round caps) established by the Vidmesh/Boloka
+lockups; palette and type system are unchanged. README.md and CHANGELOG.md
+each carry a "formerly Boloka / Vidmesh" continuity line rather than
+erasing the naming history.
+
+| # | Decision | Rationale |
+|---|----------|-----------|
+| T8 | Boloka→Evermesh is a find-and-replace for wire identifiers/crate names/tokens (re-proved byte-for-byte via the conformance suite) but a find-and-*restore* for the mark: the pre-cairn mesh mark is reinstated verbatim rather than redrawn, only the wordmark is redrawn | The mark encodes meaning the name itself now supports again ("Evermesh" contains "mesh"); restoring a still-fitting prior asset is not the same mistake as leaving a stale one, and re-litigating art direction the founder already rejected once (the cairn) is not a good use of a second rename |

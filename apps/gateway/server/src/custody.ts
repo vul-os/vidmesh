@@ -25,13 +25,13 @@ import {
   toHex,
   fromHex,
   type RecordInit,
-} from "@boloka/kernel";
+} from "@evermesh/kernel";
 import type { Db } from "./db.ts";
 import type { Config } from "./config.ts";
 import { ApiError } from "./errors.ts";
 import { processRecord, type IngestDeps } from "./ingest.ts";
 
-const HKDF_INFO = Buffer.from("boloka:custody:v1", "utf-8");
+const HKDF_INFO = Buffer.from("evermesh:custody:v1", "utf-8");
 const EXPORT_MAX_ATTEMPTS_PER_HOUR = 5;
 const EXPORT_WINDOW_MS = 60 * 60 * 1000;
 
@@ -164,10 +164,10 @@ export class CustodyService {
   /**
    * Sign a rendition derivation statement on behalf of a custodied
    * uploader (spec 004-manifest.md §3.1). Kept as one isolated function
-   * per the build plan, even though `@boloka/kernel` already exposes
-   * `signDerivation` (verified against crates/boloka-wasm/src/lib.rs:
+   * per the build plan, even though `@evermesh/kernel` already exposes
+   * `signDerivation` (verified against crates/evermesh-wasm/src/lib.rs:
    * it builds the exact `[original, rendition, codec, width, height,
-   * bitrate]` statement and signs `"boloka:derivation:v1" ||
+   * bitrate]` statement and signs `"evermesh:derivation:v1" ||
    * BLAKE3-256(stmt)` — no gap to work around here).
    */
   async signDerivationFor(

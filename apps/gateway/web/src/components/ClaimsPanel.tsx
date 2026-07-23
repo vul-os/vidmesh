@@ -1,4 +1,4 @@
-import { RecordCard } from "@boloka/ui";
+import { RecordCard } from "@evermesh/ui";
 import type { ClaimView } from "../lib/api-types.js";
 
 export interface ClaimsPanelProps {

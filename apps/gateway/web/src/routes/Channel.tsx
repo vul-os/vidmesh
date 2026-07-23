@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Avatar } from "@boloka/ui";
+import { Avatar } from "@evermesh/ui";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { follow, getChannel, unfollow } from "../api.js";

@@ -1,4 +1,4 @@
-# Two boloka-relay instances, peered with each other, for the
+# Two evermesh-relay instances, peered with each other, for the
 # conformance suite's `relay/gossip-*` vectors (spec 006 §8) and manual
 # smoke testing of REQ/PUB/gossip over a real network.
 #
@@ -14,11 +14,11 @@ services:
   relay1:
     build:
       context: .
-      dockerfile: crates/boloka-relay/Dockerfile
+      dockerfile: crates/evermesh-relay/Dockerfile
     ports:
       - "8787:8787"
     volumes:
-      - ./deploy/relay1.json:/etc/boloka/relay.json:ro
+      - ./deploy/relay1.json:/etc/evermesh/relay.json:ro
       - relay1-data:/data
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8787/info"]
@@ -29,11 +29,11 @@ services:
   relay2:
     build:
       context: .
-      dockerfile: crates/boloka-relay/Dockerfile
+      dockerfile: crates/evermesh-relay/Dockerfile
     ports:
       - "8788:8787"
     volumes:
-      - ./deploy/relay2.json:/etc/boloka/relay.json:ro
+      - ./deploy/relay2.json:/etc/evermesh/relay.json:ro
       - relay2-data:/data
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8787/info"]

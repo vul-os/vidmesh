@@ -1,9 +1,9 @@
-//! The Boloka conformance suite (build plan §11): a shared vector
+//! The Evermesh conformance suite (build plan §11): a shared vector
 //! format plus per-target execution logic, used by both the vector
 //! generator (`src/bin/generate.rs`) and the runner (`src/main.rs`).
 //!
 //! This crate is deliberately thin: all protocol behavior comes from
-//! `boloka-kernel`. What lives here is the vector format itself
+//! `evermesh-kernel`. What lives here is the vector format itself
 //! ([`vectors`]) and the three ways to replay a vector set against a
 //! runtime ([`kernel_target`], [`node_target`], [`relay_target`]).
 

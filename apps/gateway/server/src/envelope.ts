@@ -2,7 +2,7 @@
  * Field extraction for the kernel's JSON interchange form (spec 001 §11).
  *
  * The envelope itself is a CBOR map with INTEGER keys 1-7 (spec 001 §1);
- * `to_json` (crates/boloka-kernel/src/codec.rs) maps integer map keys to
+ * `to_json` (crates/evermesh-kernel/src/codec.rs) maps integer map keys to
  * decimal-string keys generically, so `recordToJson()` returns an object
  * keyed `"1".."7"`, NOT named fields like `kind`/`author`. Only kind
  * *bodies* (key "5") use text keys, per spec 003 §2 — that part reads

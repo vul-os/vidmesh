@@ -35,7 +35,7 @@ export const DOCS = [
   ["spec/010-economics.md", "010-economics"],
   ["spec/011-threat-model.md", "011-threat-model"],
   ["spec/CHANGELOG.md", "changelog"],
-  ["spec/draft-boloka-protocol-00.md", "draft-boloka-protocol-00"],
+  ["spec/draft-evermesh-protocol-00.md", "draft-evermesh-protocol-00"],
   ["DECISIONS.md", "decisions"],
   ["docs/DMTAP-CONVERGENCE.md", "dmtap-convergence"],
 ];

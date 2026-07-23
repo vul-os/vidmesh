@@ -44,7 +44,7 @@ export function Policy(): JSX.Element {
             <p>
               <strong>Counts are this gateway&rsquo;s claims.</strong> View, comment, and reaction counts shown
               throughout this site reflect only what {policy.name} has selected and indexed — not a global count
-              across the Boloka network. Other gateways serving the same content may show different numbers.
+              across the Evermesh network. Other gateways serving the same content may show different numbers.
             </p>
           </section>
 

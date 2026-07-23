@@ -1,6 +1,6 @@
 # Security Policy
 
-Boloka is a decentralized video protocol built on self-certifying signed
+Evermesh is a decentralized video protocol built on self-certifying signed
 records and content-addressed blobs. The kernel's whole job is to make
 forgery, tampering and identity hijack detectable; the reference relay and
 gateway hold real secrets (signing keys, custodied identities) and face real
@@ -11,8 +11,8 @@ handled with priority.
 
 **Please do not open a public issue for security problems.**
 
-- Preferred: [GitHub private vulnerability reporting](https://github.com/vul-os/boloka/security/advisories/new) on `vul-os/boloka`.
-- Alternatively, email **vulosorg@gmail.com** with `[boloka security]` in the subject.
+- Preferred: [GitHub private vulnerability reporting](https://github.com/vul-os/evermesh/security/advisories/new) on `vul-os/evermesh`.
+- Alternatively, email **vulosorg@gmail.com** with `[evermesh security]` in the subject.
 
 Include what you can: affected component (kernel, relay, gateway server,
 gateway web, WASM bindings, a specific record kind), reproduction steps, and
@@ -49,7 +49,7 @@ Especially interested in:
   integration point are treated as critical regardless of how they're
   found ([apps/gateway/server/CSAM.md](apps/gateway/server/CSAM.md)).
 - **Conformance divergence with security impact** — a case where the
-  kernel, `@boloka/kernel` (WASM/Node), and the relay disagree on whether a
+  kernel, `@evermesh/kernel` (WASM/Node), and the relay disagree on whether a
   record or blob is valid. In this protocol a parser/verifier disagreement
   is a security bug, not a compatibility quirk
   ([tools/conformance](tools/conformance)).

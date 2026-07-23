@@ -7,7 +7,7 @@ import type { Config } from "tailwindcss";
  *
  * `brand` is signal lime — live, verified, actionable. `accent` is mesh
  * blue — identity, verification, the substrate. Crucially `slate` and
- * `red` are remapped too: components across this app and @boloka/ui reach
+ * `red` are remapped too: components across this app and @evermesh/ui reach
  * for stock `slate-*` neutrals and `red-*` errors, so overriding them here
  * means the whole interface re-skins from the token layer with no
  * component edits — which is exactly the constraint spec 009 §7 puts on a
@@ -36,7 +36,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{ts,tsx}",
-    // @boloka/ui ships .tsx sources with no build step; Tailwind's JIT
+    // @evermesh/ui ships .tsx sources with no build step; Tailwind's JIT
     // scanner must see them directly or their classes get purged.
     "../../../packages/ui/src/**/*.{ts,tsx}",
   ],

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { UploadCloudIcon } from "@boloka/ui";
+import { UploadCloudIcon } from "@evermesh/ui";
 import { useState, type ChangeEvent, type DragEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { getUploadStatus, upload } from "../api.js";

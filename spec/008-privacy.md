@@ -4,7 +4,7 @@
 **Depends on:** [001-kernel.md](001-kernel.md), [002-identity.md](002-identity.md), [003-kinds-registry.md](003-kinds-registry.md), [004-manifest.md](004-manifest.md)
 **Depended on by:** [009-gateway.md](009-gateway.md)
 
-Privacy in Boloka is key distribution, not server permission. The
+Privacy in Evermesh is key distribution, not server permission. The
 substrate never inspects blobs; encrypted content is ordinary blobs plus
 a manifest `encryption` field plus `keygrant` records. This file
 specifies the four privacy modes, the content encryption scheme, the

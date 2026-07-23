@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boloka — many gateways, one substrate</title>
-<meta name="description" content="Boloka is a decentralized media protocol: a self-certifying substrate of signed records and content-addressed blobs, served by independent gateways. No servers of record, no token, no mandatory dependencies.">
-<link rel="canonical" href="https://boloka.org/">
+<title>Evermesh — many gateways, one substrate</title>
+<meta name="description" content="Evermesh is a decentralized media protocol: a self-certifying substrate of signed records and content-addressed blobs, served by independent gateways. No servers of record, no token, no mandatory dependencies.">
+<link rel="canonical" href="https://evermesh.org/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://boloka.org/">
-<meta property="og:title" content="Boloka — many gateways, one substrate">
+<meta property="og:url" content="https://evermesh.org/">
+<meta property="og:title" content="Evermesh — many gateways, one substrate">
 <meta property="og:description" content="A decentralized media protocol built on signed records and content-addressed blobs. Independent gateways index and serve their own selection. No token, no servers of record.">
-<meta property="og:image" content="https://boloka.org/assets/og-image.png">
+<meta property="og:image" content="https://evermesh.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Boloka — many gateways, one substrate">
+<meta name="twitter:title" content="Evermesh — many gateways, one substrate">
 <meta name="twitter:description" content="A decentralized media protocol built on signed records and content-addressed blobs. No token, no servers of record.">
-<meta name="twitter:image" content="https://boloka.org/assets/og-image.png">
+<meta name="twitter:image" content="https://evermesh.org/assets/og-image.png">
 
 <!-- Theme + icons -->
 <meta name="theme-color" content="#FAFBF7" media="(prefers-color-scheme: light)">
@@ -38,10 +38,10 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="./" aria-label="Boloka home">
+    <a class="brand" href="./" aria-label="Evermesh home">
       <picture>
         <source srcset="assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
-        <img src="assets/logo.svg" alt="Boloka" width="98" height="26">
+        <img src="assets/logo.svg" alt="Evermesh" width="110" height="26">
       </picture>
     </a>
     <nav aria-label="Sections">
@@ -51,7 +51,7 @@
         <li><a href="#roles">Roles</a></li>
         <li><a href="#status">Status</a></li>
         <li><a href="docs.html">Docs</a></li>
-        <li><a class="nav-cta" href="https://github.com/vul-os/boloka">GitHub</a></li>
+        <li><a class="nav-cta" href="https://github.com/vul-os/evermesh">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -85,15 +85,19 @@
         <p class="eyebrow">Pre-alpha &middot; protocol first, product later</p>
         <h1>Many gateways.<br>One substrate.<br><em>Media that outlives its platforms.</em></h1>
         <p class="hero-sub">
-          Boloka splits media into a small, permanent <strong>substrate</strong> — signed
+          Evermesh splits media into a small, permanent <strong>substrate</strong> — signed
           records and content-addressed blobs that verify from their own bytes — and a
           competitive <strong>edge</strong> of gateways, nodes, and viewers that decides
           everything contested: moderation, discovery, monetization. No servers of record.
           No token. No company you have to trust, including ours.
         </p>
+        <p class="hero-flags" aria-label="Project status">
+          <span class="pill pill-none">Experimental — not production-ready</span>
+          <span class="pill pill-spec">Optionally built on <a href="docs.html#dmtap-convergence">DMTAP-PUB &sect;22</a></span>
+        </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="docs.html#000-overview">Read the spec</a>
-          <a class="btn btn-secondary" href="https://github.com/vul-os/boloka#development">Run a gateway</a>
+          <a class="btn btn-secondary" href="https://github.com/vul-os/evermesh#development">Run a gateway</a>
         </div>
       </div>
 
@@ -131,7 +135,7 @@
         </div>
         <div>
           <p class="lede">
-            Every design decision in Boloka answers one question:
+            Every design decision in Evermesh answers one question:
             <strong>does the network still work after every organization involved
             dies or betrays it?</strong>
           </p>
@@ -367,7 +371,7 @@
 
       <div class="section-body">
         <p class="status-note">
-          <strong>Boloka is pre-alpha.</strong> There is no deployment, no
+          <strong>Evermesh is pre-alpha.</strong> There is no deployment, no
           public gateway, and no app you can install. What exists is a normative
           spec, a protocol kernel, a relay, a reference gateway, and a
           conformance suite whose tests pass. Where code and spec disagree, the
@@ -388,17 +392,17 @@
                   <td><span class="pill pill-built">Complete for v1</span></td>
                 </tr>
                 <tr>
-                  <td class="path">boloka-kernel</td>
+                  <td class="path">evermesh-kernel</td>
                   <td>Records, identity rotation, blobs and chunk proofs, bundles, all 27 kinds</td>
                   <td><span class="pill pill-built">Implemented, tested</span></td>
                 </tr>
                 <tr>
-                  <td class="path">boloka-relay</td>
+                  <td class="path">evermesh-relay</td>
                   <td>Sync websocket, storage, subscriptions, gossip, PoW, retention, blob sidecar</td>
                   <td><span class="pill pill-built">Implemented, tested</span></td>
                 </tr>
                 <tr>
-                  <td class="path">boloka-wasm / kernel-ts</td>
+                  <td class="path">evermesh-wasm / kernel-ts</td>
                   <td>WASM bindings and the typed TS API over them</td>
                   <td><span class="pill pill-built">Implemented, tested</span></td>
                 </tr>
@@ -433,7 +437,7 @@
                   <td><span class="pill pill-spec">Later phase</span></td>
                 </tr>
                 <tr>
-                  <td class="path">boloka-node</td>
+                  <td class="path">evermesh-node</td>
                   <td>Desktop node (Tauri 2) — pins and seeds nothing yet</td>
                   <td><span class="pill pill-none">Scaffold only</span></td>
                 </tr>
@@ -502,7 +506,7 @@
         <li><a href="docs.html#009-gateway">009-gateway</a><span class="index-leader" aria-hidden="true"></span><span class="index-desc">gateway selection, compliance, legal toolkit, the uniform reference UI</span></li>
         <li><a href="docs.html#010-economics">010-economics</a><span class="index-leader" aria-hidden="true"></span><span class="index-desc">payment pointers, receipts, disclosures</span></li>
         <li><a href="docs.html#011-threat-model">011-threat-model</a><span class="index-leader" aria-hidden="true"></span><span class="index-desc">adversaries, attack surfaces, mitigations, residual risk</span></li>
-        <li><a href="docs.html#draft-boloka-protocol-00">IETF draft</a><span class="index-leader" aria-hidden="true"></span><span class="index-desc">the same protocol as an Internet-Draft</span></li>
+        <li><a href="docs.html#draft-evermesh-protocol-00">IETF draft</a><span class="index-leader" aria-hidden="true"></span><span class="index-desc">the same protocol as an Internet-Draft</span></li>
       </ol>
     </div>
   </section>
@@ -526,15 +530,15 @@
           <div class="faq-body">
             <p><strong>PeerTube</strong> federates independent servers, but each server still
             owns the identity and data of its own users — moving off one means
-            starting over. Boloka keeps identity and content self-certifying and
+            starting over. Evermesh keeps identity and content self-certifying and
             portable; gateways select and serve rather than own.</p>
             <p><strong>Nostr</strong> shares the substrate spirit — signed events distributed
-            through relays you choose. Boloka is built specifically for media on
+            through relays you choose. Evermesh is built specifically for media on
             top of that idea: native manifests, renditions, authorship claims, and
             offline bundles that a plain event feed does not define.</p>
             <p><strong>Bluesky / AT Protocol</strong> also uses rotation-based portable identity,
-            similar in spirit to Boloka's identity log. The difference is that
-            Boloka has no required global relay or app-view: every gateway builds
+            similar in spirit to Evermesh's identity log. The difference is that
+            Evermesh has no required global relay or app-view: every gateway builds
             its own view from scratch, and the protocol is designed to keep working
             partitioned, not just when everyone can reach a central firehose.</p>
           </div>
@@ -578,7 +582,7 @@
           </div>
         </details>
         <details class="faq-item">
-          <summary>Is Boloka converging with another protocol?</summary>
+          <summary>Is Evermesh converging with another protocol?</summary>
           <div class="faq-body">
             <p>Re-basing the substrate on a shared publish/subscribe layer
             (DMTAP §24) is <strong>under decision</strong> and has not been adopted. The
@@ -599,7 +603,7 @@
     <div>
       <picture>
         <source srcset="assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
-        <img src="assets/logo.svg" alt="Boloka" width="90" height="24">
+        <img src="assets/logo.svg" alt="Evermesh" width="101" height="24">
       </picture>
     </div>
     <div>
@@ -607,13 +611,13 @@
         <li><a href="docs.html">Docs</a></li>
         <li><a href="docs.html#000-overview">Spec</a></li>
         <li><a href="docs.html#changelog">Changelog</a></li>
-        <li><a href="https://github.com/vul-os/boloka">GitHub</a></li>
+        <li><a href="https://github.com/vul-os/evermesh">GitHub</a></li>
       </ul>
       <p class="footer-note">
         Code: MIT OR Apache-2.0. Specification: CC-BY-SA-4.0.
       </p>
       <p class="footer-note">
-        Boloka is stewarded by a foundation that operates nothing and publishes
+        Evermesh is stewarded by a foundation that operates nothing and publishes
         the spec, registries, and conformance suite in the open. If that
         foundation disappears, this page is the only thing that stops working.
       </p>

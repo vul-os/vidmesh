@@ -18,7 +18,7 @@ A bundle is a byte stream:
 
 ```
 bundle = magic || cbor_sequence
-magic  = 42 4C 4B 41 01            ; "BLKA" + format version 0x01
+magic  = 45 56 4D 53 01            ; "EVMS" + format version 0x01
 ```
 
 followed by a CBOR sequence (RFC 8742) of **items**, each a canonically

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Boloka mark — "three stones, kept in balance".
+  Evermesh mark — "the play button is a network node".
 
-  A cairn: three stacked stones, largest at the base, smallest (the
-  signal-lime capstone) on top. Stones are the oldest human way to mark
-  that something was here and should stay found — the mark for a project
-  named "to keep / to preserve" is a pile, not a play button. Reads as a
-  simple stacked silhouette at any size, including a 16px favicon.
-
-  Two colors, flat fills, no gradients/filters/text. The two base stones
-  are `currentColor` here so this file can be dropped inline into any UI
-  and inherit the surrounding text color; the standalone light/dark
-  lockups hard-code it instead. The capstone is always signal lime.
+  A signal-lime play triangle with three mesh edges leaving its vertices to
+  three outer nodes: the video is one point in a lattice that keeps going.
+  This is the original Vidmesh-era mark, restored: it was briefly retired
+  for a cairn during the short-lived "Boloka" name and is brought back
+  because "Evermesh" itself re-embraces the mesh image (see DECISIONS.md,
+  2026-07-23). Two colors, flat fills, no gradients/filters/text.
+  Structure (edges + outer nodes) is `currentColor` here so this file can
+  be dropped inline into any UI and inherit the surrounding text color;
+  the standalone light/dark lockups hard-code it instead.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Boloka">
-  <title>Boloka</title>
-  <!-- base stone -->
-  <path fill="currentColor" d="M46,183 C46,159 83,145 128,145 C173,145 210,159 210,183 C210,206 173,219 128,219 C83,219 46,206 46,183 Z" />
-  <!-- middle stone -->
-  <path fill="currentColor" d="M70,126 C70,105 100,92 132,92 C164,92 190,105 190,126 C190,145 164,157 132,157 C100,157 70,145 70,126 Z" />
-  <!-- capstone: the one piece that's always signal lime -->
-  <path fill="#A8E01F" d="M92,72 C92,55 110,44 132,44 C154,44 170,55 170,72 C170,87 154,97 132,97 C110,97 92,87 92,72 Z" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Evermesh">
+  <title>Evermesh</title>
+  <!-- mesh: edges out of each vertex, then the outer nodes -->
+  <g stroke="currentColor" stroke-width="12" stroke-linecap="round" fill="currentColor">
+    <path d="M84,72 L56,28" />
+    <path d="M84,184 L56,228" />
+    <path d="M190,128 L236,128" />
+    <circle cx="56" cy="28" r="13" stroke="none" />
+    <circle cx="56" cy="228" r="13" stroke="none" />
+    <circle cx="236" cy="128" r="13" stroke="none" />
+  </g>
+  <!-- the record itself: a play triangle, drawn fill+stroke in one color so
+       the corners round without a separate path -->
+  <path d="M84,72 L190,128 L84,184 Z" fill="#A8E01F" stroke="#A8E01F"
+        stroke-width="20" stroke-linejoin="round" />
 </svg>

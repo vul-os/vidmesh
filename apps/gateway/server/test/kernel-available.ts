@@ -1,5 +1,5 @@
 /**
- * Shared guard for tests that need @boloka/kernel's WASM build. The
+ * Shared guard for tests that need @evermesh/kernel's WASM build. The
  * kernel package ships its WASM artifact via `pnpm build:wasm`
  * (packages/kernel-ts/package.json); it is not committed, so a fresh
  * checkout won't have it until that's run. Tests that fabricate records
@@ -13,7 +13,7 @@ let cached: Promise<boolean> | undefined;
 export function kernelAvailable(): Promise<boolean> {
   cached ??= (async () => {
     try {
-      const kernel = await import("@boloka/kernel");
+      const kernel = await import("@evermesh/kernel");
       await kernel.init();
       return true;
     } catch {
@@ -31,6 +31,6 @@ export async function kernelTest(
   if (await kernelAvailable()) {
     test(name, fn);
   } else {
-    test(`${name} (SKIPPED: run 'pnpm --filter @boloka/kernel build:wasm' first)`, { skip: true }, () => {});
+    test(`${name} (SKIPPED: run 'pnpm --filter @evermesh/kernel build:wasm' first)`, { skip: true }, () => {});
   }
 }

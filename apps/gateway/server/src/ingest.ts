@@ -9,11 +9,11 @@
  *
  * `supersede` and `retract` need the *target* record's kind and author to
  * validate (spec 003 §§4.2-4.3 explicitly say this is NOT checked by the
- * kernel's single-record kind validation — see crates/boloka-kernel/src/
+ * kernel's single-record kind validation — see crates/evermesh-kernel/src/
  * kinds/content.rs doc comments on `Supersede::parse` / `Retract::parse`),
  * so this file is where that cross-record check lives.
  */
-import { verifyRecord, deriveId, validateKind, recordToJson } from "@boloka/kernel";
+import { verifyRecord, deriveId, validateKind, recordToJson } from "@evermesh/kernel";
 import type { Db } from "./db.ts";
 import type { PolicyEngine, FeedTakedownBody } from "./policy.ts";
 import type { CsamMatcher } from "./csam.ts";

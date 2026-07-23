@@ -1,6 +1,6 @@
 # apps/site
 
-boloka.org: a static landing page and a hash-routed docs viewer. No
+evermesh.org: a static landing page and a hash-routed docs viewer. No
 framework, no build step, no CDN. Deployable as a directory.
 
 ```
@@ -50,7 +50,7 @@ MIT), and the documents themselves.
 
 Before going live, check `<link rel="canonical">`, the `og:` URLs,
 `robots.txt` and `sitemap.xml` — they all assume the
-`https://boloka.org/` origin.
+`https://evermesh.org/` origin.
 
 ## Design
 

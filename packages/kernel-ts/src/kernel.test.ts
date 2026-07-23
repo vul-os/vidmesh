@@ -6,7 +6,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 
-const wasmBuilt = existsSync(new URL("../wasm/boloka_wasm_bg.wasm", import.meta.url));
+const wasmBuilt = existsSync(new URL("../wasm/evermesh_wasm_bg.wasm", import.meta.url));
 
 const t = wasmBuilt
   ? test

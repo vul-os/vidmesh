@@ -40,7 +40,7 @@ function writePolicyFile(dir: string): string {
  * requirement) and no ffmpegPath (the "no ffmpeg" requirement).
  */
 async function buildTestApp(): Promise<{ app: FastifyInstance; db: Db; config: Config }> {
-  const dir = mkdtempSync(join(tmpdir(), "boloka-api-test-"));
+  const dir = mkdtempSync(join(tmpdir(), "evermesh-api-test-"));
   const config = parseConfig({
     dbPath: ":memory:",
     blobDir: join(dir, "blobs"),
@@ -179,7 +179,7 @@ await kernelTest("export requires a valid session and re-confirms the password",
 });
 
 function buildMultipart(fields: Record<string, string>, file: Buffer): { body: Buffer; contentType: string } {
-  const boundary = `----bolokatest${Math.random().toString(16).slice(2)}`;
+  const boundary = `----evermeshtest${Math.random().toString(16).slice(2)}`;
   const parts: Buffer[] = [];
   for (const [k, v] of Object.entries(fields)) {
     parts.push(Buffer.from(`--${boundary}\r\nContent-Disposition: form-data; name="${k}"\r\n\r\n${v}\r\n`));

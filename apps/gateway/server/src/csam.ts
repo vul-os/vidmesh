@@ -29,7 +29,7 @@ export interface CsamMatcher {
  * Always returns `{ match: false }`. NOT-FOR-PRODUCTION (CSAM.md): running
  * real user traffic on this implementation is non-compliant with the
  * reference gateway's own requirements (spec 009-gateway.md §4) and is not
- * covered by the Boloka trademark program, regardless of how the rest of
+ * covered by the Evermesh trademark program, regardless of how the rest of
  * the stack is configured. It exists purely so the gateway can boot and be
  * developed against without a live vendor integration.
  *

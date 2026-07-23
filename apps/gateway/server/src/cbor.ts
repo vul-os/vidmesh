@@ -4,7 +4,7 @@
  * Scope is deliberately narrow: this exists to encode/decode the relay
  * websocket frames of spec 006-relay.md §1 (arrays, text, byte strings,
  * unsigned integers, maps with text keys, bool, null) — NOT to replace
- * the kernel's record codec (records are built/verified by @boloka/kernel,
+ * the kernel's record codec (records are built/verified by @evermesh/kernel,
  * which does its own canonical CBOR internally). We never encode or decode
  * negative integers or floats because no relay frame or gateway-internal
  * use needs them (spec 001 §2 bans floats in kernel structures entirely).

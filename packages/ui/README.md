@@ -1,6 +1,6 @@
-# @boloka/ui
+# @evermesh/ui
 
-Shared React components for every Boloka gateway frontend. This is the
+Shared React components for every Evermesh gateway frontend. This is the
 component layer of the **uniform reference UI** (spec
 [009-gateway.md](../../spec/009-gateway.md) §7): gateways differ by
 domain, catalog, and branding accents — never by reimplementing the
@@ -21,7 +21,7 @@ rather than re-building these pieces.
 ## Player API
 
 ```tsx
-import { Player } from "@boloka/ui";
+import { Player } from "@evermesh/ui";
 
 <Player
   hls="/media/hls/abc123/master.m3u8"
@@ -54,13 +54,13 @@ marks are presentational.
 `VerifiedBadge` is presentational only — it does not itself call the
 kernel. The consuming app performs the actual verification (fetch
 `/api/records/{id}/cbor`, run `verifyRecord` + `deriveId` from
-`@boloka/kernel`, compare the derived id to the requested id) and maps
+`@evermesh/kernel`, compare the derived id to the requested id) and maps
 the result to `state: "verifying" | "verified" | "failed"`. See
 `apps/gateway/web/src/lib/verify.ts` for the reference implementation.
 
 ## Using this package in a gateway frontend
 
-1. Add `"@boloka/ui": "workspace:*"` (or a published version) and
+1. Add `"@evermesh/ui": "workspace:*"` (or a published version) and
    `react`/`react-dom` as dependencies.
 2. **Tailwind:** these components are styled with Tailwind utility
    classes and ship no CSS of their own. Your app's `tailwind.config`
@@ -89,5 +89,5 @@ the result to `state: "verifying" | "verified" | "failed"`. See
 
 No build step for consumers using the monorepo directly (`main`/`types`
 point straight at `src/index.ts`; the consuming Vite app compiles
-these `.tsx` files itself). `pnpm --filter @boloka/ui lint` runs
+these `.tsx` files itself). `pnpm --filter @evermesh/ui lint` runs
 `tsc --noEmit` in strict mode.

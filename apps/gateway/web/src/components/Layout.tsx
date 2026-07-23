@@ -1,4 +1,4 @@
-import { MoonIcon, SearchIcon, SunIcon } from "@boloka/ui";
+import { MoonIcon, SearchIcon, SunIcon } from "@evermesh/ui";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useMe } from "../hooks/useMe.js";
@@ -7,7 +7,7 @@ import { useTheme } from "../hooks/useTheme.js";
 /**
  * The header/nav/footer shell every page renders inside. Owns the parts
  * of the uniform UI that must not vary by gateway product decisions:
- * the skip link, the dark-mode toggle, and the "powered by boloka" +
+ * the skip link, the dark-mode toggle, and the "powered by evermesh" +
  * moderation-policy footer link (spec 009 §7).
  */
 export function Layout(): JSX.Element {
@@ -57,7 +57,7 @@ export function Layout(): JSX.Element {
                 d="M90,68 C90,49 110,37 132,37 C154,37 172,49 172,68 C172,85 154,97 132,97 C110,97 90,85 90,68 Z"
               />
             </svg>
-            <span className="font-display text-lg font-extrabold tracking-tight">boloka</span>
+            <span className="font-display text-lg font-extrabold tracking-tight">evermesh</span>
           </Link>
 
           <form role="search" onSubmit={onSearch} className="flex min-w-[12rem] flex-1 items-center">
@@ -107,8 +107,8 @@ export function Layout(): JSX.Element {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4">
           <p>
             Powered by{" "}
-            <a href="https://boloka.org" className="font-medium text-signal hover:underline">
-              boloka
+            <a href="https://evermesh.org" className="font-medium text-signal hover:underline">
+              evermesh
             </a>
             {" "}— many gateways, one substrate.
           </p>

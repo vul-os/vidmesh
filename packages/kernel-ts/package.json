@@ -1,7 +1,7 @@
 {
-  "name": "@boloka/kernel",
+  "name": "@evermesh/kernel",
   "version": "0.0.1",
-  "description": "Typed TypeScript API over the Boloka WASM kernel",
+  "description": "Typed TypeScript API over the Evermesh WASM kernel",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -16,7 +16,7 @@
   },
   "files": ["dist", "wasm"],
   "scripts": {
-    "build:wasm": "wasm-pack build ../../crates/boloka-wasm --target web --out-dir ../../packages/kernel-ts/wasm --out-name boloka_wasm --no-pack --release",
+    "build:wasm": "wasm-pack build ../../crates/evermesh-wasm --target web --out-dir ../../packages/kernel-ts/wasm --out-name evermesh_wasm --no-pack --release",
     "build": "tsc -p tsconfig.build.json && node scripts/emit-cjs.mjs",
     "lint": "tsc --noEmit",
     "test": "node --test --experimental-strip-types \"src/**/*.test.ts\""

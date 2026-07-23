@@ -29,7 +29,7 @@ importers:
 
   apps/gateway/server:
     dependencies:
-      '@boloka/kernel':
+      '@evermesh/kernel':
         specifier: workspace:*
         version: link:../../../packages/kernel-ts
       '@fastify/cookie':
@@ -69,10 +69,10 @@ importers:
 
   apps/gateway/web:
     dependencies:
-      '@boloka/kernel':
+      '@evermesh/kernel':
         specifier: workspace:*
         version: link:../../../packages/kernel-ts
-      '@boloka/ui':
+      '@evermesh/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
       '@fontsource/hanken-grotesk':

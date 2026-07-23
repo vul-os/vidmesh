@@ -1,8 +1,8 @@
 {
-  "name": "boloka-monorepo",
+  "name": "evermesh-monorepo",
   "version": "0.1.0",
   "private": true,
-  "description": "Boloka monorepo root. See README.md.",
+  "description": "Evermesh monorepo root. See README.md.",
   "scripts": {
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",

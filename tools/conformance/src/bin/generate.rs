@@ -1,4 +1,4 @@
-//! Deterministic vector generator for the Boloka conformance suite
+//! Deterministic vector generator for the Evermesh conformance suite
 //! (build plan §11). Writes the full vector tree under
 //! `tools/conformance/vectors/`.
 //!
@@ -14,7 +14,7 @@
 //!
 //! This binary constructs every kind record with plain
 //! [`RecordBuilder`] + [`Value`] bodies built directly from spec
-//! 003/004's schemas, not via `boloka_kernel::kinds` (that module is
+//! 003/004's schemas, not via `evermesh_kernel::kinds` (that module is
 //! being written in parallel and is not part of the compiled crate
 //! yet — see the top-level report).
 
@@ -22,14 +22,14 @@ use std::collections::BTreeMap;
 use std::fs;
 use std::path::PathBuf;
 
-use boloka_kernel::blob::{hash_blob, verify_chunk, CHUNK_SIZE};
-use boloka_kernel::bundle::MAGIC as BUNDLE_MAGIC;
-use boloka_kernel::codec::{self, Value};
-use boloka_kernel::identity::{AlgKey, Identity, IdentityState, Keypair};
-use boloka_kernel::ids::{BlobId, IdentityId, RecordId};
-use boloka_kernel::record::{Record, RecordBuilder, Ref};
+use evermesh_kernel::blob::{hash_blob, verify_chunk, CHUNK_SIZE};
+use evermesh_kernel::bundle::MAGIC as BUNDLE_MAGIC;
+use evermesh_kernel::codec::{self, Value};
+use evermesh_kernel::identity::{AlgKey, Identity, IdentityState, Keypair};
+use evermesh_kernel::ids::{BlobId, IdentityId, RecordId};
+use evermesh_kernel::record::{Record, RecordBuilder, Ref};
 
-use boloka_conformance::vectors::{
+use evermesh_conformance::vectors::{
     error_class, BundleExpected, IdentityExpected, Layer, Vector, VectorData,
 };
 
@@ -332,10 +332,10 @@ fn kind_invalid(
 
 // ---------------------------------------------------------------------
 // spec 004 §3.1 derivation statement (implemented here, not imported
-// from `boloka_kernel::kinds`, per the task brief).
+// from `evermesh_kernel::kinds`, per the task brief).
 // ---------------------------------------------------------------------
 
-const DERIVATION_SIG_PREFIX: &[u8] = b"boloka:derivation:v1";
+const DERIVATION_SIG_PREFIX: &[u8] = b"evermesh:derivation:v1";
 
 fn derivation_statement(
     original: BlobId,
@@ -357,7 +357,7 @@ fn derivation_statement(
 }
 
 /// Sign a derivation statement (spec 004 §3.1). Reuses
-/// `boloka_kernel::blob::hash_blob` for the BLAKE3-256 hashing step —
+/// `evermesh_kernel::blob::hash_blob` for the BLAKE3-256 hashing step —
 /// legitimate since both are literally "BLAKE3-256 of these bytes";
 /// this crate deliberately does not add a direct `blake3` dependency.
 fn sign_derivation(producer: &Keypair, stmt: &[u8]) -> Vec<u8> {
@@ -476,7 +476,7 @@ fn build_envelope_group(vectors: &mut Vec<Vector>) {
     let group = "envelope";
     let signer = kp(1);
     let identity = IdentityId([0x11; 32]);
-    let body_text = "hello, boloka";
+    let body_text = "hello, evermesh";
     let valid = build(
         32, // comment
         vec![Ref::record(TARGET_MANIFEST)],
@@ -2161,7 +2161,7 @@ fn chunk_proof_vector(
 }
 
 fn build_chunktree_group(vectors: &mut Vec<Vector>) {
-    use boloka_kernel::blob::ChunkTree;
+    use evermesh_kernel::blob::ChunkTree;
     let group = "chunktree";
 
     // 0 chunks: the empty blob has no chunk tree; any index is out of
@@ -2293,7 +2293,7 @@ fn build_bundle_group(vectors: &mut Vec<Vector>) {
     let small_id = hash_blob(&small_blob);
 
     // A 3 MiB (plus a short remainder) blob, hand-split into 1 MiB `bp`
-    // parts. Note: `boloka_kernel::bundle::Bundle::export` only
+    // parts. Note: `evermesh_kernel::bundle::Bundle::export` only
     // auto-splits blobs over `PART_SPLIT_THRESHOLD` (16 MiB, spec 007
     // §1's stated floor); this fixture is hand-assembled at the item
     // level to exercise the `bp` import path with a much smaller blob,

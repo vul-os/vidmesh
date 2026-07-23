@@ -1,7 +1,7 @@
 /**
- * @boloka/kernel — typed TypeScript API over the Boloka WASM kernel.
+ * @evermesh/kernel — typed TypeScript API over the Evermesh WASM kernel.
  *
- * Everything here delegates to `crates/boloka-wasm` (the same Rust
+ * Everything here delegates to `crates/evermesh-wasm` (the same Rust
  * kernel that runs natively), so ids, signatures, and canonical bytes
  * are identical across Rust, Node, and browsers. Call {@link init} once
  * before anything else (all helpers await it internally, so explicit
@@ -13,7 +13,7 @@
  * `"hex:<hex>"` strings.
  */
 
-import initWasm, * as wasm from "../wasm/boloka_wasm.js";
+import initWasm, * as wasm from "../wasm/evermesh_wasm.js";
 
 let ready: Promise<void> | undefined;
 
@@ -26,7 +26,7 @@ export function init(): Promise<void> {
 async function load(): Promise<void> {
   if (typeof process !== "undefined" && process.versions?.node) {
     const { readFile } = await import("node:fs/promises");
-    const bytes = await readFile(new URL("../wasm/boloka_wasm_bg.wasm", import.meta.url));
+    const bytes = await readFile(new URL("../wasm/evermesh_wasm_bg.wasm", import.meta.url));
     await initWasm({ module_or_path: bytes });
   } else {
     // Browser: wasm-pack's default relative fetch.

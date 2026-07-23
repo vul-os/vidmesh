@@ -1,7 +1,7 @@
-# Boloka ↔ DMTAP-PUB convergence
+# Evermesh ↔ DMTAP-PUB convergence
 
 *Phase 1 shipped under this project's former name, Vidmesh; every path and
-crate name below has been updated to match the current (Boloka) tree — the
+crate name below has been updated to match the current (Evermesh) tree — the
 analysis and the FOUNDER-GATED recommendation are otherwise unchanged by the
 rename.*
 
@@ -11,11 +11,11 @@ but NOT started, and remains FOUNDER-GATED.**
 Phase 1 was additive and reversible: a §22 encode/decode path now exists
 *beside* the native format, behind a default-off feature flag. **No existing
 byte format changed and no existing test changed.** Deleting
-`crates/boloka-kernel/src/dmtap_pub.rs`, its test files, and the optional
+`crates/evermesh-kernel/src/dmtap_pub.rs`, its test files, and the optional
 dependency returns the repo exactly to where it was.
 
 - **What it proves:** all **15 frozen §22 conformance vectors** from the spec
-  repo pass **byte-exact** through boloka's §22 path.
+  repo pass **byte-exact** through evermesh's §22 path.
 - **How it avoids a third dialect:** §22 is **consumed** from envoir's
   `dmtap-core`, not reimplemented.
 - **Test counts:** 251 Rust tests before → **251 unchanged** by default,
@@ -23,12 +23,12 @@ dependency returns the repo exactly to where it was.
   **189 / 142 / 115** before and after, zero failures.
 
 Jump to [Phase 1: what was built and proved](#phase-1-what-was-built-and-proved),
-the [byte-level mapping](#byte-level-mapping-boloka--22), or the
+the [byte-level mapping](#byte-level-mapping-evermesh--22), or the
 [Phase 2 specification](#phase-2-specification-the-cutover--not-started).
 
 ## The question
 
-Boloka built its own **self-certifying substrate** — a signed-record kernel
+Evermesh built its own **self-certifying substrate** — a signed-record kernel
 (CBOR envelope, Ed25519, BLAKE3), a content-addressed blob layer with
 chunk-tree range proofs, an identity/rotation model, and a `/sync` relay.
 Independently, the **DMTAP** protocol (in `~/code/vulos/dmtap`) has grown
@@ -39,30 +39,30 @@ surface. §23 (the CAD/artifact profile) is the first application over it, and a
 **§24 video profile is being authored right now**; **envoir** is implementing
 §22 in Rust.
 
-DMTAP-PUB and boloka solve the *same substrate problem* — a signed, publicly
+DMTAP-PUB and evermesh solve the *same substrate problem* — a signed, publicly
 verifiable, content-addressed, dedup-friendly, trustlessly-servable object graph
 keyed to a sovereign identity — with **different bytes**. That is the
 duplication this document is about.
 
 Two routes:
 
-- **(a) Keep the parallel substrate.** Boloka stays its own protocol; DMTAP-PUB
+- **(a) Keep the parallel substrate.** Evermesh stays its own protocol; DMTAP-PUB
   is a sibling that happens to overlap. Two codecs, two identity models, two
   serving surfaces, two conformance suites, two ecosystems.
-- **(b) Re-base the application onto DMTAP-PUB.** Boloka's *video-specific*
+- **(b) Re-base the application onto DMTAP-PUB.** Evermesh's *video-specific*
   layer becomes the **DMTAP-PUB §24 video profile** — the exact relationship
   §23 (CAD) has to §22 — riding envoir's Rust §22 implementation. One substrate,
-  one identity model, one serving surface; boloka keeps everything that makes it
+  one identity model, one serving surface; evermesh keeps everything that makes it
   *video* and contributes its substrate innovations upstream.
 
 **Recommendation: (b), founder-gated.** Reasoning and cost below.
 
 ## Why the two substrates are the same shape
 
-| Concern | Boloka | DMTAP-PUB §22 |
+| Concern | Evermesh | DMTAP-PUB §22 |
 |---|---|---|
 | Signed object | `Record`: CBOR map keys 1–7, `kind`+`refs`+`body`+`sig` (spec 001) | `PubAnnounce` (kind `0x40`): integer-keyed CBOR, `pub`/`roots`/`meta`/`sig` (§22.3) |
-| Object id | `BLAKE3-256(canonical bytes)`, bare 32 bytes; sig over `"boloka:record:v1" ‖ id` (P2/P3) | `announce_id = 0x1e ‖ BLAKE3-256(det_cbor)`; sig over `"DMTAP-PUB-v0/announce" ‖ 0x00 ‖ det_cbor(∖sig)` (§22.3.1) |
+| Object id | `BLAKE3-256(canonical bytes)`, bare 32 bytes; sig over `"evermesh:record:v1" ‖ id` (P2/P3) | `announce_id = 0x1e ‖ BLAKE3-256(det_cbor)`; sig over `"DMTAP-PUB-v0/announce" ‖ 0x00 ‖ det_cbor(∖sig)` (§22.3.1) |
 | Content-addressed blob | `Manifest` + chunk tree, 1 MiB chunks, `0x00`/`0x01` domain-sep, odd-node promotion (P6) | `PubManifest`, RFC-6962 tree, DS-tag `"DMTAP-PUB-v0/manifest"` folded into every leaf/node, `h_i = 0x1e ‖ BLAKE3(plaintext_i)` (§22.2.2) |
 | Per-blob chunk self-verification | `blob::verify_chunk` + `ChunkTree::prove` (range proofs) | inherited from §5.5, `h_i` self-verify; range-proof construction unspecified |
 | Author ordering / anti-rollback | none at substrate level (relay gossip + identity rotation finality) | `FeedHead`/`FeedEntry`: monotonic `seq`, `prev` hash-chain, fork-detectable (§22.4) |
@@ -77,16 +77,16 @@ The *bytes* differ. Maintaining both means paying twice for one idea.
 ## Migration cost (route b)
 
 What actually has to change lives almost entirely in the **substrate crates**
-(`boloka-kernel`, `boloka-relay`, `boloka-wasm`). The **application layer
+(`evermesh-kernel`, `evermesh-relay`, `evermesh-wasm`). The **application layer
 survives** (next section).
 
 | Area | Change | Cost | Notes |
 |---|---|---|---|
-| **DS-tags** | Replace `"boloka:record:v1"` / `"boloka:derivation:v1"` with the DMTAP-PUB DS-tag family (`DMTAP-PUB-v0/{announce,feed,manifest}` ‖ `0x00`) | **Low** | Mechanical; touches signing/verify preimages only. Isolated in `record.rs` / `content.rs`. |
-| **Envelope shape** | Boloka's one universal `Record` becomes a small set of DMTAP-PUB object types (`PubAnnounce` for what is published; `meta` carries the video schema). The **kinds registry stops being a wire concept and becomes a `meta` schema** (like §23's `"artifact"` key) | **Medium** | Conceptual, not just mechanical: "everything is a Record" → "everything published is an announce carrying a profile schema". Kinds like `manifest`, `comment`, `playlist`, `channel` re-express as §24 `meta` schemas or as their own announces. |
+| **DS-tags** | Replace `"evermesh:record:v1"` / `"evermesh:derivation:v1"` with the DMTAP-PUB DS-tag family (`DMTAP-PUB-v0/{announce,feed,manifest}` ‖ `0x00`) | **Low** | Mechanical; touches signing/verify preimages only. Isolated in `record.rs` / `content.rs`. |
+| **Envelope shape** | Evermesh's one universal `Record` becomes a small set of DMTAP-PUB object types (`PubAnnounce` for what is published; `meta` carries the video schema). The **kinds registry stops being a wire concept and becomes a `meta` schema** (like §23's `"artifact"` key) | **Medium** | Conceptual, not just mechanical: "everything is a Record" → "everything published is an announce carrying a profile schema". Kinds like `manifest`, `comment`, `playlist`, `channel` re-express as §24 `meta` schemas or as their own announces. |
 | **Multihash prefix** | Prefix every content address with `0x1e` (BLAKE3-256), per §18.1.5 hash-agility | **Low** | `ids.rs` (`BlobId`/`RecordId` gain the prefix on the wire); enables FIPS/SHA-2 migration and Git-LFS interop for free. |
-| **Chunk tree** | Move from odd-node-promotion + bare `0x00`/`0x01` to the **RFC-6962 split rule with the DS-tag folded into leaf/node** (§22.2.2) | **Medium–High** | The deepest byte change. But boloka's *range-proof* code is exactly what §22 lacks — see "contribute upstream". Reuses `ChunkTree` machinery; only the split rule + domain-sep bytes change. |
-| **Feed / anti-rollback** | Adopt `FeedHead`/`FeedEntry`: per-author append-only log, monotonic `seq`, `prev` chain (§22.4) | **Medium (new)** | A primitive boloka does not have today. Gives ordering, discovery, and anti-rollback the relay's gossip only approximates. |
+| **Chunk tree** | Move from odd-node-promotion + bare `0x00`/`0x01` to the **RFC-6962 split rule with the DS-tag folded into leaf/node** (§22.2.2) | **Medium–High** | The deepest byte change. But evermesh's *range-proof* code is exactly what §22 lacks — see "contribute upstream". Reuses `ChunkTree` machinery; only the split rule + domain-sep bytes change. |
+| **Feed / anti-rollback** | Adopt `FeedHead`/`FeedEntry`: per-author append-only log, monotonic `seq`, `prev` chain (§22.4) | **Medium (new)** | A primitive evermesh does not have today. Gives ordering, discovery, and anti-rollback the relay's gossip only approximates. |
 | **Serving surface** | Add `/.well-known/dmtap-pub/{feed,announce,manifest,chunk}` and advertise `pub-1` | **Low** | The relay's `/blob` sidecar (content-addressed GET + range + immutable caching) is ~80% of the `chunk`/`manifest`/`announce` endpoints already. `/sync` gossip can remain as an optimization beside the well-known surface. |
 | **Error model** | Map kernel `Error` onto the `ERR_PUB_*` (`0x09xx`) registry (§22.10) | **Low** | Naming/telemetry alignment; behavior (fail-closed) already matches. |
 | **Conformance** | Re-target the suite's vectors at the DMTAP-PUB object types; contribute them to the §22/§24 conformance corpus | **Medium** | The three-runtime harness is reusable as-is; the vectors change shape. |
@@ -96,7 +96,7 @@ engine, key custody, the gateway API, and the entire web UI + verification badge
 
 ## What survives (the application layer is the moat)
 
-None of the following cares whether the substrate is boloka-native or
+None of the following cares whether the substrate is evermesh-native or
 DMTAP-PUB — they sit *above* the object graph:
 
 - **Kinds registry → §24 video schema.** The 27 kinds become the video
@@ -115,25 +115,25 @@ The moat was never the CBOR dialect. It is video-specific: transcode economics,
 the uniform reference UI (a trademark-level requirement, spec 009 §7), and the
 gateway selection model. Route (b) keeps all of it.
 
-## What boloka contributes upstream
+## What evermesh contributes upstream
 
-Re-basing is not a surrender; boloka's substrate has three things §22/§24 should
+Re-basing is not a surrender; evermesh's substrate has three things §22/§24 should
 adopt:
 
 1. **Chunk-tree range proofs.** §22.2 gives per-chunk self-verification but no
    *range-proof* construction (prove chunk `i` against the root with a sibling
-   path). Boloka's `ChunkTree::prove` / `blob::verify_chunk` and the relay's
+   path). Evermesh's `ChunkTree::prove` / `blob::verify_chunk` and the relay's
    `GET /blob/{id}/proof?chunk=i` endpoint are exactly that primitive, already
    tested and wired into the conformance suite. Contribute the range-proof
    grammar to the §22 manifest profile (adjusted to the RFC-6962 + DS-tag tree).
-2. **Rotation-log finality / anti-equivocation.** Boloka identity rotation
+2. **Rotation-log finality / anti-equivocation.** Evermesh identity rotation
    resolves forks by **recovery > signing** class and a **contest-window
    finality** rule with verifier-local first-seen times (spec 002 §4, P9) — a
    richer anti-equivocation model than a `FeedHead`'s monotonic `seq` alone.
    Contribute it to harden feed/identity fork handling (§22.4.2 already reaches
    for "fork = HALT_ALERT with transferable evidence"; this makes finality
    precise).
-3. **Fetch-hint registry.** Boloka manifests carry per-blob retrieval **hints**
+3. **Fetch-hint registry.** Evermesh manifests carry per-blob retrieval **hints**
    (a registry of where/how to fetch a content address). §22 stops at the
    content address and the `/.well-known` surface; a fetch-hint registry gives
    swarm/CDN/mirror discovery a typed home. Contribute it as a §22 (or §24)
@@ -155,12 +155,12 @@ The counter: (a) permanently pays double for one idea, fragments identity and
 serving across two incompatible ecosystems, and forfeits the network effect of
 sharing envoir/DMTAP's substrate, holders, and identity graph — for a *video*
 product whose actual differentiation is not in the CBOR layer. The independence
-(a) buys is independence from the exact ecosystem boloka would most benefit from
+(a) buys is independence from the exact ecosystem evermesh would most benefit from
 joining.
 
 ## Recommendation
 
-**Adopt route (b): re-base boloka's video layer as the DMTAP-PUB §24 video
+**Adopt route (b): re-base evermesh's video layer as the DMTAP-PUB §24 video
 profile, on envoir's Rust §22 substrate, and contribute range proofs,
 rotation-log finality, and the fetch-hint registry upstream.** The migration cost
 is real but bounded to the substrate crates; the application layer — the moat —
@@ -169,8 +169,8 @@ survives intact.
 **This is FOUNDER-GATED.** Concretely, before any substrate byte changes:
 
 1. Founder confirms the strategic direction (one substrate vs. two).
-2. §24 reaches enough of a draft to target (or boloka co-authors it — the video
-   profile is boloka's to write, the way §23 is CAD's).
+2. §24 reaches enough of a draft to target (or evermesh co-authors it — the video
+   profile is evermesh's to write, the way §23 is CAD's).
 3. envoir's §22 Rust implementation is a consumable dependency.
 
 **Gates 2 and 3 are now MET** (see below): §24 is written through §24.15
@@ -182,7 +182,7 @@ where it did.
 
 # Phase 1: what was built and proved
 
-Phase 1 asked one question: *can a §22 path exist inside boloka without
+Phase 1 asked one question: *can a §22 path exist inside evermesh without
 disturbing anything, and does it actually agree with the spec?* Both answers are
 yes, with evidence.
 
@@ -194,9 +194,9 @@ yes, with evidence.
 dmtap-core = { git = "https://github.com/vul-os/envoir", rev = "12526123…", optional = true }
 ```
 
-`crates/boloka-kernel/src/dmtap_pub.rs` **re-exports** `PubAnnounce`,
+`crates/evermesh-kernel/src/dmtap_pub.rs` **re-exports** `PubAnnounce`,
 `PubManifest`, `FeedHead`/`FeedEntry`, `check_anti_rollback`, `ServePolicy` and
-the `ERR_PUB_*` registry verbatim. Boloka owns **none** of the §22 object code.
+the `ERR_PUB_*` registry verbatim. Evermesh owns **none** of the §22 object code.
 
 This was the deciding constraint. A vendored copy or a careful re-port would
 have produced a *second divergent implementation of §22* — precisely the
@@ -207,19 +207,19 @@ applies. It is `optional = true` and `default = []`, so the heavy PQ crypto in
 `dmtap-core` (`ml-dsa`, `x-wing`, `hpke`) never enters the default build or the
 WASM target.
 
-What boloka *does* own is the **bridge**: multihash prefix add/strip, blob →
-`PubManifest` construction at boloka's 1 MiB chunking, identity reinterpretation,
+What evermesh *does* own is the **bridge**: multihash prefix add/strip, blob →
+`PubManifest` construction at evermesh's 1 MiB chunking, identity reinterpretation,
 and the §24-profile `meta` framing of a native record.
 
 ## The proof: frozen vectors, byte-exact
 
-`crates/boloka-kernel/tests/dmtap_pub_vectors.rs` runs the spec repo's frozen
+`crates/evermesh-kernel/tests/dmtap_pub_vectors.rs` runs the spec repo's frozen
 corpus (`dmtap/conformance/vectors/pub_vectors.json`, vendored verbatim;
 sha256 `43a4ab54fee10fea3997f99605e01fb9b7dc9b465da32cd365cd3413c0be81f4`).
 
 Those vectors were generated **from the specification text** by a script that
 does not import the reference crate, and are cross-checked by a second
-from-scratch implementation. Passing them means boloka's §22 path agrees with
+from-scratch implementation. Passing them means evermesh's §22 path agrees with
 **the spec**, not merely with envoir.
 
 | Vector | §22 area | Asserted |
@@ -247,12 +247,12 @@ skipping.
 
 ### 1. Identity key material is already compatible (cheaper than expected)
 
-A boloka `Keypair` and a §22 `IdentityKey` are both Ed25519 keys built from 32
+A evermesh `Keypair` and a §22 `IdentityKey` are both Ed25519 keys built from 32
 secret seed bytes (RFC 8032). `keypair_to_identity_key` is a reinterpretation,
 and the public key is **bit-identical** on both sides
 (test: `identity_key_material_is_shared`).
 
-**Consequence: there is no key migration.** An existing boloka author can
+**Consequence: there is no key migration.** An existing evermesh author can
 publish §22 objects under the identity they already have. Only the *signing
 preimages* differ. This is the single cheapest thing about the convergence and
 it was not previously established.
@@ -263,15 +263,15 @@ DMTAP §24.14 item 4 states that on migration "the **chunk leaf hashes are
 identical** (bare-chunk BLAKE3) … so re-derivation is a **tree recompute over
 the existing chunk hashes**, not a re-read of the media bytes."
 
-**This is not true of boloka's format.** Boloka folds its `0x00` leaf tag
+**This is not true of evermesh's format.** Evermesh folds its `0x00` leaf tag
 *inside* the hash:
 
 | | preimage | value for the vector's chunk |
 |---|---|---|
-| boloka stored leaf | `BLAKE3(0x00 ‖ chunk)` | `b10e6dab…088339` |
+| evermesh stored leaf | `BLAKE3(0x00 ‖ chunk)` | `b10e6dab…088339` |
 | §22 needs `h_i` | `0x1e ‖ BLAKE3(chunk)` | `1e458cd8…301eaf` |
 
-Boloka never persisted `BLAKE3(chunk)` anywhere. (The §22 value above matches
+Evermesh never persisted `BLAKE3(chunk)` anywhere. (The §22 value above matches
 the frozen `pub_manifest_single_chunk` vector byte-for-byte, so the comparison
 is corpus-anchored, not hand-derived.)
 
@@ -280,41 +280,41 @@ media byte** — a full pass over the video corpus, not a cheap metadata-only tr
 recompute over retained digests. For a video platform that is the difference
 between a metadata migration and an I/O-bound one, and it must be budgeted.
 
-Both findings are pinned by tests (`stored_boloka_leaf_is_not_the_pub_chunk_address`,
+Both findings are pinned by tests (`stored_evermesh_leaf_is_not_the_pub_chunk_address`,
 `divergence::chunk_digests_for`) so neither claim can silently rot. **This should
 be filed as an erratum against §24.14 item 4.**
 
 ---
 
-# Byte-level mapping: boloka → §22
+# Byte-level mapping: evermesh → §22
 
 Concrete differences, object by object. "Same shape, different bytes" made precise.
 
 ## `Record` → `PubAnnounce` (§22.3)
 
-| Aspect | boloka `Record` | §22 `PubAnnounce` | Difference |
+| Aspect | evermesh `Record` | §22 `PubAnnounce` | Difference |
 |---|---|---|---|
 | Envelope | CBOR map, integer keys 1–7 | CBOR map, integer keys 1–9 | §22 splits author into `pub`(3)/`signer`(8) and adds `supersedes`(6) |
-| Type discriminator | `kind`(1), a **wire** concept from a 27-entry registry | none — kind `0x40` is the object itself | boloka's kinds become §24 `meta` schemas; the wire stops carrying a kind |
+| Type discriminator | `kind`(1), a **wire** concept from a 27-entry registry | none — kind `0x40` is the object itself | evermesh's kinds become §24 `meta` schemas; the wire stops carrying a kind |
 | Author | `author`(2) = `[identity_id, signing_key]` | `pub`(3) = root `IK`, `signer`(8) = operational key | §22 separates root identity from the signing device (`DeviceCert` chain) |
 | Payload | `body`(5), kind-defined map | `meta`(5), **text-keyed** profile map | integer-keyed body → text-keyed profile metadata |
 | References | `refs`(4) = positional `[ref_type, hash]` | `roots`(4) = `PubManifest` addresses; named subjects in `meta` | position-dependent → named |
 | Timestamp | `created_at`(3), Unix **seconds**, signed int | `ts`(7), **milliseconds** epoch, uint | unit and signedness both change |
-| **Signature preimage** | `"boloka:record:v1" ‖ id` — **signs the hash** | `"DMTAP-PUB-v0/announce" ‖ 0x00 ‖ det_cbor(∖sig)` — **signs the bytes** | different DS-tag **and** a hash-then-sign vs sign-the-bytes structural change |
+| **Signature preimage** | `"evermesh:record:v1" ‖ id` — **signs the hash** | `"DMTAP-PUB-v0/announce" ‖ 0x00 ‖ det_cbor(∖sig)` — **signs the bytes** | different DS-tag **and** a hash-then-sign vs sign-the-bytes structural change |
 | Object id | `BLAKE3(det_cbor(keys 1–6))` — **excludes** the signature | `0x1e ‖ BLAKE3(det_cbor(all keys))` — **includes** the signature | different preimage *and* multihash prefix |
 
-The signature row is the deepest incompatibility: boloka signs a 32-byte digest,
+The signature row is the deepest incompatibility: evermesh signs a 32-byte digest,
 §22 signs the encoded object. No re-framing bridges that — objects must be
 **re-signed**, which requires the author's key (see phase 2, step 4).
 
 ## Per-author feed → `FeedHead` / `FeedEntry` (§22.4)
 
-**There is no boloka counterpart to map.** Boloka orders an author's records by
+**There is no evermesh counterpart to map.** Evermesh orders an author's records by
 a **relay-local, unauthenticated `seq` receipt counter** (spec 006 §2). That is
 not a signed structure; a relay can silently omit or reorder an author's records
 and a reader cannot tell.
 
-| Aspect | boloka | §22 |
+| Aspect | evermesh | §22 |
 |---|---|---|
 | Ordering authority | relay-assigned `seq` | author-signed `FeedHead` |
 | Anti-rollback | **none** | reject lower `seq` → `0x0907` |
@@ -324,14 +324,14 @@ and a reader cannot tell.
 
 So §22's mandatory anti-rollback is **adopted, not translated** — phase 1 already
 exposes it (`build_feed_head`, `feed_genesis`, `feed_append`, `FeedFollower`).
-This is the one place convergence **hardens** boloka rather than re-encoding it.
-Boloka's identity-rotation *contest-window finality* (spec 002 §4) is a richer
+This is the one place convergence **hardens** evermesh rather than re-encoding it.
+Evermesh's identity-rotation *contest-window finality* (spec 002 §4) is a richer
 fork-resolution rule than a monotonic `seq` and remains a genuine upstream
 contribution — it complements the feed head, it does not substitute for it.
 
 ## Blob manifest → `PubManifest` (§22.2)
 
-| Aspect | boloka `ChunkTree` | §22 `PubManifest` | Difference |
+| Aspect | evermesh `ChunkTree` | §22 `PubManifest` | Difference |
 |---|---|---|---|
 | Chunk size | 1 MiB | 1 MiB (`chunk_sz`) | **same** |
 | Chunk digest | `BLAKE3(0x00 ‖ chunk)`, stored as the leaf | `h_i = 0x1e ‖ BLAKE3(chunk)`, stored as an address | **different preimage** — see erratum above |
@@ -340,7 +340,7 @@ contribution — it complements the feed head, it does not substitute for it.
 | Odd-node rule | promote unpaired last node | RFC 6962: split at largest power of two `< n` | **same resulting shape** (brute-forced for all `n ≤ 2999`), different values |
 | Empty blob | permitted — empty tree, no root | **forbidden** — `n ≥ 1` required | migration edge case |
 | Root address | bare 32 bytes, `b3-256:<hex>` | `0x1e ‖ root` | multihash prefix |
-| Range proofs | `ChunkTree::prove` + `verify_chunk` + relay `/blob/{id}/proof` | **not specified** — per-chunk self-verification only | boloka's to contribute upstream |
+| Range proofs | `ChunkTree::prove` + `verify_chunk` + relay `/blob/{id}/proof` | **not specified** — per-chunk self-verification only | evermesh's to contribute upstream |
 
 Because the tree *shape* agrees for every `n` but every *value* differs, the two
 formats are structurally interchangeable and cryptographically not. A proof from
@@ -374,7 +374,7 @@ them. *Exit: every new blob has both roots; all existing tests green.*
 **Step 2 — serve the §22 well-known surface.** Add
 `/.well-known/dmtap-pub/{feed,announce,manifest,chunk}` to the relay and
 advertise `pub-1`. The `/blob` sidecar is ~80% of `chunk`/`manifest` already.
-`/sync` keeps working untouched. *Exit: an envoir §22 client can fetch boloka
+`/sync` keeps working untouched. *Exit: an envoir §22 client can fetch evermesh
 blobs; `/sync` conformance still 115/115.*
 
 **Step 3 — adopt feed heads (no format change).** Start publishing signed
@@ -400,15 +400,15 @@ This is the part with no clean answer, and it must not be glossed.
 **Blobs migrate; records cannot be migrated automatically.**
 
 - **Blobs — mechanical but I/O-bound.** Every stored blob must be re-read and
-  re-chunked to compute `h_i = 0x1e ‖ BLAKE3(chunk)`, because boloka persisted
+  re-chunked to compute `h_i = 0x1e ‖ BLAKE3(chunk)`, because evermesh persisted
   `BLAKE3(0x00 ‖ chunk)` instead (the erratum). Content is unchanged and no key
   is needed, so this is a background job over the corpus. **Budget a full pass
   over all stored media.** New `PubManifest` roots are new addresses; keep a
   native-root → §22-root index so old references keep resolving.
 
 - **Records — require the author's key, so most cannot be migrated.** A §22
-  announce signs `det_cbor(∖sig)` under a `DMTAP-PUB-v0/` DS-tag; a boloka
-  record signed `"boloka:record:v1" ‖ id`. There is **no transformation** from
+  announce signs `det_cbor(∖sig)` under a `DMTAP-PUB-v0/` DS-tag; a evermesh
+  record signed `"evermesh:record:v1" ‖ id`. There is **no transformation** from
   one signature to the other. Re-signing needs the author's private key, which
   the platform does not hold for self-custodied identities — and *should* not.
 

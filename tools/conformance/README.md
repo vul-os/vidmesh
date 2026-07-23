@@ -1,11 +1,11 @@
 # tools/conformance
 
-The Boloka conformance suite: deterministic JSON fixture vectors covering
+The Evermesh conformance suite: deterministic JSON fixture vectors covering
 the envelope, every registered record kind, identity rotation chains,
 chunk-tree range proofs, bundle import/export, and JSON↔CBOR interchange —
 plus a Rust runner that replays them against three independent runtimes:
-the `boloka-kernel` crate in-process, `@boloka/kernel` under Node (via a
-small child-process harness), and a live `boloka-relay` over its
+the `evermesh-kernel` crate in-process, `@evermesh/kernel` under Node (via a
+small child-process harness), and a live `evermesh-relay` over its
 websocket sync protocol.
 
 **This suite is what makes the two-implementations rule (spec
@@ -25,10 +25,10 @@ tools/conformance/
 ├── src/
 │   ├── vectors.rs          the vector format (serde structs)
 │   ├── lib.rs              shared vector loading
-│   ├── kernel_target.rs    executes vectors against boloka-kernel in-process
+│   ├── kernel_target.rs    executes vectors against evermesh-kernel in-process
 │   ├── node_target.rs      spawns node-harness.mjs, speaks its protocol
 │   ├── relay_target.rs     speaks the spec 006 /sync websocket protocol
-│   ├── main.rs             the `boloka-conformance run` CLI
+│   ├── main.rs             the `evermesh-conformance run` CLI
 │   └── bin/generate.rs     the deterministic vector generator
 └── vectors/                generated output (see "Regenerating" below)
     ├── envelope/
@@ -60,7 +60,7 @@ a clean diff), with four fields every vector shares —
 | `kind` | Fields | Meaning |
 |---|---|---|
 | `record-valid` | `cbor_hex`, `expected_id_hex`, `json` | The bytes MUST parse, verify, and derive this id; `json` is its JSON interchange form (spec 001 §11), embedded as a real value so it reads/diffs naturally. |
-| `record-invalid` | `cbor_hex`, `expected_error`, `layer` | The bytes MUST be rejected. `expected_error` is one of `cbor`, `non-canonical`, `envelope`, `signature`, `unknown-algorithm`, `kind` (mirrors `boloka_kernel::Error`). `layer` is `"envelope"` (checkable by `Record::from_cbor` + `Record::verify` alone — every target checks these today) or `"kind"` (only checkable by `boloka_kernel::kinds::validate`, not yet wired into this runner — see below). |
+| `record-invalid` | `cbor_hex`, `expected_error`, `layer` | The bytes MUST be rejected. `expected_error` is one of `cbor`, `non-canonical`, `envelope`, `signature`, `unknown-algorithm`, `kind` (mirrors `evermesh_kernel::Error`). `layer` is `"envelope"` (checkable by `Record::from_cbor` + `Record::verify` alone — every target checks these today) or `"kind"` (only checkable by `evermesh_kernel::kinds::validate`, not yet wired into this runner — see below). |
 | `chunk-proof` | `n_chunks`, `last_chunk_len`, `chunk_index`, `proof_hex`, `root_hex`, `valid` | Describes a synthetic blob by formula (chunk `i` is `(i % 251)` repeated for its length; every chunk but the last is exactly 1 MiB) rather than embedding megabytes of hex, plus a range proof and whether it MUST verify. |
 | `identity-chain` | `records_hex`, `now`, `observed`, `expected` or `expected_error` | Records to feed `Identity::verify_chain`, in the order the vector wants them merged; `observed` maps record-id-hex to a first-observed Unix time (absent = "just observed", not final). |
 | `bundle` | `bundle_hex`, `expected` or `expected_error` | A complete bundle byte stream (magic + CBOR item sequence); `expected` is what a correct importer recovers (record/blob ids, skip count, truncation flag), or `expected_error` if the container itself is malformed (e.g. bad magic — `Bundle::import` MUST fail outright, not salvage). |
@@ -81,22 +81,22 @@ from a fixed secret-byte seed (`Keypair::from_secret_bytes`, never
 synthesized from a formula, and output is written in sorted order with
 sorted-key JSON — so a clean checkout re-running `generate` produces no
 diff. Record-kind bodies are built directly with `RecordBuilder` +
-`boloka_kernel::codec::Value` per spec 003/004's schemas, **not** via
-`boloka_kernel::kinds` (that module is being completed in parallel and is
+`evermesh_kernel::codec::Value` per spec 003/004's schemas, **not** via
+`evermesh_kernel::kinds` (that module is being completed in parallel and is
 not yet part of the compiled kernel crate — see the report below).
 
 ## Running
 
 ```sh
 # Against the kernel crate in-process (the reference target):
-cargo run --bin boloka-conformance -- run --target kernel
+cargo run --bin evermesh-conformance -- run --target kernel
 
-# Against @boloka/kernel under Node (requires crates/boloka-wasm built
+# Against @evermesh/kernel under Node (requires crates/evermesh-wasm built
 # into packages/kernel-ts/wasm/, and Node >= 22.6):
-cargo run --bin boloka-conformance -- run --target node
+cargo run --bin evermesh-conformance -- run --target node
 
 # Against a live relay's /sync:
-cargo run --bin boloka-conformance -- run --target relay --relay-url ws://127.0.0.1:8787/sync
+cargo run --bin evermesh-conformance -- run --target relay --relay-url ws://127.0.0.1:8787/sync
 ```
 
 `--vectors <dir>` overrides the vector directory (default:
@@ -110,8 +110,8 @@ when the target genuinely cannot check it yet — e.g. a `layer: "kind"`
 record-invalid vector against the kernel target (kind-level validation
 isn't wired in yet, guarded behind a `// kinds` comment in
 `src/kernel_target.rs` for the lead to enable once
-`boloka_kernel::kinds` lands), or a `bundle` vector against the node
-target (`@boloka/kernel` exposes no bundle API), or any non-record
+`evermesh_kernel::kinds` lands), or a `bundle` vector against the node
+target (`@evermesh/kernel` exposes no bundle API), or any non-record
 vector against the relay target (relays only speak the envelope, spec
 006 §4).
 
@@ -134,24 +134,24 @@ These are reported rather than silently worked around, per the task's
 own instruction — decide what to do about each one as a build-plan/spec
 decision, not a fixture hack:
 
-1. **`boloka_kernel::kinds` is not part of the compiled kernel crate
-   yet.** `crates/boloka-kernel/src/kinds/mod.rs` references
+1. **`evermesh_kernel::kinds` is not part of the compiled kernel crate
+   yet.** `crates/evermesh-kernel/src/kinds/mod.rs` references
    `claims`, `compliance`, `infra`, `live`, `social`, `trust` submodules
    that do not exist on disk yet (only `content.rs` does), and
-   `crates/boloka-kernel/src/lib.rs` does not declare `pub mod kinds;`
+   `crates/evermesh-kernel/src/lib.rs` does not declare `pub mod kinds;`
    at all — so the module tree isn't wired in. This suite therefore
    builds every kind record directly with `RecordBuilder` + `Value`
    (per the task brief) and ships every kind-specific invalid mutation
    as a `layer: "kind"` vector that the kernel target currently
    *skips* rather than checks (see `src/kernel_target.rs`'s `// kinds`
    comment block, ready to uncomment once the module lands).
-   `crates/boloka-wasm/src/lib.rs` already assumes `kinds` exists
-   (`use boloka_kernel::{..., kinds, ...}`) and calls
-   `kinds::validate` in `validate_kind` — so `boloka-wasm` likely does
+   `crates/evermesh-wasm/src/lib.rs` already assumes `kinds` exists
+   (`use evermesh_kernel::{..., kinds, ...}`) and calls
+   `kinds::validate` in `validate_kind` — so `evermesh-wasm` likely does
    not compile today either, independent of this suite.
 
 2. **The WASM `identity.verifyChain` binding cannot express
-   contest-window finality.** `crates/boloka-wasm/src/lib.rs`'s
+   contest-window finality.** `crates/evermesh-wasm/src/lib.rs`'s
    `verify_chain` hardcodes
    `Identity::verify_chain(&parsed, &|_| None, now)` — every record is
    always treated as "just observed," so a signing-key rotation can
@@ -163,7 +163,7 @@ decision, not a fixture hack:
    correctly exercised against the `node` target as it stands — it
    will genuinely disagree with the `kernel` target. Fix: add an
    `observedAt: Record<string, number>` parameter through
-   `boloka_wasm::verify_chain` → `kernel-ts`'s `identity.verifyChain`
+   `evermesh_wasm::verify_chain` → `kernel-ts`'s `identity.verifyChain`
    → `node-harness.mjs`'s `identity-verify-chain` op (which already
    forwards a request `observed` map that the harness currently drops
    for exactly this reason, documented at the top of the file).
@@ -179,7 +179,7 @@ decision, not a fixture hack:
 
 4. **The `bundle/roundtrip` and `bundle/corrupted-blob-item` fixtures'
    3 MiB+ parted blob is hand-assembled at the item level, not produced
-   by `Bundle::export`.** `boloka_kernel::bundle::PART_SPLIT_THRESHOLD`
+   by `Bundle::export`.** `evermesh_kernel::bundle::PART_SPLIT_THRESHOLD`
    is 16 MiB (matching spec 007 §1's stated floor — "blobs larger than
    16 MiB"), so `Bundle::export` would not split a 3 MiB blob into `bp`
    parts on its own. The task brief called for a 3 MiB parted blob

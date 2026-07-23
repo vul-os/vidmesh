@@ -1,10 +1,10 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/boloka-kernel",
-    "crates/boloka-relay",
-    "crates/boloka-wasm",
-    "crates/boloka-node",
+    "crates/evermesh-kernel",
+    "crates/evermesh-relay",
+    "crates/evermesh-wasm",
+    "crates/evermesh-node",
     "tools/conformance",
 ]
 
@@ -12,11 +12,11 @@ members = [
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/vul-os/boloka"
-authors = ["Boloka contributors"]
+repository = "https://github.com/vul-os/evermesh"
+authors = ["Evermesh contributors"]
 
 [workspace.dependencies]
-boloka-kernel = { path = "crates/boloka-kernel" }
+evermesh-kernel = { path = "crates/evermesh-kernel" }
 
 [profile.release]
 lto = true

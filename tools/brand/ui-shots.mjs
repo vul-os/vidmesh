@@ -2,11 +2,11 @@
 /**
  * Screenshots of the uniform reference UI for the README.
  *
- *   pnpm --filter @boloka/gateway-web build
+ *   pnpm --filter @evermesh/gateway-web build
  *   node tools/brand/ui-shots.mjs
  *
  * Serves the built frontend and answers the gateway REST API with fixed
- * sample responses, because **no boloka gateway is deployed** — see the
+ * sample responses, because **no evermesh gateway is deployed** — see the
  * status table in README.md. These are pictures of the real interface
  * with a stubbed backend, and the README says so; they are not pictures
  * of a running network, and must never be captioned as if they were.
@@ -24,7 +24,7 @@ const dist = path.join(repo, "apps", "gateway", "web", "dist");
 const shots = path.join(repo, "apps", "site", "screenshots");
 
 if (!fs.existsSync(dist)) {
-  console.error("build the frontend first: pnpm --filter @boloka/gateway-web build");
+  console.error("build the frontend first: pnpm --filter @evermesh/gateway-web build");
   process.exit(1);
 }
 

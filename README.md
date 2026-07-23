@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-    <img src="assets/logo.svg" alt="boloka" width="380">
+    <img src="assets/logo.svg" alt="evermesh" width="380">
   </picture>
 </p>
 
@@ -18,7 +18,16 @@
   <img alt="spec license: CC-BY-SA-4.0" src="https://img.shields.io/badge/spec-CC--BY--SA--4.0-4C554D">
 </p>
 
-Boloka is a decentralized media protocol built on a substrate of
+> ⚠️ **Experimental.** Evermesh is early-stage software and not
+> production-ready — see [Status by component](#status-by-component) below.
+> It has its own native substrate (signed records, identity, blobs,
+> bundles) and does not require DMTAP for anything; it can *optionally*
+> distribute over [DMTAP-PUB (§22)](docs/DMTAP-CONVERGENCE.md) as an
+> additive, default-off encode/decode path (`--features dmtap-pub`) for
+> interop with the wider DMTAP substrate. Formerly named **Boloka**, and
+> before that **Vidmesh**.
+
+Evermesh is a decentralized media protocol built on a substrate of
 self-certifying data: signed records (CBOR, Ed25519, BLAKE3) and
 content-addressed blobs. No servers of record, no token, no mandatory
 dependencies. Independent **gateways** index and serve their own selection of
@@ -38,16 +47,16 @@ no live-streaming product surface, and the desktop node is a scaffold. The
 | Path | What it is | State |
 |---|---|---|
 | `spec/` | Normative protocol spec (000–011 + IETF draft), CC-BY-SA-4.0 | **Complete** for v1 scope |
-| `crates/boloka-kernel` | Records, identity/rotation, blobs+chunk proofs, bundles, canonical codec, all 27 record kinds | **Implemented, tested** (193 unit + 7 property tests) |
-| `crates/boloka-relay` | Axum `/sync` websocket relay: envelope validation, storage, filtered subscriptions, gossip, PoW, rate-limit, retention, blob sidecar (PUT/GET-range/proof) | **Implemented, tested** (47 tests) |
-| `crates/boloka-wasm` | wasm-bindgen bindings over the kernel | **Implemented**, builds to WASM, tested |
+| `crates/evermesh-kernel` | Records, identity/rotation, blobs+chunk proofs, bundles, canonical codec, all 27 record kinds | **Implemented, tested** (193 unit + 7 property tests) |
+| `crates/evermesh-relay` | Axum `/sync` websocket relay: envelope validation, storage, filtered subscriptions, gossip, PoW, rate-limit, retention, blob sidecar (PUT/GET-range/proof) | **Implemented, tested** (47 tests) |
+| `crates/evermesh-wasm` | wasm-bindgen bindings over the kernel | **Implemented**, builds to WASM, tested |
 | `packages/kernel-ts` | Typed TS API over the WASM kernel | **Implemented, tested** (5 tests) |
 | `packages/ui` | Shared React components (player, verification badge) | **Implemented**, typechecks |
 | `apps/gateway/server` | Gateway backend: config, SQLite index, policy engine, key custody, relay clients, kind-aware ingest, upload/original-only pipeline, JSON API | **Implemented, tested** (45 tests); boots and connects to a relay |
 | `apps/gateway/web` | Gateway frontend: React + Vite + Tailwind | **Implemented, tested** (45 tests); builds |
-| `apps/site` | boloka.org: static landing page + docs viewer | **Built**, browser-checked (`just site-check`) |
+| `apps/site` | evermesh.org: static landing page + docs viewer | **Built**, browser-checked (`just site-check`) |
 | `tools/conformance` | 189 deterministic vectors + a runner replaying them against three runtimes | **Implemented, green** (see below) |
-| `crates/boloka-node` | Desktop node app (Tauri 2) | **Scaffold only** |
+| `crates/evermesh-node` | Desktop node app (Tauri 2) | **Scaffold only** |
 
 ### Spec'd but not built
 
@@ -59,14 +68,14 @@ no live-streaming product surface, and the desktop node is a scaffold. The
   product surface**.
 - **Non-custodial key flows** — the reference gateway custodies keys
   server-side (spec 002 §7 / 009 §5); client-held keys are a later phase.
-- **Desktop node** — `crates/boloka-node` is a Tauri scaffold; it pins and
+- **Desktop node** — `crates/evermesh-node` is a Tauri scaffold; it pins and
   seeds nothing yet.
 
 ## Conformance: the golden rule
 
 The suite replays the same vectors against three independent runtimes — the
-`boloka-kernel` crate in-process, `@boloka/kernel` under Node/WASM, and a
-live `boloka-relay` over its `/sync` websocket. **A vector must pass
+`evermesh-kernel` crate in-process, `@evermesh/kernel` under Node/WASM, and a
+live `evermesh-relay` over its `/sync` websocket. **A vector must pass
 identically in every runtime**; a divergence is a protocol/binding bug, never
 a fixture to special-case. Current result (0 failures across all three; the
 differing counts are documented per-runtime skips — each runtime only checks
@@ -89,14 +98,14 @@ measured contrast table) is documented in [`assets/README.md`](assets/README.md)
 
 | Reference UI — dark | Reference UI — light |
 |---|---|
-| ![Gateway home in dark theme: a grid of video cards, search, and the boloka lockup](apps/site/screenshots/ui-dark.png) | ![The same page in the light theme](apps/site/screenshots/ui-light.png) |
+| ![Gateway home in dark theme: a grid of video cards, search, and the evermesh lockup](apps/site/screenshots/ui-dark.png) | ![The same page in the light theme](apps/site/screenshots/ui-light.png) |
 
 > These two are the real frontend served against a **stubbed** gateway API
-> (`node tools/brand/ui-shots.mjs`), because no boloka gateway is deployed
+> (`node tools/brand/ui-shots.mjs`), because no evermesh gateway is deployed
 > — see the status table above. They show the interface, not a running
 > network.
 
-| boloka.org | Docs viewer |
+| evermesh.org | Docs viewer |
 |---|---|
 | ![The landing page: the survival test, roles, and an honest status section](apps/site/screenshots/site-dark.png) | ![The specification rendered in the site's docs viewer](apps/site/screenshots/docs-dark.png) |
 
@@ -121,20 +130,20 @@ Per-suite, if you want to run them individually:
 
 ```sh
 cargo test --workspace                          # kernel, relay, wasm, node, conformance
-pnpm --filter @boloka/kernel build && \
-  pnpm --filter @boloka/kernel test            # TS kernel (needs `just wasm` first)
-pnpm --filter @boloka/gateway-server test      # gateway backend (45)
-pnpm --filter @boloka/gateway-web test         # gateway frontend (45)
+pnpm --filter @evermesh/kernel build && \
+  pnpm --filter @evermesh/kernel test            # TS kernel (needs `just wasm` first)
+pnpm --filter @evermesh/gateway-server test      # gateway backend (45)
+pnpm --filter @evermesh/gateway-web test         # gateway frontend (45)
 ```
 
 ### Conformance suite
 
 ```sh
 cargo run --bin generate                        # (re)generate vectors — deterministic
-cargo run --bin boloka-conformance -- run --target kernel
-cargo run --bin boloka-conformance -- run --target node    # needs `just wasm` + kernel-ts build
+cargo run --bin evermesh-conformance -- run --target kernel
+cargo run --bin evermesh-conformance -- run --target node    # needs `just wasm` + kernel-ts build
 # relay target needs a live relay (see the smoke run below), then:
-cargo run --bin boloka-conformance -- run --target relay --relay-url ws://127.0.0.1:8787/sync
+cargo run --bin evermesh-conformance -- run --target relay --relay-url ws://127.0.0.1:8787/sync
 ```
 
 ### Smoke run (relay + gateway, no ffmpeg)
@@ -157,10 +166,10 @@ cat > smoke/relay.json <<'JSON'
   "blob": { "enabled": true, "dir": "smoke/blobs", "max_bytes": 4294967296 }
 }
 JSON
-./target/debug/boloka-relay smoke/relay.json &
+./target/debug/evermesh-relay smoke/relay.json &
 
 # 3. Put a blob; the server derives (never trusts) its content address
-printf 'hello boloka smoke test blob payload' > smoke/payload.bin
+printf 'hello evermesh smoke test blob payload' > smoke/payload.bin
 ID=$(curl -s -X PUT --data-binary @smoke/payload.bin \
        http://127.0.0.1:8787/blob | sed -E 's/.*"id":"([^"]+)".*/\1/')
 
@@ -175,7 +184,7 @@ curl -s -i "http://127.0.0.1:8787/blob/$ID/proof?chunk=0" | head -3
 cp apps/gateway/server/config.example.json smoke/gateway.json   # then edit paths/secrets,
                                                                 # set relays to ws://127.0.0.1:8787/sync
 GATEWAY_CONFIG=smoke/gateway.json \
-  pnpm --filter @boloka/gateway-server exec node --experimental-transform-types src/main.ts
+  pnpm --filter @evermesh/gateway-server exec node --experimental-transform-types src/main.ts
 # GET http://127.0.0.1:8080/api/info  ->  200 {"gateway":...,"relays":[...],"uploadEnabled":true}
 ```
 

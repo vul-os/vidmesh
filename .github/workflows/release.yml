@@ -1,10 +1,10 @@
-# Release: build the boloka-relay binary (macOS universal, Linux, Windows)
+# Release: build the evermesh-relay binary (macOS universal, Linux, Windows)
 # and the reference gateway's static web bundle on a v* tag, and attach them
 # to a draft GitHub Release.
 #
 # What gets released, and what does not — see README.md "Status by
 # component" for the full picture this mirrors:
-#   - boloka-relay   the one component that is a real, self-hostable service
+#   - evermesh-relay   the one component that is a real, self-hostable service
 #                      today (websocket sync + optional blob sidecar). Built
 #                      natively per OS, matching how slipscan/molao build
 #                      their CLI/server binaries in this suite.
@@ -19,9 +19,9 @@
 #                      auto-generated "Source code" archive on every release
 #                      already covers that; building a redundant copy here
 #                      would add nothing.
-#   - boloka-node     NOT built. Tauri desktop-node scaffold only (pins and
+#   - evermesh-node     NOT built. Tauri desktop-node scaffold only (pins and
 #                      seeds nothing yet) — see README's status table.
-#   - boloka-wasm /
+#   - evermesh-wasm /
 #     packages/*       NOT published here. Libraries other components embed
 #                      (gateway/web's build step below compiles the WASM
 #                      kernel as a build input), not standalone release
@@ -53,7 +53,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  # ── boloka-relay: one binary per platform ──────────────────────────────
+  # ── evermesh-relay: one binary per platform ──────────────────────────────
   build-relay:
     name: Build relay (${{ matrix.platform }})
     strategy:
@@ -99,16 +99,16 @@ jobs:
       - name: Build relay (macOS universal)
         if: matrix.platform == 'macos'
         run: |
-          cargo build --release -p boloka-relay --target aarch64-apple-darwin
-          cargo build --release -p boloka-relay --target x86_64-apple-darwin
+          cargo build --release -p evermesh-relay --target aarch64-apple-darwin
+          cargo build --release -p evermesh-relay --target x86_64-apple-darwin
           lipo -create \
-            target/aarch64-apple-darwin/release/boloka-relay \
-            target/x86_64-apple-darwin/release/boloka-relay \
-            -output target/release-boloka-relay-universal
+            target/aarch64-apple-darwin/release/evermesh-relay \
+            target/x86_64-apple-darwin/release/evermesh-relay \
+            -output target/release-evermesh-relay-universal
 
       - name: Build relay
         if: matrix.platform != 'macos'
-        run: cargo build --release -p boloka-relay
+        run: cargo build --release -p evermesh-relay
 
       - name: Stage release asset
         shell: bash
@@ -117,13 +117,13 @@ jobs:
           mkdir -p staging
           case "${{ matrix.platform }}" in
             macos)
-              cp target/release-boloka-relay-universal "staging/boloka-relay-${ver}-macos-universal"
+              cp target/release-evermesh-relay-universal "staging/evermesh-relay-${ver}-macos-universal"
               ;;
             linux)
-              cp target/release/boloka-relay "staging/boloka-relay-${ver}-linux-x86_64"
+              cp target/release/evermesh-relay "staging/evermesh-relay-${ver}-linux-x86_64"
               ;;
             windows)
-              cp target/release/boloka-relay.exe "staging/boloka-relay-${ver}-windows-x86_64.exe"
+              cp target/release/evermesh-relay.exe "staging/evermesh-relay-${ver}-windows-x86_64.exe"
               ;;
           esac
           ls -la staging
@@ -150,7 +150,7 @@ jobs:
             echo "::error::Tag $tag does not match VERSION ($ver)"; exit 1; }
 
       # The kernel-ts package (a gateway/web dependency) wraps a WASM build
-      # of boloka-wasm, so this job needs the Rust wasm32 target too — same
+      # of evermesh-wasm, so this job needs the Rust wasm32 target too — same
       # as the "js" job in ci.yml.
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -177,17 +177,17 @@ jobs:
 
       - name: Build WASM kernel + TS wrapper
         run: |
-          pnpm --filter @boloka/kernel build:wasm
-          pnpm --filter @boloka/kernel build
+          pnpm --filter @evermesh/kernel build:wasm
+          pnpm --filter @evermesh/kernel build
 
       - name: Build gateway web
-        run: pnpm --filter @boloka/gateway-web build
+        run: pnpm --filter @evermesh/gateway-web build
 
       - name: Stage release asset
         run: |
           ver="${GITHUB_REF_NAME#v}"
           mkdir -p staging
-          tar -czf "staging/boloka-gateway-web-${ver}.tar.gz" -C apps/gateway/web/dist .
+          tar -czf "staging/evermesh-gateway-web-${ver}.tar.gz" -C apps/gateway/web/dist .
           ls -la staging
 
       - uses: actions/upload-artifact@v4.6.0
@@ -215,7 +215,7 @@ jobs:
       - name: Generate checksums
         run: |
           cd dist
-          sha256sum boloka-relay-* boloka-gateway-web-* > SHA256SUMS.txt
+          sha256sum evermesh-relay-* evermesh-gateway-web-* > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
       - name: List assets
@@ -225,5 +225,5 @@ jobs:
         with:
           draft: true
           generate_release_notes: true
-          name: Boloka ${{ github.ref_name }}
+          name: Evermesh ${{ github.ref_name }}
           files: dist/*

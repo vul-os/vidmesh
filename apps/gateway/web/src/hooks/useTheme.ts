@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type Theme = "light" | "dark";
 
-const STORAGE_KEY = "boloka:theme";
+const STORAGE_KEY = "evermesh:theme";
 
 /** Pure: resolves the initial theme from storage, falling back to the media query. Exported for testing. */
 export function resolveInitialTheme(

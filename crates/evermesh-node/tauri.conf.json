@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Evermesh Node",
+  "version": "0.0.1",
+  "identifier": "org.evermesh.node",
+  "build": {
+    "frontendDist": "./ui"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Evermesh Node",
+        "width": 960,
+        "height": 640,
+        "minWidth": 640,
+        "minHeight": 480,
+        "resizable": true
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/icon.png"]
+  }
+}

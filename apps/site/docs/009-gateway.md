@@ -80,7 +80,7 @@ behalf, holding a recovery key). Custody obligations
 ([002](002-identity.md) §7): the user can export their identity
 (genesis + chain + keys they hold) at any time, and leaving is a
 rotation requiring nothing from the gateway. A custodial gateway that
-cannot demonstrate the exit path is not Boloka-compliant.
+cannot demonstrate the exit path is not Evermesh-compliant.
 
 ## 6. Discovery and recommendation
 

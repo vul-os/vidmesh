@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Boloka docs</title>
-<meta name="description" content="The Boloka protocol specification, the IETF draft, and the project's decision log — rendered in the browser from the same markdown that ships in the repository.">
-<link rel="canonical" href="https://boloka.org/docs.html">
+<title>Evermesh docs</title>
+<meta name="description" content="The Evermesh protocol specification, the IETF draft, and the project's decision log — rendered in the browser from the same markdown that ships in the repository.">
+<link rel="canonical" href="https://evermesh.org/docs.html">
 <meta name="theme-color" content="#FAFBF7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0C0B" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -18,10 +18,10 @@
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="./" aria-label="Boloka home">
+    <a class="brand" href="./" aria-label="Evermesh home">
       <picture>
         <source srcset="assets/logo-dark.svg" media="(prefers-color-scheme: dark)">
-        <img src="assets/logo.svg" alt="Boloka" width="98" height="26">
+        <img src="assets/logo.svg" alt="Evermesh" width="110" height="26">
       </picture>
     </a>
     <nav aria-label="Sections">
@@ -31,7 +31,7 @@
         <li><a href="./#roles">Roles</a></li>
         <li><a href="./#status">Status</a></li>
         <li><a href="docs.html">Docs</a></li>
-        <li><a class="nav-cta" href="https://github.com/vul-os/boloka">GitHub</a></li>
+        <li><a class="nav-cta" href="https://github.com/vul-os/evermesh">GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -84,7 +84,7 @@ const GROUPS = [
   {
     label: "Reference",
     docs: [
-      ["draft-boloka-protocol-00", "IETF draft"],
+      ["draft-evermesh-protocol-00", "IETF draft"],
       ["changelog", "Spec changelog"],
     ],
   },
@@ -224,7 +224,7 @@ function wrapTables() {
 }
 
 /**
- * draft-boloka-protocol-00.md opens with a pandoc YAML frontmatter block
+ * draft-evermesh-protocol-00.md opens with a pandoc YAML frontmatter block
  * (title/author/date/abstract — consumed by `just spec-pdf`, not by this
  * viewer). Left in, marked reads the closing `---` as a Setext heading
  * underline for everything above it and renders the whole block as one
@@ -239,7 +239,7 @@ function stripFrontmatter(text) {
 async function load(doc) {
   setActive(doc);
   crumb.textContent = TITLES[doc];
-  document.title = TITLES[doc] + " — Boloka docs";
+  document.title = TITLES[doc] + " — Evermesh docs";
   content.textContent = "Loading…";
   try {
     const res = await fetch("docs/" + doc + ".md", { cache: "no-cache" });
@@ -263,7 +263,7 @@ async function load(doc) {
       } else {
         // A relative link to something the site does not carry (a source
         // file, say): send it to the repository rather than 404.
-        a.setAttribute("href", "https://github.com/vul-os/boloka/blob/main/" + href.replace(/^\.\//, ""));
+        a.setAttribute("href", "https://github.com/vul-os/evermesh/blob/main/" + href.replace(/^\.\//, ""));
         a.target = "_blank";
         a.rel = "noopener";
       }

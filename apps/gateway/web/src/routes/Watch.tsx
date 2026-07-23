@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Player, VerifiedBadge, type VerifiedState } from "@boloka/ui";
+import { Player, VerifiedBadge, type VerifiedState } from "@evermesh/ui";
 import { Link, useParams } from "react-router-dom";
 import { getVideo, getVideoClaims, getVideoComments, getVideoReceipts } from "../api.js";
 import { ClaimsPanel } from "../components/ClaimsPanel.js";

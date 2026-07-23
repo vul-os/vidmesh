@@ -6,7 +6,7 @@
  * These custom properties are that seam. Every colour in every component
  * resolves through them — including the neutrals and the error red, which
  * tailwind.config.ts remaps onto `--bo-neutral-*` / `--bo-live-*` so that
- * a stock `text-slate-500` is already a Boloka colour and no component
+ * a stock `text-slate-500` is already a Evermesh colour and no component
  * has to be edited to re-skin the app.
  *
  * The values are the reference brand, "signal on carbon", and they are
@@ -109,7 +109,7 @@
 
   /* ---- shape + elevation (mirrors assets/tokens.css — the app was
      missing this half of the token layer, which is why it read flatter
-     than boloka.org: every card/input/button here was falling back to
+     than evermesh.org: every card/input/button here was falling back to
      stock Tailwind rounded-md/border with no radius or shadow scale of
      its own). Two-stop shadows — a tight contact layer plus a soft
      ambient one — so surfaces read as resting material, not a flat

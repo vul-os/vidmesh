@@ -1,4 +1,4 @@
-import { Avatar, formatClockTime, PlayIcon, TimeAgo } from "@boloka/ui";
+import { Avatar, formatClockTime, PlayIcon, TimeAgo } from "@evermesh/ui";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import type { VideoSummary } from "../lib/api-types.js";

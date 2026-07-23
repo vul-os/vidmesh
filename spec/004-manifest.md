@@ -92,7 +92,7 @@ The producer signs the derivation statement:
 ```
 stmt = canonical_cbor( [ original.blob, rendition.blob, codec,
                          width, height, bitrate: uint ] )
-derivation_sig = Sign( producer_key, "boloka:derivation:v1" || BLAKE3-256(stmt) )
+derivation_sig = Sign( producer_key, "evermesh:derivation:v1" || BLAKE3-256(stmt) )
 ```
 
 A rendition is **authorized** if `produced_by` is the manifest's author,

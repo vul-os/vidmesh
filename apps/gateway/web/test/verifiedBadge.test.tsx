@@ -1,4 +1,4 @@
-import { VerifiedBadge } from "@boloka/ui";
+import { VerifiedBadge } from "@evermesh/ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { KernelLike } from "../src/lib/verify.js";

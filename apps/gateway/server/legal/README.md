@@ -2,7 +2,7 @@
 
 **Template — not legal advice.**
 
-This folder is the compliance starter kit that ships with the Boloka
+This folder is the compliance starter kit that ships with the Evermesh
 reference gateway (build plan §9, [spec/009-gateway.md](../../../../spec/009-gateway.md)
 §4). It exists because running a public video service carries real
 legal obligations, and most of those obligations are the same shape for

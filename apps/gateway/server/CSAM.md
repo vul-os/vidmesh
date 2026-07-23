@@ -10,7 +10,7 @@ anything in this area.
 
 Every other compliance decision in this toolkit is local gateway policy:
 what to allow, what to geo-block, which feeds to subscribe, how to
-respond to a takedown notice. Boloka's design principle is that
+respond to a takedown notice. Evermesh's design principle is that
 moderation is selection, and selection is instant, local, and reversible
 ([spec/009-gateway.md](../../../spec/009-gateway.md) §1).
 
@@ -76,7 +76,7 @@ required — one is not a substitute for the other:
 1. **Upload pipeline, pre-publish.** Before a freshly uploaded blob is
    accepted into the content-addressed store and before the gateway
    signs/publishes a manifest referencing it
-   ([BOLOKA_BUILD_PLAN.md](../../../BOLOKA_BUILD_PLAN.md) §9, upload
+   ([EVERMESH_BUILD_PLAN.md](../../../EVERMESH_BUILD_PLAN.md) §9, upload
    pipeline). A match here means the upload never gets published,
    never gets pinned, and never reaches a relay from this gateway.
 2. **Relay-ingest, pre-index.** Before the gateway indexes a record it
@@ -168,9 +168,9 @@ a live vendor integration for every contributor.
   any publicly reachable deployment on `StubMatcher` is **non-compliant**
   with the reference gateway's own requirements
   ([spec/009-gateway.md](../../../spec/009-gateway.md) §4) and is
-  **not covered by the Boloka trademark program** — a deployment on
+  **not covered by the Evermesh trademark program** — a deployment on
   the stub matcher is not entitled to represent itself as a compliant
-  Boloka reference gateway, regardless of how the rest of the stack is
+  Evermesh reference gateway, regardless of how the rest of the stack is
   configured.
 
 If you are reading this because you're about to deploy a gateway for

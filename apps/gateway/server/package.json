@@ -1,8 +1,8 @@
 {
-  "name": "@boloka/gateway-server",
+  "name": "@evermesh/gateway-server",
   "version": "0.0.1",
   "private": true,
-  "description": "Boloka gateway backend: ingest, index, policy engine, upload pipeline, HLS serving",
+  "description": "Evermesh gateway backend: ingest, index, policy engine, upload pipeline, HLS serving",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "@fastify/cookie": "^9.4.0",
     "@fastify/multipart": "^8.3.0",
-    "@boloka/kernel": "workspace:*",
+    "@evermesh/kernel": "workspace:*",
     "argon2": "^0.41.1",
     "better-sqlite3": "^11.3.0",
     "fastify": "^4.28.1",

@@ -7,7 +7,7 @@ import { openDb } from "../src/db.ts";
 import { PolicyEngine, type PolicyFile } from "../src/policy.ts";
 
 function writePolicyFile(policy: Partial<PolicyFile>): string {
-  const dir = mkdtempSync(join(tmpdir(), "boloka-policy-"));
+  const dir = mkdtempSync(join(tmpdir(), "evermesh-policy-"));
   const path = join(dir, "policy.json");
   writeFileSync(
     path,

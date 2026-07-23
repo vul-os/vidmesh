@@ -1,5 +1,5 @@
 /**
- * Boloka gateway web frontend entry point. React 18 + Vite + Tailwind
+ * Evermesh gateway web frontend entry point. React 18 + Vite + Tailwind
  * + TanStack Query + react-router-dom (data router). No Redux, no
  * other state library — server data lives in the query cache; the only
  * local component state is UI state (form fields, toggles).

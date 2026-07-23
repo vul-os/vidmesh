@@ -1,5 +1,5 @@
 /**
- * @boloka/ui — shared React components for Boloka gateways.
+ * @evermesh/ui — shared React components for Evermesh gateways.
  *
  * This is the uniform reference UI's component layer (spec 009 §7): the
  * player, the verification badge, and generic record display. Every

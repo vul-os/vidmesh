@@ -1,6 +1,6 @@
-# @boloka/gateway-server
+# @evermesh/gateway-server
 
-The reference Boloka gateway backend: subscribes to relays, runs a local
+The reference Evermesh gateway backend: subscribes to relays, runs a local
 selection (moderation) policy over what it ingests, indexes selected
 records in SQLite, pins the blobs it serves in a content-addressed store,
 runs the upload/transcode pipeline, packages HLS, exposes the REST API
@@ -180,7 +180,7 @@ see that file for what a real integration requires.
 
 ```
 pnpm install                                   # from the repo root
-pnpm --filter @boloka/kernel build:wasm       # required — see below
+pnpm --filter @evermesh/kernel build:wasm       # required — see below
 cp apps/gateway/server/config.example.json apps/gateway/server/config.json
 cp apps/gateway/server/policy.example.json apps/gateway/server/policy.json
 # edit config.json: real sessionSecret/custody.secret (32+ chars each),
@@ -227,15 +227,15 @@ GATEWAY_CONFIG=./config.json pnpm dev
 
 ## kernel-ts API surface notes
 
-The build plan's brief assumed `@boloka/kernel` had no raw-sign
+The build plan's brief assumed `@evermesh/kernel` had no raw-sign
 primitive and asked for derivation signing to be isolated behind a
 `TODO(kernel-ts: expose raw sign)` with renditions omitted from published
 manifests until it landed. **That assumption doesn't hold in this repo**:
 `packages/kernel-ts/src/index.ts` already exports `signDerivation()`, and
-cross-checking it against `crates/boloka-wasm/src/lib.rs`'s
+cross-checking it against `crates/evermesh-wasm/src/lib.rs`'s
 `sign_derivation` confirms it builds exactly the spec 004 §3.1 statement
 (`canonical_cbor([original, rendition, codec, width, height, bitrate])`)
-and signs `"boloka:derivation:v1" || BLAKE3-256(stmt)`. So this gateway
+and signs `"evermesh:derivation:v1" || BLAKE3-256(stmt)`. So this gateway
 signs and publishes real renditions with real `derivation_sig`s
 (`upload.ts` → `custody.signDerivationFor()`, which is kept as one
 isolated function per the build plan's structural intent even though

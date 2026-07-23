@@ -17,7 +17,7 @@ custody.
 Remember: this policy governs **our selection**, not the substrate.
 Removing something for violating this policy means we stop serving and
 indexing it — it does not delete the underlying record or blob from
-the Boloka network (see `TERMS.md` §1).
+the Evermesh network (see `TERMS.md` §1).
 
 ## 1. Illegal content
 
@@ -33,7 +33,7 @@ We have zero tolerance for child sexual abuse material (CSAM) in any
 form. All uploads are checked against industry hash-matching databases
 before publication and again at index time — see `../CSAM.md` for how
 this works. This check is not configurable and cannot be disabled by
-this gateway or any gateway claiming Boloka trademark compliance
+this gateway or any gateway claiming Evermesh trademark compliance
 ([spec/009-gateway.md](../../../../spec/009-gateway.md) §4).
 
 A confirmed match results in immediate blocking, no serving, and a

@@ -5,7 +5,7 @@ import { verifyRecordById, type VerificationResult } from "../lib/verify.js";
 /**
  * Real client-side verification of a record, wired into TanStack Query
  * so watch pages get loading/error semantics for free. The kernel
- * (`@boloka/kernel`, WASM) is imported dynamically so it's only
+ * (`@evermesh/kernel`, WASM) is imported dynamically so it's only
  * fetched/instantiated on pages that actually verify something.
  */
 export function useVerification(recordId: string | undefined): UseQueryResult<VerificationResult> {
@@ -13,7 +13,7 @@ export function useVerification(recordId: string | undefined): UseQueryResult<Ve
     queryKey: ["verify", recordId],
     queryFn: async () => {
       if (!recordId) throw new Error("no record id");
-      const kernel = await import("@boloka/kernel");
+      const kernel = await import("@evermesh/kernel");
       return verifyRecordById(
         recordId,
         async (id) => getRecordCbor(id),
