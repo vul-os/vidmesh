@@ -103,16 +103,21 @@ measured contrast table) is documented in [`assets/README.md`](assets/README.md)
 
 | Reference UI — dark | Reference UI — light |
 |---|---|
-| ![Gateway home in dark theme: a grid of video cards, search, and the evermesh lockup](apps/site/screenshots/ui-dark.png) | ![The same page in the light theme](apps/site/screenshots/ui-light.png) |
+| ![Gateway home in dark theme: the hero strip naming video, music, client-side verification and the desktop client, above a grid mixing video and audio cards](apps/site/screenshots/ui-dark.png) | ![The same page in the light theme](apps/site/screenshots/ui-light.png) |
 
-> These two are the real frontend served against a **stubbed** gateway API
-> (`node tools/brand/ui-shots.mjs`), because no evermesh gateway is deployed
-> — see the status table above. They show the interface, not a running
-> network.
+| Desktop client (Tauri) — dark | Desktop client (Tauri) — light |
+|---|---|
+| ![The evermesh-node desktop client's Browse view: the same mixed video/audio grid, with a gateway picker and an All/Video/Audio filter](apps/site/screenshots/ui-node-dark.png) | ![The same view in the light theme](apps/site/screenshots/ui-node-light.png) |
+
+> These four are the real frontends served against a **stubbed** gateway
+> API / a **stubbed** Tauri IPC boundary (`node tools/brand/ui-shots.mjs`,
+> `node tools/brand/node-shots.mjs`), because no evermesh gateway is
+> deployed and there is no built desktop binary in this environment — see
+> the status table above. They show the interfaces, not a running network.
 
 | evermesh.org | Docs viewer |
 |---|---|
-| ![The landing page: the survival test, roles, and an honest status section](apps/site/screenshots/site-dark.png) | ![The specification rendered in the site's docs viewer](apps/site/screenshots/docs-dark.png) |
+| ![The landing page: the tagline hero naming video, music, and the desktop client, followed by the survival test, roles, and an honest status section](apps/site/screenshots/site-dark.png) | ![The specification rendered in the site's docs viewer](apps/site/screenshots/docs-dark.png) |
 
 The site in [`apps/site`](apps/site/) is static and self-contained;
 `just site-check` drives a real browser over it (console errors, links,
@@ -200,7 +205,10 @@ GATEWAY_CONFIG=smoke/gateway.json \
 ```sh
 just site-serve     # preview apps/site at http://127.0.0.1:8080
 just site-check     # docs-copy sync check + real-browser check of the site
-just site-shots     # refresh apps/site/screenshots/
+just site-shots     # refresh the site/docs screenshots
+just ui-shots       # refresh the gateway reference-UI screenshots
+just node-shots     # refresh the desktop (Tauri) client screenshots
+just shots          # all three of the above
 just brand          # re-render the OG card and apple-touch-icon
 ```
 

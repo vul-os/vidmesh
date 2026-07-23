@@ -130,24 +130,34 @@ function thumbFor(title, i) {
   return "data:image/svg+xml;base64," + Buffer.from(svg).toString("base64");
 }
 
+/**
+ * Media kind is per-item (the 4th tuple field, defaulting to "video")
+ * because the home grid, the reference UI's own uniform catalogue view
+ * (spec 004 §2 / DMTAP §24.4.2), mixes video and music side by side —
+ * screenshots of it should too, or the "does both" claim in the hero
+ * above this grid has nothing on screen to back it up. "mor.audio"'s
+ * three items are the ones that carry a track, not a frame.
+ */
 const VIDEOS = [
   ["Recovering a channel after a gateway shutdown", "kestrel.tv", 11 * 60_000 + 42_000, hours(5)],
   ["Chunk trees, explained with a whiteboard", "ana@substrate.dev", 8 * 60_000 + 15_000, hours(19)],
-  ["Field recording: the coast road, 4am", "mor.audio", 26 * 60_000, hours(30)],
+  ["Field recording: the coast road, 4am", "mor.audio", 26 * 60_000, hours(30), "audio"],
   ["Why we stopped running our own CDN", "kestrel.tv", 17 * 60_000 + 4_000, hours(54)],
   ["Reading the spec: identity rotation", "ana@substrate.dev", 33 * 60_000 + 20_000, hours(72)],
   ["A relay on a solar panel, six months in", "quiet.works", 6 * 60_000 + 58_000, hours(96)],
-  ["Offline bundles across a border", "mor.audio", 14 * 60_000 + 11_000, hours(120)],
+  ["Nine variations on a chunk tree", "mor.audio", 9 * 60_000 + 12_000, hours(120), "audio"],
   ["Conformance vectors from scratch", "quiet.works", 21 * 60_000 + 39_000, hours(150)],
   ["A gateway migration, live and mid-stream", "kestrel.tv", 9 * 60_000 + 30_000, hours(170)],
   ["Why blob proofs, not just hashes", "ana@substrate.dev", 12 * 60_000 + 5_000, hours(200)],
   ["Building a node from spare parts", "quiet.works", 19 * 60_000 + 47_000, hours(230)],
-  ["Voice notes from the last outage", "mor.audio", 4 * 60_000 + 58_000, hours(260)],
-].map(([title, name, durationMs, createdAt], i) => ({
+  ["Voice notes from the last outage", "mor.audio", 4 * 60_000 + 58_000, hours(260), "audio"],
+].map(([title, name, durationMs, createdAt, mediaKind = "video"], i) => ({
   id: "vm1" + String(i).padStart(3, "0") + "9f3ab2c7d1e",
   title,
   author: { identityId: "vmid" + i, name },
   thumbnailUrl: thumbFor(title, i),
+  mediaKind,
+  coverArtUrl: mediaKind === "audio" ? thumbFor(title, i) : undefined,
   durationMs,
   createdAt,
 }));

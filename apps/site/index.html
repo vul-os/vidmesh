@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Evermesh — many gateways, one substrate</title>
-<meta name="description" content="Evermesh is a decentralized media protocol: a self-certifying substrate of signed records and content-addressed blobs, served by independent gateways. No servers of record, no token, no mandatory dependencies.">
+<meta name="description" content="Evermesh is a decentralized media protocol for video and music: a self-certifying substrate of signed records and content-addressed blobs, served by independent gateways and playable on the web or the desktop client. No servers of record, no token, no mandatory dependencies.">
 <link rel="canonical" href="https://evermesh.org/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://evermesh.org/">
 <meta property="og:title" content="Evermesh — many gateways, one substrate">
-<meta property="og:description" content="A decentralized media protocol built on signed records and content-addressed blobs. Independent gateways index and serve their own selection. No token, no servers of record.">
+<meta property="og:description" content="A decentralized protocol for video and music, built on signed records and content-addressed blobs. Independent gateways index and serve their own selection; a desktop client verifies and plays offline. No token, no servers of record.">
 <meta property="og:image" content="https://evermesh.org/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Evermesh — many gateways, one substrate">
-<meta name="twitter:description" content="A decentralized media protocol built on signed records and content-addressed blobs. No token, no servers of record.">
+<meta name="twitter:description" content="A decentralized protocol for video and music, built on signed records and content-addressed blobs. No token, no servers of record.">
 <meta name="twitter:image" content="https://evermesh.org/assets/og-image.png">
 
 <!-- Theme + icons -->
@@ -85,12 +85,19 @@
         <p class="eyebrow">Pre-alpha &middot; protocol first, product later</p>
         <h1>Many gateways.<br>One substrate.<br><em>Media that outlives its platforms.</em></h1>
         <p class="hero-sub">
-          Evermesh splits media into a small, permanent <strong>substrate</strong> — signed
-          records and content-addressed blobs that verify from their own bytes — and a
-          competitive <strong>edge</strong> of gateways, nodes, and viewers that decides
-          everything contested: moderation, discovery, monetization. No servers of record.
-          No token. No company you have to trust, including ours.
+          Evermesh splits media — video <em class="hero-and">and</em> music — into a small,
+          permanent <strong>substrate</strong> — signed records and content-addressed blobs
+          that verify from their own bytes — and a competitive <strong>edge</strong> of
+          gateways, nodes, and viewers that decides everything contested: moderation,
+          discovery, monetization. No servers of record. No token. No company you have to
+          trust, including ours.
         </p>
+        <ul class="hero-kinds" aria-label="What Evermesh carries">
+          <li>Video</li>
+          <li>Music &amp; playlists</li>
+          <li>Desktop client</li>
+          <li>Web player</li>
+        </ul>
         <p class="hero-flags" aria-label="Project status">
           <span class="pill pill-none">Experimental — not production-ready</span>
           <span class="pill pill-spec">Optionally built on <a href="docs.html#dmtap-convergence">DMTAP-PUB &sect;22</a></span>
@@ -98,6 +105,7 @@
         <div class="cta-row">
           <a class="btn btn-primary" href="docs.html#000-overview">Read the spec</a>
           <a class="btn btn-secondary" href="https://github.com/vul-os/evermesh#development">Run a gateway</a>
+          <a class="btn btn-secondary" href="https://github.com/vul-os/evermesh/tree/main/crates/evermesh-node">Desktop client</a>
         </div>
       </div>
 
@@ -120,6 +128,14 @@
             <dt>Independent runtimes</dt>
             <dd>3</dd>
           </div>
+          <div>
+            <dt>Media kinds</dt>
+            <dd>2 <span>video + audio</span></dd>
+          </div>
+          <div>
+            <dt>Clients</dt>
+            <dd>2 <span>web + desktop</span></dd>
+          </div>
         </dl>
         <p class="telemetry-foot mono">0 failures across kernel, WASM, and relay</p>
       </aside>
@@ -141,7 +157,7 @@
           </p>
           <p class="lede">
             Not "is it federated". Not "is it open source". Those are means. The
-            test is whether a video published today is still playable, still
+            test is whether a video or a track published today is still playable, still
             attributable, and still re-hostable when the gateway that served it,
             the foundation that wrote this spec, and the operators who ran the
             relays are all gone.
@@ -307,9 +323,10 @@
               <span class="runs">runs: a browser</span>
             </div>
             <p>
-              Watches. Verifies signatures and hashes client-side while the video
-              plays, so a hostile or careless gateway cannot quietly substitute
-              different bytes. No account, no setup, no commitment.
+              Watches or listens. Verifies signatures and hashes client-side while
+              the video or track plays, so a hostile or careless gateway cannot
+              quietly substitute different bytes. No account, no setup, no
+              commitment.
             </p>
           </div>
         </li>
@@ -347,7 +364,7 @@
 
       <p class="lede roles-note">
         A creator is not a separate piece of infrastructure — it is any keyholder
-        who publishes a video manifest, and creators may run a node and a gateway
+        who publishes a video or audio manifest, and creators may run a node and a gateway
         too. A foundation stewards the spec, the registries, and the conformance
         suite, and runs no servers of its own.
       </p>
@@ -413,7 +430,7 @@
                 </tr>
                 <tr>
                   <td class="path">gateway/web</td>
-                  <td>The uniform reference UI: player, verification, channels, upload</td>
+                  <td>The uniform reference UI: video &amp; audio player, playlists, verification, channels, upload</td>
                   <td><span class="pill pill-built">Implemented, tested</span></td>
                 </tr>
                 <tr>
@@ -438,8 +455,13 @@
                 </tr>
                 <tr>
                   <td class="path">evermesh-node</td>
-                  <td>Desktop node (Tauri 2) — pins and seeds nothing yet</td>
-                  <td><span class="pill pill-none">Scaffold only</span></td>
+                  <td>Desktop client (Tauri 2) — browses a gateway, verifies manifests natively, pins video and audio for offline playback</td>
+                  <td><span class="pill pill-built">Implemented, tested</span></td>
+                </tr>
+                <tr>
+                  <td class="path">node seeding / swarm</td>
+                  <td>The desktop client pins and caches for its own owner but does not seed to other nodes yet</td>
+                  <td><span class="pill pill-none">No P2P transport</span></td>
                 </tr>
               </tbody>
             </table>

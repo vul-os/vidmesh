@@ -70,6 +70,21 @@ site-check:
 site-shots:
     node tools/site/check.mjs --shots
 
+# Screenshot the gateway reference UI against a stubbed API
+# (apps/site/screenshots/ui-{dark,light}.png) — build first.
+ui-shots:
+    pnpm --filter @evermesh/gateway-web build
+    node tools/brand/ui-shots.mjs
+
+# Screenshot the desktop (Tauri) node client against a stubbed IPC
+# boundary (apps/site/screenshots/ui-node-{dark,light}.png) — build first.
+node-shots:
+    pnpm --filter @evermesh/node-web build
+    node tools/brand/node-shots.mjs
+
+# Refresh every screenshot in apps/site/screenshots/
+shots: site-shots ui-shots node-shots
+
 # Re-render the raster brand exports (OG card, apple-touch-icon)
 brand:
     node tools/brand/render.mjs

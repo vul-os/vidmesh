@@ -346,6 +346,36 @@ h3 {
   font-weight: 600;
 }
 
+.hero-sub em.hero-and {
+  font-style: normal;
+  color: var(--bo-signal);
+  font-weight: 700;
+}
+
+/* a small chip row naming the two media kinds and the two clients —
+   a fact list, styled like the eyebrow pill rather than a feature-icon
+   row, so it reads as one more instrument reading, not a marketing grid */
+.hero-kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-kinds li {
+  font-family: var(--bo-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--bo-muted);
+  border: 1px solid var(--bo-border);
+  border-radius: var(--bo-radius-pill);
+  padding: 5px 12px;
+  background: var(--bo-surface);
+}
+
 .hero-flags {
   display: flex;
   flex-wrap: wrap;
